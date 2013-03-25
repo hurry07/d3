@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+    text {
+        font: bold 48px monospace;
+    }
+
+    .enter {
+        fill: green;
+    }
+
+    .update {
+        fill: #333;
+    }
+
+    div.bar {
+        display: inline-block;
+        width: 20px;
+        height: 75px;	/* Gets overriden by D3-assigned height below */
+        margin-right: 2px;
+        background-color: teal;
+    }
+</style>
+<body>
+<script src="../d3.js"></script>
+<script>
+
+
+    var dataset = [ 5, 10, 15, 20, 25 ];
+
+    d3.select("body").selectAll("div")
+            .data(dataset)
+            .enter()
+            .append("div")
+            .attr("class", "bar")
+            .style("height", function(d) {
+                var barHeight = d * 5;
+                return barHeight + "px";
+            });
+
+    var s = d3.scale.linear().domain([100, 500]).range([10, 350]);
+    console.log(s);
+    console.log(s(100));
+    console.log(s(300));
+    console.log(s(500));
+</script>
