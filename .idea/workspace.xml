@@ -10,7 +10,8 @@
     <file path="/test2.html" changelist="5c798b6a-e158-43be-b7b0-8325f0f4cfd7" time="1364194082679" ignored="false" />
     <file path="/t_01.html" changelist="5c798b6a-e158-43be-b7b0-8325f0f4cfd7" time="1364201458849" ignored="false" />
     <file path="/t_02.html" changelist="5c798b6a-e158-43be-b7b0-8325f0f4cfd7" time="1364203202741" ignored="false" />
-    <file path="/t_03.html" changelist="5c798b6a-e158-43be-b7b0-8325f0f4cfd7" time="1364223353500" ignored="false" />
+    <file path="/t_03.html" changelist="5c798b6a-e158-43be-b7b0-8325f0f4cfd7" time="1364284539011" ignored="false" />
+    <file path="/a.dummy" changelist="5c798b6a-e158-43be-b7b0-8325f0f4cfd7" time="1364279850232" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,37 +31,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="t_01.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tools/t_01.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="108" column="27" selection-start="3243" selection-end="3249" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="t_02.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tools/t_02.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="37" column="16" selection-start="721" selection-end="721" vertical-scroll-proportion="-0.625">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="t_03.html" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/tools/t_03.html">
+        <entry file="file://$PROJECT_DIR$/tools/example_3/t_03.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="113" selection-start="157" selection-end="157" vertical-scroll-proportion="0.2284264">
+            <state line="147" column="28" selection-start="3878" selection-end="3878" vertical-scroll-proportion="0.6286408">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="t_03css.css" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tools/t_03css.css">
+      <file leaf-file-name="states-age.csv" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tools/example_3/states-age.csv">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="176" column="1" selection-start="1930" selection-end="1930" vertical-scroll-proportion="-23.916666">
+            <state line="14" column="87" selection-start="1333" selection-end="1333" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -83,14 +66,15 @@
         <option value="$PROJECT_DIR$/tools/t_02.html" />
         <option value="$PROJECT_DIR$/tools/t_03css.html" />
         <option value="$PROJECT_DIR$/tools/t_03.html" />
+        <option value="$PROJECT_DIR$/tools/example_3/t_03.html" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="72" />
-    <option name="y" value="22" />
-    <option name="width" value="1241" />
-    <option name="height" value="774" />
+    <option name="x" value="470" />
+    <option name="y" value="84" />
+    <option name="width" value="1411" />
+    <option name="height" value="867" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -118,6 +102,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -150,9 +135,26 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="d3" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="d3" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tools" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="example_3" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -162,11 +164,15 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="FullScreen" value="false" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\apache-tomcat-6.0.36\webapps\lucidchart\d3\tools" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\apache-tomcat-6.0.36\webapps\lucidchart\d3\tools\example_3" />
       <recent name="D:\apache-tomcat-6.0.36\webapps\lucidchart\d3\tools" />
     </key>
   </component>
@@ -201,13 +207,14 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="72" y="22" width="1241" height="774" extended-state="0" />
-    <editor active="true" />
+    <frame x="470" y="84" width="1411" height="867" extended-state="0" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32909605" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21839081" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21793003" sideWeight="0.670904" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32944608" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -216,7 +223,6 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -283,11 +289,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/test/arrays/zip-test.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="107" selection-start="884" selection-end="884" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tools/main.html">
       <provider selected="true" editor-type-id="text-editor">
         <state line="17" column="0" selection-start="330" selection-end="367" vertical-scroll-proportion="0.0" />
@@ -352,21 +353,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/tools/t_02.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="37" column="16" selection-start="721" selection-end="721" vertical-scroll-proportion="-0.625">
+        <state line="37" column="16" selection-start="721" selection-end="721" vertical-scroll-proportion="-0.65217394">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tools/t_03css.css">
+    <entry file="file://$PROJECT_DIR$/tools/example_3/t_03css.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="176" column="1" selection-start="1930" selection-end="1930" vertical-scroll-proportion="-23.916666">
+        <state line="147" column="38" selection-start="1629" selection-end="1629" vertical-scroll-proportion="-9.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tools/t_03.html">
+    <entry file="file://$PROJECT_DIR$/tools/example_3/states-age.csv">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="113" selection-start="157" selection-end="157" vertical-scroll-proportion="0.2284264">
+        <state line="14" column="87" selection-start="1333" selection-end="1333" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools/example_3/t_03.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="147" column="28" selection-start="3878" selection-end="3878" vertical-scroll-proportion="0.6286408">
           <folding />
         </state>
       </provider>
