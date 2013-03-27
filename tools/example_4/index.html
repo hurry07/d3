@@ -59,10 +59,10 @@
     init();
 
     function init () {
-        vis.append("svg:g")
+        var temp = vis.append("svg:g")
                 .attr("class", "x axis")
-                .attr("transform", "translate(0," + (HEIGHT - MARGINS.bottom) + ")")
-                .call(xAxis);
+                .attr("transform", "translate(0," + (HEIGHT - MARGINS.bottom) + ")");
+                temp.call(xAxis);
 
         vis.append("svg:g")
                 .attr("class", "y axis")
