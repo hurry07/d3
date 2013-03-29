@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script type="text/javascript" src='../../d3.js'></script>
+<script type="text/javascript">
+    var data = [
+        {date: new Date(2011,  1, 1), value: 0.5},
+        {date: new Date(2011,  2, 1), value: 0.6},
+        {date: new Date(2011,  3, 1), value: 0.7},
+        {date: new Date(2011,  4, 1), value: 0.8}
+    ];
+    var bisect = d3.bisector(function(d) { return d.date; }).right;
+    console.log(bisect);
+    var res = bisect(data, new Date(2011, 1, 2));
+    console.log(res);
+
+    var bl = d3.bisector(function(d) {return d.data}).left;
+    res = bl(data, new Date(2011, 1, 2));
+    console.log(res);
+</script>
+</body>
+</html>                                               r
