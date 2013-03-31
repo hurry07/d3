@@ -1,3 +1,4 @@
+// 向原型上添加属性
 function d3_class(ctor, properties) {
     try {
         for (var key in properties) {

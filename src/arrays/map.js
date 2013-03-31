@@ -1,5 +1,4 @@
-import
-"../core/class";
+import "../core/class";
 
 // 包装了 {}
 d3.map = function (object) {

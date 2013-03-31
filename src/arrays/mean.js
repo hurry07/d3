@@ -1,5 +1,4 @@
-import
-"../math/number";
+import "../math/number";
 
 /**
  * Given an array, this function calculates the mean of the array.
