@@ -22,47 +22,69 @@
 </div>
 <script type="text/javascript">
 
-    var w = 1280,
-            h = 800;
+    var w = 1280, h = 800;
 
-    var nodes = d3.range(200).map(function() {
-                return {radius: Math.random() * 12 + 4}; }),
-            color = d3.scale.category10();
+    // 随即产生一个数据数组
+    var nodes = d3.range(50).map(
+        function() {
+            return {
+                radius: Math.random() * 12 + 4,
+                test : 'aa'
+            };
+        }),
+    color = d3.scale.category10();
 
     var force = d3.layout.force()
-            .gravity(0.05)
-            .charge(function(d, i) { return i ? 0 : -2000; })
-            .nodes(nodes)
-            .size([w, h]);
+        .gravity(0.05)
+        .charge(
+            // 定义点给定点距离其他点的距离, 我猜
+            function(d, i) {
+                return i ? 0 : -1000;
+            })
+        .nodes(nodes)
+        .size([w, h]);
 
+    // 第一个点是 root
     var root = nodes[0];
     root.radius = 0;
     root.fixed = true;
 
     force.start();
 
-    var svg = d3.select("#body").append("svg:svg")
-            .attr("width", w)
-            .attr("height", h);
+    var svg = d3.select("#body")
+        .append("svg:svg")
+        .attr("width", w)
+        .attr("height", h);
 
+    // root 是不绑定的
     svg.selectAll("circle")
-            .data(nodes.slice(1))
-            .enter().append("svg:circle")
-            .attr("r", function(d) { return d.radius - 2; })
-            .style("fill", function(d, i) { return color(i % 3); });
+        .data(nodes.slice(1))
+        .enter()
+        .append("svg:circle")
+        .attr("r",
+            function(d) {
+                return d.radius - 2;
+            })
+        .style("fill",
+            function(d, i) {
+                return color(i % 3);
+            });
 
-    force.on("tick", function(e) {
-        var q = d3.geom.quadtree(nodes),
+    force.on("tick",
+        function(e) {
+            var q = d3.geom.quadtree(nodes),
                 i = 0,
                 n = nodes.length;
 
-        while (++i < n) {
-            q.visit(collide(nodes[i]));
-        }
+            // 比较当前节点同其他节点的相交情况
+            while (++i < n) {
+                q.visit(collide(nodes[i]));
+            }
 
-        svg.selectAll("circle")
-                .attr("cx", function(d) { return d.x; })
-                .attr("cy", function(d) { return d.y; });
+            // 改变所有圆的位置
+            svg.selectAll("circle")
+                    .attr("cx", function(d) { return d.x; })
+                    .attr("cy", function(d) { return d.y; });
     });
 
     svg.on("mousemove", function() {
@@ -74,16 +96,27 @@
 
     function collide(node) {
         var r = node.radius + 16,
+        // binding box
                 nx1 = node.x - r,
                 nx2 = node.x + r,
                 ny1 = node.y - r,
                 ny2 = node.y + r;
+
+        /**
+         *
+         * @param quad
+         * @param x1
+         * @param y1
+         * @param x2
+         * @param y2
+         */
         return function(quad, x1, y1, x2, y2) {
             if (quad.point && (quad.point !== node)) {
                 var x = node.x - quad.point.x,
                         y = node.y - quad.point.y,
                         l = Math.sqrt(x * x + y * y),
                         r = node.radius + quad.point.radius;
+                // 如果距离太近就分开
                 if (l < r) {
                     l = (l - r) / l * .5;
                     node.x -= x *= l;
@@ -92,6 +125,7 @@
                     quad.point.y += y;
                 }
             }
+            // 如果返回不相交, 那么所有这个节点的子节点将不会被遍历
             return x1 > nx2
                     || x2 < nx1
                     || y1 > ny2
