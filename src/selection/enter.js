@@ -2,8 +2,8 @@ import "../core/array";
 import "selection";
 
 function d3_selection_enter(selection) {
-  d3_arraySubclass(selection, d3_selection_enterPrototype);
-  return selection;
+    d3_arraySubclass(selection, d3_selection_enterPrototype);
+    return selection;
 }
 
 var d3_selection_enterPrototype = [];
@@ -11,6 +11,10 @@ var d3_selection_enterPrototype = [];
 d3.selection.enter = d3_selection_enter;
 d3.selection.enter.prototype = d3_selection_enterPrototype;
 
+/**
+ * enter 的 prototype 只有 4 个方法
+ * @type {Function}
+ */
 d3_selection_enterPrototype.append = d3_selectionPrototype.append;
 d3_selection_enterPrototype.insert = d3_selectionPrototype.insert;
 d3_selection_enterPrototype.empty = d3_selectionPrototype.empty;

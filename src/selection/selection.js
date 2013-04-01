@@ -13,7 +13,11 @@ d3_selectAll = function (s, n) {
     return n.querySelectorAll(s);
 },
 d3_selectRoot = d3_document.documentElement,
-d3_selectMatcher = d3_selectRoot.matchesSelector || d3_selectRoot.webkitMatchesSelector || d3_selectRoot.mozMatchesSelector || d3_selectRoot.msMatchesSelector || d3_selectRoot.oMatchesSelector,
+d3_selectMatcher = d3_selectRoot.matchesSelector
+    || d3_selectRoot.webkitMatchesSelector
+    || d3_selectRoot.mozMatchesSelector
+    || d3_selectRoot.msMatchesSelector
+    || d3_selectRoot.oMatchesSelector,
 d3_selectMatches = function (n, s) {
     return d3_selectMatcher.call(n, s);
 };
@@ -72,9 +76,7 @@ d3_selectionRoot[0].parentNode = d3_selectRoot;
 d3.select = function (selector) {
     return typeof selector === "string"
         ? d3_selectionRoot.select(selector)
-        : d3_selection([
-        [selector]
-    ]); // assume node
+        : d3_selection([[selector]]); // assume node
 };
 
 // TODO selectAll(function)
