@@ -96,29 +96,37 @@
             }).endAngle(function(d) {
                         return scaleHours(d.numeric % 12);
                     });
-            return clockGroup.selectAll(".clockhand").data(data).enter().append("svg:path").attr("d", function(d) {
-                if (d.unit === "seconds") {
-                    return secondArc(d);
-                } else if (d.unit === "minutes") {
-                    return minuteArc(d);
-                } else if (d.unit === "hours") {
-                    return hourArc(d);
-                }
-            }).attr("class", "clockhand").attr("stroke", "black").attr("stroke-width", function(d) {
+            return clockGroup.selectAll(".clockhand")
+                    .data(data)
+                    .enter()
+                    .append("svg:path")
+                    .attr("d", function(d) {
                         if (d.unit === "seconds") {
-                            return 2;
-                        } else if (d.unit === "minutes") {
-                            return 3;
-                        } else if (d.unit === "hours") {
-                            return 3;
+                            var t = secondArc(d);
+                            console.log(t);
+                                return t;
+                            } else if (d.unit === "minutes") {
+                                return minuteArc(d);
+                            } else if (d.unit === "hours") {
+                                return hourArc(d);
+                            }
                         }
-                    }).attr("fill", "none");
+                    )
+                    .attr("class", "clockhand").attr("stroke", "black").attr("stroke-width", function(d) {
+                                if (d.unit === "seconds") {
+                                    return 2;
+                                } else if (d.unit === "minutes") {
+                                    return 3;
+                                } else if (d.unit === "hours") {
+                                    return 3;
+                                }
+                            }).attr("fill", "none");
         };
 
         setInterval(function() {
             var data;
             data = fields();
-            console.log(data[2].numeric + ":" + data[1].numeric + ":" + data[0].numeric);
+            //console.log(data[2].numeric + ":" + data[1].numeric + ":" + data[0].numeric);
             return render(data);
         }, 1000);
 
