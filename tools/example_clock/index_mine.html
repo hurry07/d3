@@ -32,6 +32,12 @@
         Selection.prototype.select = function() {
             return this.root.selectAll('.' + this.style);
         }
+        /**
+         * controller
+         *
+         * @param selector
+         * @constructor
+         */
         function Widget(selector) {
             this.x = 0;
             this.y = 0;
