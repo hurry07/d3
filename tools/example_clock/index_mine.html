@@ -25,12 +25,62 @@
         offSetY = 100;
         pi = Math.PI;
 
-        var ClockDat = function() {
-            this.second = 0;
-            this.minute = 0;
-            this.hour = 0;
+        function Selection(root, style) {
+            this.root = root;
+            this.style = style;
+        }
+        Selection.prototype.select = function() {
+            return this.root.selectAll('.' + this.style);
+        }
+        function Widget(selector) {
+            this.x = 0;
+            this.y = 0;
+            this.selector = selector;
+            this.data = {};
+        }
+        Widget.prototype.bind = function(data) {
+            var context = this.selector.select().data([this.data]);
 
+            var widget = this;
+            context.enter().append('svg:g').attr('class', this.selector.style).each(function(d, i, nindex) {
+                widget.enterUI(this, d, i, nindex);
+            });
+            context.each(function(d, i, nindex) {
+                widget.updateUI(this, d, i, nindex);
+            });
+            context.exit().each(function(d, i, nindex) {
+                widget.exitUI(this, d, i, nindex);
+            });
+        }
+        Widget.prototype.enterUI = function(ui, index) {
+        }
+        Widget.prototype.updateUI = function(ui) {
+        }
+        Widget.prototype.exitUI = function(ui) {
+            d3.select(ui).remove();
+        }
+        Widget.enter = function(d, i, nindex) {
+            d.enterUI(this, d, i, nindex);
+        }
+        Widget.update = function(d, i, nindex) {
+            d.updateUI(this, d, i, nindex);
+        }
+        Widget.exit = function(d, i, nindex) {
+            d.exitUI(this, d, i, nindex);
+        }
+
+        console.log('Widget.enter', Widget.enter);
+
+        var ClockDat = function(root) {
+            Widget.apply(this, arguments);
+            this.update();
+        }
+        ClockDat.prototype = Object.create(Widget.prototype);
+        ClockDat.prototype.constructor = ClockDat;
+
+        ClockDat.prototype.update = function() {
             this.updateTime();
+            this.bind(this.data);
         }
         ClockDat.prototype.updateTime = function() {
             var currentTime, data, hour, minute, second;
@@ -39,42 +89,41 @@
             minute = currentTime.getMinutes();
             hour = currentTime.getHours() + minute / 60;
 
-            this.second = second;
-            this.minute = minute;
-            this.hour = hour;
+            var data = this.data;
+            data.second = second;
+            data.minute = minute;
+            data.hour = hour;
         }
-        ClockDat.prototype.update = function() {
-            this.updateTime();
-            this.updateUI();
-        }
-        ClockDat.prototype.updateUI = function() {
-            this.secondSelect.attr('d', this.secondD(this.second));
-            this.minuteSelect.attr('d', this.minuteD(this.minute));
-            this.hourSelect.attr('d', this.hourD(this.hour));
+        ClockDat.prototype.updateUI = function(g, d) {
+            var sel = d3.select(g);
+            sel.select('.clocksec').attr('d', this.secondD(d.second));
+            sel.select('.clockmin').attr('d', this.minuteD(d.minute));
+            sel.select('.clockhour').attr('d', this.hourD(d.hour));
         }
         ClockDat.prototype.destroyUI = function() {
         }
-        ClockDat.prototype.initUI = function(g) {
-            console.log('initUI', this, arguments);
+        ClockDat.prototype.enterUI = function(g, d) {
+            console.log('enterUI', this, arguments);
 
             var selection = d3.select(g);
-            this.secondSelect = selection.append('svg:path').attr('d', this.secondD(this.second))
-                    .attr("fill", "none").attr("stroke", "black").attr("stroke-width", 2);
-            this.minuteSelect = selection.append('svg:path').attr('d', this.minuteD(this.minute))
-                    .attr("fill", "none").attr("stroke", "black").attr("stroke-width", 3);
-            this.hourSelect = selection.append('svg:path').attr('d', this.hourD(this.hour))
-                    .attr("fill", "none").attr("stroke", "black").attr("stroke-width", 3);
+
+            selection.append('svg:path').attr('d', this.secondD(d.second))
+                    .attr("fill", "none").attr("stroke", "black").attr("stroke-width", 2).attr("class", "clocksec");
+            selection.append('svg:path').attr('d', this.minuteD(d.minute))
+                    .attr("fill", "none").attr("stroke", "black").attr("stroke-width", 3).attr("class", "clockmin");
+            selection.append('svg:path').attr('d', this.hourD(d.hour))
+                    .attr("fill", "none").attr("stroke", "black").attr("stroke-width", 3).attr("class", "clockhour");
 
             selection.append("svg:circle")
                     .attr("r", 80)
                     .attr("fill", "none")
-                    .attr("class", "clock outercircle")
+                    .attr("class", "outercircle")
                     .attr("stroke", "black")
                     .attr("stroke-width", 2);
             selection.append("svg:circle")
                     .attr("r", 4)
                     .attr("fill", "black")
-                    .attr("class", "clock innercircle");
+                    .attr("class", "innercircle");
         }
         ClockDat.prototype.secondD = function() {
             var scale = d3.scale.linear()
@@ -122,19 +171,9 @@
             return arc;
         }();
 
-        var clock = new ClockDat();
-
-        function customer(d, i, nindex) {
-            d.initUI(this);
-        }
-
         var svg = d3.selectAll(".chart").append("svg:svg").attr("width", width).attr("height", height);
-        svg.selectAll(".clockhand")
-                .data([clock])
-                .enter()
-                .append("svg:g")
-                .attr("transform", "translate(" + offSetX + "," + offSetY + ")")
-                .each(customer);
+        var root = svg.append("svg:g").attr("transform", "translate(" + offSetX + "," + offSetY + ")").attr('class', 'clock11');
+        var clock = new ClockDat(new Selection(root, 'clock'));
 
         setInterval(function() {
             clock.update();

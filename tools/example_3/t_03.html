@@ -220,6 +220,10 @@
                     .attr("x", function(d) { return x(d[age]) - 3; })
                     .text(function(d) { return format(d[age]); });
 
+            bar.exit().each(function() {
+                console.log('bar.exit', this, arguments);
+            });
+
             var barExit = d3.transition(bar.exit())
                     .attr("transform", function(d) { return "translate(0," + (d.y0 + height) + ")"; })
                     .style("fill-opacity", 0)
