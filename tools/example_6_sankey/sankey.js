@@ -18,14 +18,28 @@ d3.sankey = function () {
         return sankey;
     };
 
+    /**
+     * 为了支持 . 语法, 所以需要返回 sankey
+     *
+     * @param _
+     * @returns {*}
+     */
     sankey.nodes = function (_) {
-        if (!arguments.length) return nodes;
+        if (!arguments.length)
+            return nodes;
         nodes = _;
         return sankey;
     };
 
+    /**
+     * 设置或者获得 links
+     *
+     * @param _
+     * @returns {*}
+     */
     sankey.links = function (_) {
-        if (!arguments.length) return links;
+        if (!arguments.length)
+            return links;
         links = _;
         return sankey;
     };
@@ -50,9 +64,19 @@ d3.sankey = function () {
         return sankey;
     };
 
+    /**
+     * 返回一个可以建立连接的函数
+     *
+     * @returns {Function}
+     */
     sankey.link = function () {
         var curvature = .5;
 
+        /**
+         * 建立连接
+         * @param d
+         * @returns {string}
+         */
         function link(d) {
             var x0 = d.source.x + d.source.dx,
                 x1 = d.target.x,
@@ -67,9 +91,16 @@ d3.sankey = function () {
                 + " " + x1 + "," + y1;
         }
 
+        /**
+         * 提供一个可以操作闭包的函数
+         *
+         * @param _
+         * @returns {*}
+         */
         link.curvature = function (_) {
-            if (!arguments.length) return curvature;
-            curvature = +_;
+            if (!arguments.length)
+                return curvature;
+                curvature = +_;
             return link;
         };
 

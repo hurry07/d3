@@ -6,7 +6,8 @@ d3_selectionPrototype.selectAll = function (selector) {
         subgroup,
         node;
 
-    if (typeof selector !== "function") selector = d3_selection_selectorAll(selector);
+    if (typeof selector !== "function")
+        selector = d3_selection_selectorAll(selector);
 
     for (var j = -1, m = this.length; ++j < m;) {
         for (var group = this[j], i = -1, n = group.length; ++i < n;) {

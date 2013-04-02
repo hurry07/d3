@@ -1,19 +1,14 @@
 import "selection";
 
-/**
- * @param selector 选择函数
- * @returns {*}
- */
 d3_selectionPrototype.select = function (selector) {
     var subgroups = [],
         subgroup,
-        subnode,
-        group,
-        node;
+        subnode,// 新建立的节点
+        group,// 当前集合中的一个元素
+        node;// 元素中的一个节点
 
-    if (typeof selector !== "function") {
+    if (typeof selector !== "function")
         selector = d3_selection_selector(selector);
-    }
 
     for (var j = -1, m = this.length; ++j < m;) {
         subgroups.push(subgroup = []);
@@ -21,9 +16,8 @@ d3_selectionPrototype.select = function (selector) {
         for (var i = -1, n = group.length; ++i < n;) {
             if (node = group[i]) {
                 subgroup.push(subnode = selector.call(node, node.__data__, i));
-                if (subnode && "__data__" in node) {
+                if (subnode && "__data__" in node)
                     subnode.__data__ = node.__data__;
-                }
             } else {
                 subgroup.push(null);
             }
