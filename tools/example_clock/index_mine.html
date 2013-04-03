@@ -178,8 +178,7 @@
         }();
 
         var svg = d3.selectAll(".chart").append("svg:svg").attr("width", width).attr("height", height);
-        var root = svg.append("svg:g").attr("transform", "translate(" + offSetX + "," + offSetY + ")").attr('class', 'clock11');
-        var clock = new ClockDat(new Selection(root, 'clock'));
+        var clock = new ClockDat(new Selection(svg.append("svg:g").attr("transform", "translate(" + offSetX + "," + offSetY + ")").attr('class', 'clock11'), 'clock'));
 
         setInterval(function() {
             clock.update();
