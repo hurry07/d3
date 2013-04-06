@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+         "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+<svg width="300" height="250">
+<circle cx="150" cy="70" r="40" fill="none" stroke="black"/>
+<text x="150" y="65" style="text-anchor:middle">Graphic
+<tspan x="150" dy="1.5em">Objects</tspan></text>
+<circle cx="50" cy="170" r="40" fill="none" stroke="black"/>
+<text x="50" y="175" style="text-anchor:middle">shapes</text>
+<circle cx="150" cy="170" r="40" fill="none" stroke="black"/>
+<text x="150" y="175" style="text-anchor:middle">images</text>
+<circle cx="250" cy="170" r="40" fill="none" stroke="black"/>
+<text x="250" y="175" style="text-anchor:middle">text</text>
+<path d="M50 130v-10 h200 v10 M150 130 v-20" style="fill:none;stroke:black"/>
+</svg>

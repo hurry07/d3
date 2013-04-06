@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+         "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+<svg width="800" height="450" onload="init(evt)">
+<defs>
+<g id="picture">
+<image id="source" x="0" y="0" width="400" height="400" xlink:href="puzzle.jpg"/>
+</g>
+<g id="clips">
+</g>
+</defs>
+<script type="text/ecmascript" xlink:href="clip_paths.js" />
+<script type="text/ecmascript"><![CDATA[
+var svgdoc="",xd1,xd2,yd1,yd2,num;
+var click_piece=false,cible="";
+var size=5,nb_pieces=25,large=80,nb_trials=0;
+var played=new Array();
+
+function init(evt)
+{svgdoc=evt.getTarget().ownerDocument();
+large=Math.round(400/size);nb_pieces=size*size;
+create_pieces(evt);
+distribution(evt);
+}
+
+function solution(evt)
+{for (i=1;i<=nb_pieces;i++)
+{node = svgdoc.getElementById("tile"+i.toString());
+node.setAttribute("transform","translate(0,0)");
+}
+}
+
+function distribution(evt)
+{var place_allowed=new Array();
+for (i=0;i<size;i++)
+{for (j=0;j<size;j++) {place_allowed[i+size*j]=0}};
+for (i=1;i<=nb_pieces;i++) {played[i]=0};
+for (i=0;i<size;i++)
+{for (j=0;j<size;j++) 
+{while (place_allowed[i+size*j]==0)
+{k=1+Math.floor(nb_pieces*Math.random());
+if (played[k]<1) {played[k]=played[k]+1;place_allowed[i+size*j]=k}};
+line=Math.floor((k-1)/size);row=k-1-size*line;
+dx=400-large*(line-i);dy=large*(j-row);
+transfo="translate("+dx.toString()+","+dy.toString()+")";
+node = svgdoc.getElementById("tile"+k.toString());
+node.setAttribute("transform",transfo);
+}}
+for (i=1;i<=nb_pieces;i++) {played[i]=0};
+nb_trials=0;
+node=svgdoc.getElementById("trials");
+child=node.getFirstChild();
+child.setData(nb_trials)
+}
+
+function create_pieces(evt)
+{
+contents = svgdoc.getElementById ('clips');
+contents2 = svgdoc.getElementById ('pieces');
+k=-1;
+for (i=0;i<size;i++)
+{for (j=0;j<size;j++)
+{k+=1;
+node=svgdoc.createElement("clipPath");
+identif="clip_path"+(1+i+size*j).toString();
+node.setAttribute("id",identif);
+contents.appendChild(node);
+node2=svgdoc.createElement("path"); 
+node2.setAttribute("d",chemin[k]);
+node.appendChild(node2);
+node=svgdoc.createElement("use");
+node.setAttribute("id","tile"+(1+i+size*j).toString());
+node.setAttribute("transform","translate(400,0)");
+identif="url(#clip_path"+(1+i+size*j).toString()+")";
+node.setAttribute("clip-path",identif);
+node.setAttributeNS('http://www.w3.org/2000/xlink/namespace/',"xlink:href","#picture");
+contents2.appendChild(node);
+}};
+}
+
+
+function mouse_up(evt)
+{click_piece=false}
+
+function mouse_down(evt)
+{if (click_piece==false)
+{cible=evt.getTarget().getAttribute("id");
+click_piece=true;nb_trials+=1;
+node=svgdoc.getElementById("trials");
+child=node.getFirstChild();
+child.setData(nb_trials);
+xm=evt.getClientX();
+ym=evt.getClientY();
+num=parseInt(cible.substring(4,cible.length));
+objet=svgdoc.getElementById("tile"+num.toString());
+transfo=new String(objet.getAttribute("transform"));
+posi2=transfo.lastIndexOf(",");
+tranx=transfo.substring(10,posi2);
+xd1=parseInt(tranx,10); 
+longueur=transfo.length-1;
+trany=transfo.substring(posi2+1,longueur);
+yd1=parseInt(trany,10);
+xd2=xm;yd2=ym}}
+
+function mouse_move(evt)
+{xm=evt.getClientX();ym=evt.getClientY();
+if (click_piece==true)
+{depx=xm+xd1-xd2;depy=ym+yd1-yd2;
+if ((Math.abs(depx)<5)&&(Math.abs(depy)<5))
+{depx=0;depy=0;played[num]=1} else {played[num]=0};
+transfo="translate("+depx+","+depy+")";
+node = svgdoc.getElementById("tile"+num.toString());
+node.setAttribute("transform",transfo)}}
+
+function bilan(evt)
+{var win_game=true;
+for (i=1;i<=nb_pieces;i++)
+{if (played[i]==0) {win_game=false}};
+if (win_game==true)
+{alert("You win in "+nb_trials+" trials")}
+else
+{alert("It's not finished!")}}
+
+]]></script>
+<rect x="0" y="0" width="800" height="450" fill="green" opacity="0.3"/>
+<rect x="10" y="410" width="100" height="20" style="fill:white"/>
+<text x="60" y="425" style="text-anchor:middle;font-size:15;font-family:Arial;fill:red">Result</text>
+<rect x="10" y="410" onclick="bilan(evt)" width="100" height="20" style="fill:green;fill-opacity:0"/>
+<rect x="120" y="410" width="120" height="20" style="fill:white"/>
+<text x="180" y="425" style="text-anchor:middle;font-size:15;font-family:Arial;fill:red">New game</text>
+<rect x="120" y="410" onclick="distribution(evt)" width="120" height="20" style="fill:green;fill-opacity:0"/>
+<rect x="250" y="410" width="120" height="20" style="fill:white"/>
+<text x="310" y="425" style="text-anchor:middle;font-size:15;font-family:Arial;fill:red">Solution</text>
+<rect x="250" y="410" onclick="solution(evt)" width="120" height="20" style="fill:green;fill-opacity:0"/>
+<text x="450" y="425" style="text-anchor:left;font-size:15;font-family:Arial;fill:black">Trials: </text>
+<text id="trials" x="580" y="425" style="text-anchor:right;font-size:15;font-family:Arial;fill:black">0</text>
+<g onmouseup="mouse_up(evt)">
+<use opacity="0.3" xlink:href="#picture"/>
+<g id="pieces" onmousemove="mouse_move(evt)" onmousedown="mouse_down(evt)">
+</g>
+</g>
+</svg>

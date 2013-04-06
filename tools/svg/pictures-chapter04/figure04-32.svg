@@ -1,0 +1,33 @@
+<svg width="800" height="400" viewBox="0 0 400 200" onload="SetMarkers(evt)">
+  <defs>
+    <g id="vertex">
+      <path stroke="black" d="M0-2.5 0-5 M0,2.5, 0,5" />
+      <circle r="2.5" stroke="black" fill="none"/>
+    </g>
+  </defs>
+  <path id="contour"
+        d="M10,60 L10,30 L20,20 Q40,0 60,20 T100,20 L110,30 L110,60 Z"
+        stroke="blue" fill="lightgray" stroke-linecap="round" />
+  <script><![CDATA[
+    function SetMarkers(evt)
+    {
+       var path = evt.target.ownerDocument.getElementById("contour"),
+           pathLength = path.getTotalLength(),
+           point = null,
+           use = null,
+           n = 15;
+
+       for (var i=0; i<n; i++)
+       {
+          point = path.getPointAtLength(i/n*pathLength);
+          use = evt.target.ownerDocument.createElement("use");
+          use.setAttributeNS("http://www.w3.org/1999/xlink", "href",
+                             "#vertex");
+          use.setAttribute("x", point.x);
+          use.setAttribute("y", point.y);
+          evt.target.ownerDocument.documentElement.appendChild(use);
+       }
+    }
+  ]]></script> 
+</svg>
+

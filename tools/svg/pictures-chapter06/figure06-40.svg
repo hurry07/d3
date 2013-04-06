@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?> 
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+         "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+   <svg width="600" height="400">
+      <defs>
+         <polygon id="e0" fill="navy" points="0,0 200,0 100,-200" />
+      </defs>
+      <use xlink:href="#e0" transform="translate(200,300)" />
+   </svg>
+

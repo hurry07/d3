@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+         "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+<svg width='200' height='200' onload="init(evt)">
+<script><![CDATA[
+var text_data='SVG';
+var svgdoc="";
+
+function init(evt)
+{svgdoc=evt.target.ownerDocument;
+node=svgdoc.createElement("text");
+node.setAttribute("x","100");node.setAttribute("y","100");
+node.setAttribute("style","visibility:hidden;text-anchor:middle;font-size:80;font-family:Arial;fill:black");
+node.setAttribute("id","texte");
+texte=svgdoc.createTextNode(text_data);
+node.appendChild(texte);
+where=svgdoc.getElementById('word');
+where.appendChild(node);
+objet=svgdoc.getElementById('texte');
+for (i=0;i<text_data.length;i++)
+{f=objet.getExtentOfChar(i);
+str="\n<text x='"
++(-f.width/2)
++"' y='0' style='text-anchor:left;font-weight:bold;font-size:80;font-family:Verdana;fill:red;stroke:black;' transform='translate("
++(f.x+f.width/2)
++","
++(f.y+f.height)
++") scale(1,1)' startOffset='0'>\n"
++text_data.substring(i,i+1)
++"\n<animateTransform attributeName='transform' type='scale' additive='sum' values='1,1;0,1;-1,1;0,1;1,1' begin='go.click' repeatCount='1' dur='5s'/>"
++"\n<animateColor attributeName='fill' values='red;gray;gray;gray;red' begin='go.click' repeatCount='1' dur='5s'/>\n</text>\n"
+svg_frag=parseXML(str,svgdoc);
+where.appendChild(svg_frag);
+}};
+  
+]]></script>
+<rect id='contour' x='0' y='0' width='200' height='200' style='stroke:green;fill:yellow'/>
+<g id='word'>
+</g>
+<rect x="10" y="180" width="50" height="18" fill="black"/>
+<text x="35" y="195" style="text-anchor:middle;font-weight:bold;font-size:15;font-family:Arial;fill:white;stroke:black">
+GO</text>
+<rect id="go" x="10" y="180" width="50" height="18" opacity="0.1"/>
+</svg>

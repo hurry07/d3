@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+         "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+<svg width="800" height="600" viewBox="0 0 800 600">
+<defs>
+<filter id='MyFilter1' filterUnits='objectBoundingBox' x='0%' y='0%' width='100%' height='100%'>
+    <feComponentTransfer>
+     <feFuncR type='identity'/>
+     <feFuncG type='identity'/>
+     <feFuncB type='identity'/>
+     <feFuncA type='linear' slope='0.5' intercept='0'/>
+  </feComponentTransfer>
+</filter>
+<filter id='MyFilter2' filterUnits='objectBoundingBox' x='0%' y='0%' width='100%' height='100%'>
+    <feComponentTransfer>
+     <feFuncR type='identity'/>
+     <feFuncG type='gamma' amplitude='0' exponent='1' offset='0'/>
+     <feFuncB type='gamma' amplitude='0' exponent='1' offset='0'/>
+     <feFuncA type='identity'/>
+    </feComponentTransfer>
+</filter>
+<filter id='MyFilter3' filterUnits='objectBoundingBox' x='0%' y='0%' width='100%' height='100%'>
+    <feComponentTransfer>
+     <feFuncR type='table' tableValues='0 0 1 1'/>
+     <feFuncG type='table' tableValues='0 1 0 1'/>
+     <feFuncB type='table' tableValues='0 1 1 0'/>
+     <feFuncA type='identity'/>
+    </feComponentTransfer>
+</filter>
+<filter id='MyFilter4' filterUnits='objectBoundingBox' x='0%' y='0%' width='100%' height='100%'>
+    <feComponentTransfer>
+     <feFuncR type='linear' slope='1.5' intercept='0'/>
+     <feFuncG type='linear' slope='1.5' intercept='0'/>
+     <feFuncB type='linear' slope='1.5' intercept='0'/>
+     <feFuncA type='identity'/>
+    </feComponentTransfer>
+</filter>
+<filter id='MyFilter5' filterUnits='objectBoundingBox' x='0%' y='0%' width='100%' height='100%'>
+     <feComponentTransfer>
+     <feFuncR type='linear' slope='.5' intercept='0'/>
+     <feFuncG type='linear' slope='.5' intercept='0'/>
+     <feFuncB type='linear' slope='.5' intercept='0'/>
+     <feFuncA type='identity'/>
+    </feComponentTransfer>
+</filter>
+<image id="MyImage" width='200' height='200' xlink:href='pie.svgz'/>
+</defs>
+<rect x="0" y="0" width="800" height="600" style="fill:white;stroke:black;fill-opacity:0.5"/>
+<text x="400" y="35" style="text-anchor:middle;font-size:30">
+feComponentTransfer</text>
+<use x="100" y="50" xlink:href='#MyImage'/>
+<use x="310" y="50" filter='url(#MyFilter1)' xlink:href='#MyImage'/>
+<use x="520" y="50" filter='url(#MyFilter2)' xlink:href='#MyImage'/>
+<use x="100" y="290" filter='url(#MyFilter3)' xlink:href='#MyImage'/>
+<use x="310" y="290" filter='url(#MyFilter4)' xlink:href='#MyImage'/>
+<rect x="520" y="290" width="200" height="200" fill="white"/>
+<use x="520" y="290" filter='url(#MyFilter5)' xlink:href='#MyImage'/>
+<text x="200" y="275" style="text-anchor:middle;font-size:15">
+original picture</text>
+<text x="410" y="275" style="text-anchor:middle;font-size:15">
+alpha linear slope : 0.6</text>
+<text x="620" y="275" style="text-anchor:middle;font-size:15">
+GB gamma amplitude=0</text>
+<text x="200" y="515" style="text-anchor:middle;font-size:15">
+RGB tables 0011 0101 0110</text>
+<text x="410" y="515" style="text-anchor:middle;font-size:15">
+RGB linear slope=1.5</text>
+<text x="620" y="515" style="text-anchor:middle;font-size:15">
+RGB linear slope=0.5</text>
+</svg>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?> 
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+     <pattern id="postBore" height="20" patternUnits="userSpaceOnUse">
+       <rect width="12" height="20" stroke="none" fill="steelblue" />
+       <circle cx="6" cy="10" r="2" stroke="none" fill="lightgray" />
+     </pattern>
+     <g id="pallet" stroke="black" stroke-width="0.2" fill="tan" >
+       <defs>
+         <rect id="block" width="16" height="12" />
+       </defs>
+       <rect x="-66"   y="-15" width="132" height="3" />
+       <use xlink:href="#block" x="-66" y="-12" />
+       <use xlink:href="#block" x="-8" y="-12" />
+       <use xlink:href="#block" x="50" y="-12" />
+     </g>
+     <g id="load">
+        <use xlink:href="#pallet" />
+        <rect x="-66" y="-85" width="132" height="70" stroke="black" stroke-width="1" />
+     </g>
+     <g id="uprightPost" stroke="black" stroke-width="0.2" >
+        <rect width="12" height="300" fill="url(#postBore)" />
+     </g>
+     <g id="beam" stroke="black" stroke-width="0.2" fill="steelblue" >
+        <rect x="3" y="0" width="278" height="10" />
+        <rect x="0" y="0" width="3"   height="20" />
+        <rect x="281" y="0" width="3" height="20" />
+     </g>
+     <g id="column">
+       <use xlink:href="#uprightPost" />
+       <use xlink:href="#beam" x="14" y="0" />
+       <use xlink:href="#beam" x="14" y="100" />
+       <use xlink:href="#beam" x="14" y="200" />
+     </g>
+     <g id="rack">
+       <use xlink:href="#column" x="0" y="0" />
+       <use xlink:href="#column" x="300" y="0" />
+       <use xlink:href="#uprightPost" x="600" y="0" />
+       <line x1="-50" y1="301" x2="650" y2="301" stroke="black" fill="none" />
+       <rect x="-50" y="302" width="700" height="8" stroke="none" fill="lightgray" />
+     </g>
+  </defs>
+  <g transform="translate(100,150)" >
+    <use xlink:href="#rack" x="-14" y="0" />
+    <use xlink:href="#load" x="71" y="300" fill="tomato" />
+    <use xlink:href="#load" x="371" y="0" fill="tomato" />
+    <use xlink:href="#load" x="513" y="200" fill="tomato" />
+  </g>
+</svg>

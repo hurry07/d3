@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<svg width="800" height="400" onload="Init(evt)">
+  <script type="text/ecmascript">
+  <![CDATA[
+    var pendulum = null,
+        pendulumLen = 200,
+        g = 9.81 * 1000,
+        amplitude = 60,
+        t = 0;
+    function window.parent.Animate()
+    {
+       t = t + 0.01;
+       var teta = amplitude*Math.cos(Math.sqrt(g/pendulumLen)*t);
+       pendulum.setAttribute("transform", "translate(400,50) rotate(" + teta + ")");
+       if (window.parent.active)
+          window.setTimeout("window.Animate()", 1);
+    }
+    function Init(evt)
+    {
+       pendulum = evt.getTarget().getOwnerDocument().getElementById("pendulum");
+       window.parent.active = false;
+       window.parent.Animate();
+    }
+  ]]>
+  </script> 
+  <defs>
+    <g id="pendulumGroup">
+       <line x1="0" y1="0" x2="0" y2="200" stroke="blue" stroke-width="5" 
+             stroke-linecap="round" />
+       <circle cx="0" cy="200" r="20" stroke="blue" stroke-width="5" fill="lightgray" />
+    </g>
+  </defs>
+  <rect width="800" height="400" fill="white" />
+  <use id="pendulum" xlink:href="#pendulumGroup" transform="translate(400,50) rotate(0)" />
+  <circle cx="400" cy="50" r="5" stroke="blue" stroke-width="3" fill="lightgray" />
+</svg>

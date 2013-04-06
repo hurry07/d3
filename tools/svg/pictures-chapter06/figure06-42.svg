@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?> 
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+         "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+   <svg width="600" height="400">
+<defs>
+         <polygon id="e0" fill="navy" points="0,0 200,0 100,-200" />
+         <g id="e1">
+            <use xlink:href="#e0" transform="translate(0,0)     scale(0.5)" />
+            <use xlink:href="#e0" transform="translate(100,0)   scale(0.5)" />
+            <use xlink:href="#e0" transform="translate(50,-100) scale(0.5)" />
+         </g>
+         <g id="e2">
+           <use xlink:href="#e1" transform="translate(0,0)     scale(0.5)" />
+           <use xlink:href="#e1" transform="translate(100,0)   scale(0.5)" />
+           <use xlink:href="#e1" transform="translate(50,-100) scale(0.5)" />
+         </g>
+         <g id="e3">
+           <use xlink:href="#e2" transform="translate(0,0)     scale(0.5)" />
+           <use xlink:href="#e2" transform="translate(100,0)   scale(0.5)" />
+           <use xlink:href="#e2" transform="translate(50,-100) scale(0.5)" />
+         </g>
+         <g id="e4">
+           <use xlink:href="#e3" transform="translate(0,0)     scale(0.5)" />
+           <use xlink:href="#e3" transform="translate(100,0)   scale(0.5)" />
+           <use xlink:href="#e3" transform="translate(50,-100) scale(0.5)" />
+         </g>
+         <g id="e5">
+           <use xlink:href="#e4" transform="translate(0,0)     scale(0.5)" />
+           <use xlink:href="#e4" transform="translate(100,0)   scale(0.5)" />
+           <use xlink:href="#e4" transform="translate(50,-100) scale(0.5)" />
+         </g>
+      </defs>
+      <use xlink:href="#e5" transform="translate(200,300)" />
+   </svg>
+

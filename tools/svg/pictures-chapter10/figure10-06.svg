@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?> 
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" onload="Init(evt);">
+  <script type="text/ecmascript" xlink:href="RemoveWhiteSpace.js"/>
+  <script type="text/ecmascript">
+  <![CDATA[
+    function Init(evt)
+    {
+       RemoveWhiteSpaceChildNodesOf(evt.target.ownerDocument.documentElement);
+       var engine = evt.target.ownerDocument.getElementById("engine");
+
+       FindTrailer2ByAttribute(engine);
+       MakeGreenBoxGolden(engine);
+       ChangeAToY(engine);
+       RemoveCoils(engine);
+       MoveBoxAndLetterAndCreateDefectWagonAndPyramid(engine);
+    }
+
+    function FindTrailer2ByAttribute(engine)
+    {
+       var groups = engine.ownerDocument.getElementsByTagName("g");
+       var wagon = null;  // null as long as you didn't find it ..
+       var currentGroup = null;   // .. used in loop ..
+
+       for (var i=0; wagon == null && i < groups.length; i++)
+       {
+          currentGroup = groups.item(i);
+          if (currentGroup.getAttribute("id") == "wagon2") // found :-) 
+             wagon = currentGroup;
+       }
+       if (wagon != null)
+          window.alert("group found with id: " + wagon.getAttribute("id"));
+       else
+          window.alert("no group found with id 'wagon2'");
+    }
+  
+    function MakeGreenBoxGolden(engine)
+    {
+       var greenBox       = engine.lastChild,
+           greenBoxHeight = parseFloat(greenBox.getAttribute("height")),
+           greenBoxY      = parseFloat(greenBox.getAttribute("y"));
+
+       greenBox.setAttribute("height", 2*greenBoxHeight);
+       greenBox.setAttribute("y", greenBoxY - greenBoxHeight);
+       greenBox.setAttribute("fill", "gold");
+    }
+     
+    function ChangeAToY(engine)
+    {
+       var wagon2 = engine.ownerDocument.getElementById("wagon2");
+       var texts = wagon2.getElementsByTagName("text");
+
+       if (texts.length > 0) // ok, it must be our 'A' ..
+       {
+          var letter = texts.item(0).firstChild;
+          letter.nodeValue = "Y";
+       }
+    }
+     
+     function RemoveCoils(engine)
+     {
+       var wagon1 = engine.ownerDocument.getElementById("wagon1");
+
+       wagon1.removeChild(wagon1.lastChild); // remove blue coil ..
+       wagon1.removeChild(wagon1.lastChild); // remove red coil ..
+       var letterY = engine.ownerDocument.getElementById("wagon2").firstChild.nextSibling;
+       letterY.removeAttribute("fill");          // remove purple paper ..
+     }
+
+     function MoveBoxAndLetterAndCreateDefectWagonAndPyramid(engine)
+     {
+        var wagon1 = engine.ownerDocument.getElementById("wagon1"),
+            wagon2 = engine.ownerDocument.getElementById("wagon2");
+
+        wagon1.appendChild(wagon2.lastChild);
+        wagon1.appendChild(wagon2.lastChild);
+
+        var defectWagon = wagon2.cloneNode(true);
+        defectWagon.setAttribute("transform", "translate(0,-35)");
+
+        var pyramid = engine.ownerDocument.createElement("polygon");
+        pyramid.setAttribute("points", "5,-10 145,-10 75,-100");
+        pyramid.setAttribute("fill", "olive");
+        defectWagon.appendChild(pyramid);
+
+        wagon2.appendChild(defectWagon);
+   }
+  ]]>
+  </script>
+  <defs>
+    <g id="carriage">
+       <line x2="150" y2="0" stroke="gray" stroke-width="10" stroke-linecap="round" />
+       <circle cx="20" cy="17" r="10" fill="lightgray" stroke="black" />
+       <circle cx="130" cy="17" r="10" fill="lightgray" stroke="black" />
+    </g>
+  </defs>
+  <g id="train">
+    <g id="engine" transform="translate(390, 300)" >
+      <use xlink:href="#carriage" x="0" y="0" />
+      <polyline id="cabin" points="150,0 150,-60 90,-50 90,0" 
+                 stroke="gray" stroke-width="10" stroke-linejoin="round" fill="gray" />
+      <rect x="10" y="-90" width="70" height="80" fill="darkgreen" stroke="black" />
+    </g>
+    <g id="wagon1" transform="translate(220,300)">
+      <use xlink:href="#carriage" x="0" y="0" />
+      <circle cx="40" cy="-42" r="20" stroke="darkred" stroke-width="30" fill="none" />
+      <circle cx="110" cy="-42" r="20" stroke="steelblue" stroke-width="30" fill="none" />
+    </g>
+    <g id="wagon2" transform="translate(50,300)">
+      <use xlink:href="#carriage" x="0" y="0" />
+      <text x="5" y="-10" font-family="Verdana" font-size="120" fill="purple" >A</text>
+      <rect id="bluebox" x="90" y="-100" width="60" height="90" fill="navy" stroke="black" />
+    </g>
+  </g>
+</svg>

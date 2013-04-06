@@ -1,0 +1,28 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+	"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<svg width="600" height="200" viewBox="0 220 600 200">
+<text text-rendering="auto" x="300" y="250" style="font-size:25;text-anchor:middle">text-rendering</text>
+<g transform="translate(0,-70)">
+  <text text-rendering="auto" x="300" y="350" style="font-size:15;text-anchor:middle">filled</text>
+  <text text-rendering="auto" x="30" y="370" style="font-size:20;text-anchor:middle">auto</text>
+  <text text-rendering="optimizeSpeed" x="140" y="370" style="font-size:20;text-anchor:middle">optimizeSpeed</text>
+  <text text-rendering="optimizeLegibility" x="300" y="370" style="font-size:20;text-anchor:middle">optimizeLegibility</text>
+  <text text-rendering="geometricPrecision" x="490" y="370" style="font-size:20;text-anchor:middle">geometricPrecision</text>
+</g>
+<g transform="translate(0,10)" stroke="black">
+  <text text-rendering="auto" x="300" y="350" style="font-size:15;text-anchor:middle">stroked and filled</text>
+  <text text-rendering="auto" x="30" y="370" style="font-size:20;text-anchor:middle">auto</text>
+  <text text-rendering="optimizeSpeed" x="140" y="370" style="font-size:20;text-anchor:middle">optimizeSpeed</text>
+  <text text-rendering="optimizeLegibility" x="300" y="370" style="font-size:20;text-anchor:middle">optimizeLegibility</text>
+  <text text-rendering="geometricPrecision" x="490" y="370" style="font-size:20;text-anchor:middle">geometricPrecision</text>
+</g>
+<g transform="translate(0,-30)" stroke="black" fill="none">
+  <text text-rendering="auto" x="300" y="350" style="font-size:15;text-anchor:middle">stoked</text>
+  <text text-rendering="auto" x="30" y="370" style="font-size:20;text-anchor:middle">auto</text>
+  <text text-rendering="optimizeSpeed" x="140" y="370" style="font-size:20;text-anchor:middle">optimizeSpeed</text>
+  <text text-rendering="optimizeLegibility" x="300" y="370" style="font-size:20;text-anchor:middle">optimizeLegibility</text>
+  <text text-rendering="geometricPrecision" x="490" y="370" style="font-size:20;text-anchor:middle">geometricPrecision</text>
+</g>
+</svg>
+	

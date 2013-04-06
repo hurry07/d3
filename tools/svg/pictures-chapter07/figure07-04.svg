@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+         "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+<svg width="640" height="220" viewBox="-20 -20 640 220">
+<defs>
+        <linearGradient id="MyGradient1">
+            <stop offset="0%" stop-color="red"/>
+            <stop offset="100%" stop-color="yellow"/>
+        </linearGradient>
+        <linearGradient id="MyGradient2">
+            <stop offset="20%" stop-color="red"/>
+            <stop offset="80%" stop-color="yellow"/>
+        </linearGradient>
+        <linearGradient id="MyGradient3">
+            <stop offset="30%" stop-color="red"/>
+            <stop offset="70%" stop-color="yellow"/>
+        </linearGradient>
+        <linearGradient id="MyGradient4">
+            <stop offset="50%" stop-color="red"/>
+            <stop offset="50%" stop-color="yellow"/>
+        </linearGradient>
+</defs>
+<rect x="0" y="0" width="150" height="150" style="fill:url(#MyGradient1)"/>
+<rect x="150" y="0" width="150" height="150" style="fill:url(#MyGradient2)"/>
+<rect x="300" y="0" width="150" height="150" style="fill:url(#MyGradient3)"/>
+<rect x="450" y="0" width="150" height="150" style="fill:url(#MyGradient4)"/>
+<text x="75" y="175" style="text-anchor:middle">Offset 0 and 100</text>
+<text x="225" y="175" style="text-anchor:middle">Offset 20 and 80</text>
+<text x="375" y="175" style="text-anchor:middle">Offset 30 and 70</text>
+<text x="525" y="175" style="text-anchor:middle">Offset 50 and 50</text>
+<g style="stroke-dasharray:2 2;stroke:black">
+<path d="M180 0l0 150"/>
+<path d="M270 0l0 150"/>
+<path d="M0 0l0 150"/>
+<path d="M150 0l0 150"/>
+<path d="M345 0l0 150"/>
+<path d="M405 0l0 150"/>
+<path d="M525 0l0 150"/>
+<path d="M525 0l0 150"/>
+</g>
+</svg>

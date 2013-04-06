@@ -1,0 +1,49 @@
+<?xml version="1.0" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+         "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+<svg width="640" height="380" viewBox="-10 -10 320 190">
+<defs>
+<pattern id="Pat01" width="10" height="10" patternUnits="userSpaceOnUse">
+	<rect width="10" height="10" fill="#FFFFFF" stroke="#000000" stroke-width="0.1"/>
+</pattern>
+<circle id="dot" cx="0" cy="0" r="2" stroke="black" stroke-width="1" fill="white"/>
+<circle id="dot2" cx="0" cy="0" r="2" stroke="black" stroke-width="1" fill="lightGray"/>
+<circle id="dot3" cx="0" cy="0" r="2" stroke="black" stroke-width="1" stroke-dasharray="1 1" fill="white"/>
+</defs>
+<rect x="0" y="0" width="301" height="171" fill="url(#Pat01)"/>
+<path d="M50,70 C0,70 50,10 50,50 C50,120 100,120 100,50 C100,10 150,70 100,70" stroke="black" fill="none"/>
+<path d="M0,70 L50,70 M50,110 L50,10 M100,10 L100,110 M100,70 L150,70" fill="none" stroke="black" stroke-dasharray="2 2"/>
+<use x="0" y="70" xlink:href="#dot"/>
+<use x="50" y="10" xlink:href="#dot"/>
+<use x="50" y="110" xlink:href="#dot"/>
+<use x="100" y="10" xlink:href="#dot"/>
+<use x="100" y="110" xlink:href="#dot"/>
+<use x="150" y="70" xlink:href="#dot"/>
+<use x="50" y="60" xlink:href="#dot2"/>
+<use x="50" y="70" xlink:href="#dot2"/>
+<use x="100" y="60" xlink:href="#dot2"/>
+<use x="100" y="70" xlink:href="#dot2"/>
+
+
+<text x="10" y="128" font-size="7">
+d="M50,70 
+<tspan x="20" dy="1em">C0,70 50,10 50,50</tspan>
+<tspan x="20" dy="1em">C50,120 100,120 100,50</tspan>
+<tspan x="20" dy="1em">C100,10 150,70 100,70"</tspan>
+</text>
+<path d="M240,100 C180,20 240,10 240,40 C240,10 300,20 240,100Z" stroke="black" fill="none"/>
+<path d="M180,20 L240,100 M240,10 L240,40 M240,100 L300,20" fill="none" stroke="black" stroke-dasharray="2 2"/>
+<use x="180" y="20" xlink:href="#dot"/>
+<use x="240" y="10" xlink:href="#dot"/>
+<use x="300" y="20" xlink:href="#dot"/>
+<use x="240" y="40" xlink:href="#dot2"/>
+<use x="240" y="100" xlink:href="#dot2"/>
+<text x="190" y="128" font-size="7">
+d="M 240,100 
+<tspan x="200" dy="1em">C 180,20 240,10 240,40</tspan>
+<tspan x="200" dy="1em">C 240,10 300,20 240,100</tspan>
+<tspan x="200" dy="1em">Z"</tspan>
+</text>
+
+
+</svg>

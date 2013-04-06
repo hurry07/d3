@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+         "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+<svg >
+<defs>
+<g id="scroll_textes" transform="translate(0,90)" style="text-anchor:left;font-size:12;font-family:Arial;fill:black">
+</g>
+<clipPath id="txt_spot">
+<rect id="txt_liste" x="0" y="90" width="260" height="120"/>
+</clipPath>
+</defs>
+<g onkeypress="list_tape(evt)">
+<rect x="5" y="5" rx="4" ry="4" width="300" height="160" style="fill:#EEEEEE;stroke:gray;stroke-width:10"/>
+<text id="invite0" x="155" y="40" style="text-anchor:middle;font-size:12pt;font-family:Times Roman;fill:black">Texte here!</text>
+<text id="invite1" x="155" y="60" style="text-anchor:middle;font-size:12pt;font-family:Times Roman;fill:black">2d line</text>
+<text id="invite2" x="155" y="80" style="text-anchor:middle;font-size:12pt;font-family:Times Roman;fill:black">3d line</text>
+<rect x="60" y="125" width="80" height="25" style="fill:white;stroke:black"/>
+<text x="100" y="145" style="text-anchor:middle;font-size:16pt;font-family:Times Roman;fill:black">OK</text>
+<rect onclick="close_list_scroll(true)" x="60" y="125" width="80" height="25" style="fill:red;fill-opacity:0.2"/>
+<rect x="180" y="125" width="80" height="25" style="fill:white;stroke:black"/>
+<text x="220" y="145" style="text-anchor:middle;font-size:16pt;font-family:Times Roman;fill:black">Cancel</text>
+<rect onclick="close_list_scroll(false)" x="180" y="125" width="80" height="25" style="fill:red;fill-opacity:0.2"/>
+<rect x="290" y="3" width="16" height="16" style="fill:white;stroke:black"/>
+<path d="M293 6l10 10 M293 16l10 -10" style="stroke:black;stroke-width:3"/>
+<rect onclick="close_list_scroll(false)" x="290" y="5" width="16" height="16" style="fill:white;fill-opacity:0"/>
+<g id="liste_affichage">
+</g>
+<rect x="15" y="90" width="260" height="20" style="stroke:black;fill:white"/>
+<text id="liste_titre2" x="20" y="105" style="text-anchor:left;font-size:12;font-family:Arial;fill:black">Les formulaires</text>
+<rect x="275" y="90" width="20" height="20" style="stroke:black;fill:LightGray"/>
+<path d="M280 94 l5 8 5 -8z"  style="stroke:black;fill:black"/>
+<rect onclick="liste_scroll_faire(evt)" x="275" y="90" width="20" height="20" style="stroke:black;fill:LightGray;fill-opacity:0"/>
+<g id="ddown_list" style="display:none">
+<rect x="15" y="90" width="260" height="120" style="fill:white;stroke:black"/>
+<g  clip-rule="nonzero">
+<use id="liste_scroll_montre" clip-path="url(#txt_spot)" x="20" y="0" xlink:href="#scroll_textes"/>
+</g>
+<rect id="liste_scroll_inv_menu" x="15" y="90" width="260" height="20" style="fill:black;fill-opacity:0.3"/>
+<path d="M280 114 l5 8 5 -8z"  style="stroke:black;fill:black"/>
+<rect onclick="liste_scrolling(1)" x="275" y="110" width="20" height="20" style="stroke:black;fill:black;fill-opacity:0.1"/>
+
+<rect onmousedown="liste_glisse_click(evt,true)" onmouseup="liste_glisse_click(evt,false)" x="275" y="130" width="20" height="60" style="stroke:black;fill:white"/>
+<rect id="scroll_cursor" onmouseup="liste_glisse_click(evt,false)" onmousedown="liste_glisse_click(evt,true)" onmousemove="liste_glisse(evt)" x="275" y="130" width="20" height="20" style="stroke:black;fill:black;fill-opacity:0.1"/>
+
+<path d="M280 206 l5 -8 5 8z"  style="stroke:black;fill:black"/>
+<rect onclick="liste_scrolling(-1)" x="275" y="190" width="20" height="20" style="stroke:black;fill:black;fill-opacity:0.1"/>
+
+<rect onclick="liste_scroll_choix(evt)" onmousemove="liste_scroll_inverse(evt)" x="15" y="90" width="260" height="120" style="fill:yellow;fill-opacity:0.1"/>
+</g>
+</g>
+</svg>

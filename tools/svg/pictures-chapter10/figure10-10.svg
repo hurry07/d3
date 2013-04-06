@@ -1,0 +1,41 @@
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" onload="Init(evt);">
+  <script type="text/ecmascript" xlink:href="RemoveWhiteSpace.js"/>
+  <script type="text/ecmascript">
+  <![CDATA[
+    function Init(evt)
+    {
+       RemoveWhiteSpaceChildNodesOf(evt.target.ownerDocument.documentElement);
+    }
+    function Highlight(evt)
+    {
+       evt.target.setAttribute("opacity", "1.0");
+    }
+    function Unhighlight(evt)
+    {
+       evt.target.setAttribute("opacity", "0.4");
+    }
+    function ChangeColor(evt)
+    {
+       if (evt.type == "mousedown")
+          evt.target.setAttribute("fill", "black");
+       else if (evt.type == "mouseup")
+          evt.target.setAttribute("fill", "yellowgreen");
+    }
+  ]]>
+  </script>
+  <g onmouseover="Highlight(evt);" onmouseout="Unhighlight(evt);">
+    <rect x="10"  y="100" width="90" height="40" fill="blue" opacity="0.4" />
+    <rect x="110" y="100" width="90" height="40" fill="green" opacity="0.4" />
+    <rect x="210" y="100" width="90" height="40" fill="yellowgreen" opacity="0.4" 
+          onmousedown="ChangeColor(evt);" onmouseup="ChangeColor(evt);"/>
+    <rect x="310" y="100" width="90" height="40" fill="orange" opacity="0.4" />
+    <rect x="410" y="100" width="90" height="40" fill="red" opacity="0.4" />
+  </g>
+  <text x="55"  y="160" text-anchor="middle">highlight</text>
+  <text x="155" y="160" text-anchor="middle">magical</text>
+  <text x="255" y="160" text-anchor="middle">changing color</text>
+  <text x="355" y="160" text-anchor="middle">mutate</text>
+  <text x="455" y="160" text-anchor="middle">click</text>
+</svg>
+

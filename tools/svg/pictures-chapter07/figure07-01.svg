@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+         "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+<svg width="600" height="110" viewBox="-25 -30 600 110">
+<rect x="0" y="0" width="50" height="50" style="fill:black;fill-opacity:1"/>
+<rect x="50" y="0" width="50" height="50" style="fill:black;fill-opacity:0.9"/>
+<rect x="100" y="0" width="50" height="50" 
+style="fill:black;fill-opacity:0.8"/>
+<rect x="150" y="0" width="50" height="50" 
+style="fill:black;fill-opacity:0.7"/>
+<rect x="200" y="0" width="50" height="50" 
+style="fill:black;fill-opacity:0.6"/>
+<rect x="250" y="0" width="50" height="50" 
+style="fill:black;fill-opacity:0.5"/>
+<rect x="300" y="0" width="50" height="50" 
+style="fill:black;fill-opacity:0.4"/>
+<rect x="350" y="0" width="50" height="50" 
+style="fill:black;fill-opacity:0.3"/>
+<rect x="400" y="0" width="50" height="50" 
+style="fill:black;fill-opacity:0.2"/>
+<rect x="450" y="0" width="50" height="50" 
+style="fill:black;fill-opacity:0.1"/>
+<rect x="500" y="0" width="50" height="50" 
+style="fill:black;fill-opacity:0"/>
+<rect x="20" y="10" width="510" height="30" 
+style="fill:yellow;fill-opacity:0.5"/>
+</svg>

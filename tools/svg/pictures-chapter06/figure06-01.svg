@@ -1,0 +1,19 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+	"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<svg width="400" height="400" viewBox="-50 -50 400 400">
+<defs>
+<pattern id="Pat01" width="20" height="20" patternUnits="userSpaceOnUse">
+	<rect width="20" height="20" fill="none" stroke="#000000" stroke-width="0.1"/>
+</pattern>
+<g id="system">
+<path d="M0 0 h60 M60 5l30 -5l-30 -5z" stroke="black" stroke-width="1" />
+<path d="M0 0 v60 M5 60l-5 30l-5 -30z" stroke="black" stroke-width="1" />
+<circle cx="0" cy="0" r="5" stroke="black" stroke-width="1"/>
+</g>
+</defs>
+<rect x="-50" y="-50" width="400" height="400" fill-opacity="0.1" fill="orange"/>
+<rect x="-50" y="-50" width="400" height="400" fill="url(#Pat01)"/>
+<use x="0" y="0" xlink:href="#system" fill="lightGray"/>
+<text x="30" y="18" text-anchor="middle" font-size="18">(0,0)</text>
+</svg>

@@ -1,0 +1,50 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+	"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<svg width="800" height="600" viewBox="0 0 400 300">
+	<defs>
+		<pattern id="gridPattern" width="10" height="10" patternUnits="userSpaceOnUse">
+			<path d="M10 0 L0 0 L0 10" style="fill:none;stroke:rgb(128,128,128);stroke-width:0.25"/>
+		</pattern>
+		<circle id="node" r="2" style="stroke-width:0.6;fill:rgb(255,255,255)"/>
+		<path id="arrow" d="M0 0 L-10 -2 L-10 2 z"
+			 style="stroke:none"/>
+		<g id="coords" style="stroke:rgb(0,0,0)">
+			<path d="M15 0 L0 0 L0 15" style="fill:none;stroke-width:0.5"/>
+			<use xlink:href="#arrow" transform="translate(20 0) scale(0.5)"/>
+			<use xlink:href="#arrow" transform="translate(0 20) rotate(90) scale(0.5)"/>
+			<circle r="1" style="stroke-width:0.2;fill:rgb(255,255,255)"/>
+		</g>
+		<marker id="startArrow" viewBox="0 -5 10 10" markerUnits="userSpaceOnUse"
+			refX="0" refY="0" markerWidth="10" markerHeight="10" orient="auto">
+			<path d="M0 0 L10 -2 L10 2 zM0 -5 L0 5"
+				 style="stroke:rgb(0,0,0)"/>
+		</marker>
+		<marker id="endArrow" viewBox="-10 -5 10 10" markerUnits="strokeWidth"
+			refX="0" refY="0" markerWidth="10" markerHeight="10" orient="auto">
+			<path d="M-10 -2 L0 0 L-10 2 zM0 -5 L0 5"
+				 style="stroke:rgb(0,0,0)"/>
+		</marker>
+	</defs>
+	<rect id="grid" width="200" height="100"
+		 style="stroke:rgb(128,128,128);stroke-width:0.25;fill:url(#gridPattern)"/>
+<!-- grid -->
+	<use xlink:href="#coords"/>
+	<text x="3" y="9" style="font-size:7">(0,0)</text>
+<!-- example -->
+	<defs>
+		<text id="UseMe" x="20" y="30">I <tspan font-style="italic" font-weight="bolder">am</tspan> being used!
+		</text>
+	</defs>
+	<text x="20" y="30" font-size="10">
+		I am <tspan font-style="italic" font-weight="bolder">not</tspan> being used.
+	</text>
+	<text x="20" y="60" font-size="10" fill="orange">
+		<tref xlink:href="#UseMe" fill="darkslategrey" />
+	</text>
+<!-- dimensions -->
+	<circle r="2" cx="20" cy="30" style="stroke-width:0.2;stroke:black;fill:rgb(255,255,255)"/>
+	<text x="23" y="39" style="font-size:7">(20,30)</text>
+	<circle r="2" cx="20" cy="60" style="stroke-width:0.2;stroke:black;fill:rgb(255,255,255)"/>
+	<text x="23" y="69" style="font-size:7">(20,60)</text>
+</svg>

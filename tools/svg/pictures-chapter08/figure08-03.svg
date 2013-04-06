@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+         "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="800" height="550" viewBox="0 50 1600 1100">
+<defs>
+<filter id='MyFilter1' filterUnits='objectBoundingBox' x='0%' y='0%' width='100%' height='100%'>
+<feMerge>
+<feMergeNode in="SourceGraphic"/>
+</feMerge>
+</filter>
+<filter id='MyFilter2' filterUnits='objectBoundingBox' x='0%' y='0%' width='100%' height='100%'>
+<feMerge>
+<feMergeNode in="SourceAlpha"/>
+</feMerge>
+</filter>
+<image id='MyImage1' width='400' height='400' xlink:href='memo.svgz'/>
+<image id='MyImage2' width='400' height='400' xlink:href='puzzle.jpg'/>
+<image id='MyImage3' width='400' height='400' xlink:href='strokefilter.svg'/>
+</defs>
+<rect x="0" y="50" width="1600" height="1100" style="fill:white;stroke:black;fill-opacity:0.5"/>
+<use x="150" y="100" filter='url(#MyFilter1)' xlink:href='#MyImage1'/>
+<use x="150" y="600" filter='url(#MyFilter2)' xlink:href='#MyImage1'/>
+<use x="1050" y="100" filter='url(#MyFilter1)' xlink:href='#MyImage2'/>
+<use x="1050" y="600" filter='url(#MyFilter2)' xlink:href='#MyImage2'/>
+<use x="600" y="100" filter='url(#MyFilter1)' xlink:href='#MyImage3'/>
+<use x="600" y="600" filter='url(#MyFilter2)' xlink:href='#MyImage3'/>
+
+<text x="800" y="575" style="text-anchor:middle;font-size:50">
+SourceGraphic</text>
+<text x="800" y="1075" style="text-anchor:middle;font-size:50">
+SourceAlpha</text>
+</svg>

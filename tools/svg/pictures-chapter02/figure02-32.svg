@@ -1,0 +1,43 @@
+<svg width="500" height="350" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+        <circle id="Ball01" cx="100" cy="100" r="40" fill="url(#Grad01)"/>
+        <text x="50%" y="80%" text-anchor="middle" writing-mode="lr">S V G</text>
+        <!--背景填充-->
+        <pattern id="Pat01" width="10" height="10" patternUnits="userSpaceOnUse">
+            <rect width="10" height="10" fill="#FFFFFF" stroke="#000000" stroke-width="0.1"/>
+        </pattern>
+        <!-- 放射性渐变 -->
+        <radialGradient id="Grad01" gradientUnits="userSpaceOnUse" cx="120" cy="60" fx="130" fy="50" r="100">
+            <stop offset="0%" stop-color="white"/>
+            <stop offset="20%" stop-color="#cccccc"/>
+            <stop offset="100%" stop-color="rgb(100,20,150)"/>
+        </radialGradient>
+        <marker id="Marker01" viewBox="0 0 10 10" refX="0" refY="5"
+                markerUnits="strokeWidth" markerWidth="10" markerHeight="6"
+                orient="auto">
+            <path d="M 0 0 L 15 5 L 0 10 z"/>
+        </marker>
+    </defs>
+    <g letter-spacing="0.02em" enable-background="new">
+        <!--BACKGROUND-->
+        <rect id="Background" fill="url(#Pat01)" stroke-width="0.5" stroke="#000000" x="0" y="0" width="100%" height="100%">
+            <desc>Background Pattern</desc>
+        </rect>
+        <g id="watermark" fill="#000000" font-weight="bold" style="font-size:180" font-family="san-serif,Arial,Verdana" opacity="0.2">
+            <text x="50%" y="95%" text-anchor="middle" stroke="none" writing-mode="lr">S V G</text>
+        </g>
+        <!--SCALABLE-->
+        <text x="30" y="180" stroke="none" writing-mode="lr">SCALABLE</text>
+        <use xlink:href="#Ball01" x="0" y="0" transform="scale(0.1)"/>
+        <use xlink:href="#Ball01" x="0" y="0" transform="scale(0.25)"/>
+        <use xlink:href="#Ball01" x="0" y="0" transform="scale(0.5)"/>
+        <use xlink:href="#Ball01" x="0" y="0" transform="scale(1)"/>
+        <!--VECTOR-->
+        <text x="205" y="180" stroke="none" writing-mode="lr">VECTOR</text>
+        <line x1="165" y1="16" x2="165" y2="132" stroke="black" stroke-width="1.5" marker-end="url(#Marker01)"/>
+        <line x1="165" y1="16" x2="272" y2="16" stroke="black" stroke-width="1.5" marker-end="url(#Marker01)"/>
+        <!--GRAPHICS-->
+        <text x="385" y="180" stroke="none" writing-mode="lr">GRAPHICS</text>
+        <image xlink:href="figure31-02.png" x="340" y="0" width="140" height="160" opacity="0.5"/>
+    </g>
+</svg>

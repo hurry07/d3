@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+         "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+<svg width="800" height="600" viewBox="0 0 800 600">
+<defs>
+<filter id='Filter0' filterUnits='userSpaceOnUse' x='0' y='0' width='400' height='400'>
+<feTurbulence result='pict0' type='turbulence' baseFrequency='0.03,0.1' numOctaves='4' seed='0' stitchTiles='noStitch'/>
+<feDiffuseLighting result='pict1' in='pict0' lighting-color='silver' diffuseConstant='1' kernelUnitLength='1,1' surfaceScale='0.5'>
+<feDistantLight azimuth='45' elevation='45'/>
+</feDiffuseLighting>
+</filter>
+<filter id='Filter1' filterUnits='userSpaceOnUse' x='0' y='0' width='400' height='400'>
+<feTurbulence result='pict0' type='turbulence' baseFrequency='0.03,0.1' numOctaves='4' seed='0' stitchTiles='noStitch'/>
+<feDiffuseLighting result='pict1' in='pict0' lighting-color='silver' diffuseConstant='1' kernelUnitLength='1,1' surfaceScale='1'>
+<feDistantLight azimuth='45' elevation='45'/>
+</feDiffuseLighting>
+</filter>
+<filter id='Filter2' filterUnits='userSpaceOnUse' x='0' y='0' width='400' height='400'>
+<feTurbulence result='pict0' type='turbulence' baseFrequency='0.03,0.1' numOctaves='4' seed='0' stitchTiles='noStitch'/>
+<feDiffuseLighting result='pict1' in='pict0' lighting-color='silver' diffuseConstant='1' kernelUnitLength='1,1' surfaceScale='2'>
+<feDistantLight azimuth='45' elevation='45'/>
+</feDiffuseLighting>
+</filter>
+<filter id='Filter3' filterUnits='userSpaceOnUse' x='0' y='0' width='400' height='400'>
+<feTurbulence result='pict0' type='turbulence' baseFrequency='0.03,0.1' numOctaves='4' seed='0' stitchTiles='noStitch'/>
+<feDiffuseLighting result='pict1' in='pict0' lighting-color='silver' diffuseConstant='1' kernelUnitLength='1,1' surfaceScale='4'>
+<feDistantLight azimuth='45' elevation='45'/>
+</feDiffuseLighting>
+</filter>
+<filter id='Filter4' filterUnits='userSpaceOnUse' x='0' y='0' width='400' height='400'>
+<feTurbulence result='pict0' type='turbulence' baseFrequency='0.03,0.1' numOctaves='4' seed='0' stitchTiles='noStitch'/>
+<feDiffuseLighting result='pict1' in='pict0' lighting-color='silver' diffuseConstant='1' kernelUnitLength='1,1' surfaceScale='6'>
+<feDistantLight azimuth='45' elevation='45'/>
+</feDiffuseLighting>
+</filter>
+<filter id='Filter5' filterUnits='userSpaceOnUse' x='0' y='0' width='400' height='400'>
+<feTurbulence result='pict0' type='turbulence' baseFrequency='0.03,0.1' numOctaves='4' seed='0' stitchTiles='noStitch'/>
+<feDiffuseLighting result='pict1' in='pict0' lighting-color='silver' diffuseConstant='1' kernelUnitLength='1,1' surfaceScale='10'>
+<feDistantLight azimuth='45' elevation='45'/>
+</feDiffuseLighting>
+</filter>
+</defs>
+<rect x="0" y="0" width="800" height="600" style="fill:white;stroke:black;fill-opacity:0.5"/>
+<text x="400" y="75" style="text-anchor:middle;font-size:20">
+Parameters: surfaceScale on feTurbulence</text>
+<svg x="100" y="100" width="200" height="200" viewBox='0 0 400 400'>
+<rect x='0' y='0' width='400' height='400' filter='url(#Filter0)'/>
+</svg>
+<svg x="310" y="100" width="200" height="200" viewBox='0 0 400 400'>
+<rect x='0' y='0' width='400' height='400' filter='url(#Filter1)'/>
+</svg>
+<svg x="520" y="100" width="200" height="200" viewBox='0 0 400 400'>
+<rect x='0' y='0' width='400' height='400' filter='url(#Filter2)'/>
+</svg>
+<text x="200" y="320" style="text-anchor:middle;font-size:15">
+surfaceScale : 0.5
+</text>
+<text x="410" y="320" style="text-anchor:middle;font-size:15">
+surfaceScale : 1
+</text>
+<text x="620" y="320" style="text-anchor:middle;font-size:15">
+surfaceScale : 2
+</text>
+<svg x="100" y="330" width='200' height='200' viewBox="0 0 400 400">
+<rect x='0' y='0' width='400' height='400' filter='url(#Filter3)'/>
+</svg>
+<svg x="310" y="330" width='200' height='200' viewBox="0 0 400 400">
+<rect x='0' y='0' width='400' height='400' filter='url(#Filter4)'/>
+</svg>
+<svg x="520" y="330" width='200' height='200' viewBox="0 0 400 400">
+<rect x='0' y='0' width='400' height='400' filter='url(#Filter5)'/>
+</svg>
+<text x="200" y="550" style="text-anchor:middle;font-size:15">
+surfaceScale : 4
+</text>
+<text x="410" y="550" style="text-anchor:middle;font-size:15">
+surfaceScale : 6
+</text>
+<text x="620" y="550" style="text-anchor:middle;font-size:15">
+surfaceScale : 10
+</text>
+</svg>

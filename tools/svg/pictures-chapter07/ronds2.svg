@@ -1,0 +1,9 @@
+<svg width="5500" height="6100">
+<defs>
+<pattern id='motif' x='0' y='0' width='246' height='246' overflow='visible' patternUnits="userSpaceOnUse" viewBox="-1 -1 41 41">
+<circle cx='10' cy='10' r='10' style='stroke:black;stroke-width:1;fill:red'/>
+<circle cx='30' cy='30' r='10' style='stroke:black;stroke-width:1;fill:red'/>
+</pattern>
+</defs>
+<rect x="0" y="0" width="5500" height="6100" fill="url(#motif)"/>
+</svg>

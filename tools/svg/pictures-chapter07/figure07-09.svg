@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+         "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+<svg width="640" height="220" viewBox="-20 -20 640 220">
+<defs>
+        <linearGradient id="MyGradient1" x2="5%" spreadMethod="reflect">
+            <stop offset="10%" stop-color="red"/>
+            <stop offset="90%" stop-color="yellow"/>
+        </linearGradient>
+</defs>
+<rect x="0" y="0" width="150" height="150" style="stroke:black;fill:url(#MyGradient1)"/>
+<circle cx="225" cy="75" r="60" style="fill:none;
+stroke-width:10;stroke:url(#MyGradient1)"/>
+<path d="M320 20l 70 0 0 60 20 50 -100 0z" style="stroke:black;fill:url(#MyGradient1)"/>
+<text x="525" y="100" style="stroke:black;fill:url(#MyGradient1);
+font-family:Balloon;text-anchor:middle;font-size:100">SVG</text>
+<text x="75" y="175" style="text-anchor:middle">fill rectangle</text>
+<text x="225" y="175" style="text-anchor:middle">stroke circle</text>
+<text x="375" y="175" style="text-anchor:middle">fill path</text>
+<text x="525" y="175" style="text-anchor:middle">fill text</text>
+</svg>

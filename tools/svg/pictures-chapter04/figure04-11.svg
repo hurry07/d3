@@ -1,0 +1,51 @@
+<?xml version="1.0" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+         "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+<svg width="480" height="235" viewBox="-10 -10 320 170">
+<defs>
+<pattern id="Pat01" width="10" height="10" patternUnits="userSpaceOnUse">
+	<rect width="10" height="10" fill="#FFFFFF" stroke="#000000" stroke-width="0.1"/>
+</pattern>
+<marker id="Marker01" viewBox="0 0 10 10" refX="0" refY="5" 
+     markerUnits="strokeWidth" markerWidth="10" markerHeight="6" 
+     orient="auto">
+  <path d="M 0 0 L 15 5 L 0 10 z" />
+</marker>
+<marker id="Marker02" viewBox="0 -5 10 10" refX="0" refY="0" 
+     markerUnits="strokeWidth" markerWidth="10" markerHeight="6" 
+     orient="auto">
+  <path d="M 0 0l 15 -5 l 0 10z"/>
+</marker>
+<circle id="dot" cx="0" cy="0" r="2" stroke-width="1" fill="white"/>
+<g id="origin">
+<path d="M0,0 h8" stroke-width="0.3" marker-end="url(#Marker01)"/>
+<path d="M0,0 v8" stroke-width="0.3" marker-end="url(#Marker01)"/>
+</g>
+</defs>
+<rect x="0" y="0" width="301" height="151" fill="url(#Pat01)"/>
+<path transform="translate(50,50) rotate(-15) scale(40)" 
+        d="M1,0 A1,1 0 0 0 0,-1"
+        stroke-width="0.08" stroke="blue" fill="none" stroke-linecap="round" />
+  <path transform="translate(50,100) rotate(-30) scale(40)" 
+        d="M1,0 A1,1 0 1 1 -0.707 -0.707"
+        stroke-width="0.08" stroke="red" fill="none" stroke-linecap="round" />
+  <path transform="translate(150,50) rotate(-45) scale(40)" 
+        d="M1,0 A1,1 0 0 0 0,-1 Z"
+        stroke="blue" stroke-width="0.08" fill="silver" fill-opacity="0.5" />
+  <path transform="translate(150,100) rotate(-22.5) scale(40)" 
+        d="M1,0 A1,1 0 1 1 -0.707 -0.707 Z"
+        stroke="red" stroke-width="0.08" fill="silver" fill-opacity="0.5" />
+  <path transform="translate(250,50) rotate(-60) scale(40)" 
+        d="M0,0 L1,0 A1,1 0 0 0 0,-1 Z"
+        stroke="blue" stroke-width="0.08" fill="silver" fill-opacity="0.5" />
+  <path transform="translate(250,100) rotate(-15) scale(40)" 
+        d="M0,0 L1,0 A1,1 0 1 1 -0.707 -0.707 Z"
+        stroke="red" stroke-width="0.08" fill="silver" fill-opacity="0.5" />
+<use stroke="blue" x="50" y="50" xlink:href="#dot"/>
+<use stroke="blue" x="150" y="50" xlink:href="#dot"/>
+<use stroke="blue" x="250" y="50" xlink:href="#dot"/>
+<use stroke="red" x="50" y="100" xlink:href="#dot"/>
+<use stroke="red" x="150" y="100" xlink:href="#dot"/>
+<use stroke="red" x="250" y="100" xlink:href="#dot"/>
+
+</svg>

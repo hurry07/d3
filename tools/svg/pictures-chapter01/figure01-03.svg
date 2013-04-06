@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+         "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+<svg width="200" height="200">
+<circle cx="100" cy="100" r="30" style="stroke:orange;stroke-width:3;fill:blue"/>
+</svg>

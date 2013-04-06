@@ -1,0 +1,49 @@
+<?xml version="1.0" ?>
+<svg width="800" height="600" viewBox="0 0 400 300">
+  <defs>
+    <pattern id="gridPattern" width="10" height="10" patternUnits="userSpaceOnUse">
+      <path d="M10,0 H0 V10" fill="none" stroke="gray" stroke-width="0.25"/>
+    </pattern>
+    <marker id="tick" viewBox="-10 -5 10 10" markerUnits="strokeWidth"
+            markerWidth="10" markerHeight="10" orient="auto">
+      <path d="M0,-2 V2" stroke="black"/>
+    </marker>
+    <marker id="endArrow" viewBox="-10 -5 10 10" markerUnits="strokeWidth"
+            markerWidth="10" markerHeight="10" orient="auto">
+      <path d="M-10,-2 L0,0 -10,2 z" fill="black" stroke="none"/>
+    </marker>
+    <marker id="startDimArrow" viewBox="0 -5 10 10" markerUnits="strokeWidth"
+            markerWidth="10" markerHeight="10" orient="auto">
+      <path d="M0,0 L10,-2 10,2 z M0,-5 L0,5" stroke="black" />
+    </marker>
+    <marker id="endDimArrow" viewBox="-10 -5 10 10" markerUnits="strokeWidth"
+            markerWidth="10" markerHeight="10" orient="auto">
+      <path d="M-10,-2 L0,0 -10,2 z M0,-5 L0,5" stroke="black" />
+    </marker>
+    <circle id="node" r="2" stroke-width="0.6" fill="white" />
+    <path id="arrow" d="m0,0l-10-2v4z" stroke="none" />
+    <g id="coords" stroke="black">
+      <path d="M15,0 H0 V15" fill="none" stroke-width="0.5"/>
+      <use xlink:href="#arrow" transform="translate(20,0) scale(0.5)" />
+      <use xlink:href="#arrow" transform="translate(0,20) rotate(90) scale(0.5)" />
+      <circle r="1" stroke-width="0.2" fill="white" />
+    </g>
+  </defs>
+  <rect id="grid" width="240" height="130" stroke="gray" stroke-width="0.25" fill="url(#gridPattern)" /> 
+  <!-- grid -->
+  <use xlink:href="#coords" />
+  <text x="3" y="9" font-size="8">(0,0)</text>
+	<!-- example -->
+  <ellipse cx="110" cy="55" rx="70" ry="35" stroke="darkslategray" stroke-width="2" fill="lightgray" fill-opacity="0.4" />
+  <!-- decoratation -->
+  <line x1="110" y1="55" x2="110" y2="20" marker-end="url(#endArrow)" stroke="black" />
+  <line x1="110" y1="55" x2="180" y2="55" marker-end="url(#endArrow)" stroke="black" />
+  <line x1="40" y1="110" x2="180" y2="110" marker-start="url(#startDimArrow)" marker-end="url(#endDimArrow)" stroke="black" />
+  <line x1="200" y1="20" x2="200" y2="90" marker-start="url(#startDimArrow)" marker-end="url(#endDimArrow)" stroke="black" />
+  <use xlink:href="#node" x="110" y="55" stroke="darkslategray" />
+  <text x="133" y="65" font-size="8" text-anchor="end">(cx,cy)</text>
+  <text x="145" y="51" font-size="8" text-anchor="middle">rx</text>
+  <text x="118" y="42" font-size="8" text-anchor="middle">ry</text>
+  <text x="110" y="120" font-size="8" text-anchor="middle">width</text>
+  <text x="205" y="60" font-size="8" text-anchor="start">height</text>
+</svg>

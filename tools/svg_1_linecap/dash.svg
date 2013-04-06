@@ -1,0 +1,20 @@
+<svg width="350" height="300" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <line x1="40" y1="20" x2="200" y2="20"
+          stroke-dasharray="1 10" fill="none"
+          stroke="darkslategray" stroke-width="2" stroke-linecap="round"/>
+    <line x1="40" y1="40" x2="200" y2="40"
+          stroke-dasharray="10 10 10 10" fill="none"
+          stroke="darkslategray" stroke-width="2" stroke-linecap="round"/>
+    <line x1="40" y1="60" x2="200" y2="60"
+          stroke-dasharray="10 10 1 10" fill="none"
+          stroke="darkslategray" stroke-width="2" stroke-linecap="round"/>
+    <line x1="40" y1="80" x2="200" y2="80"
+          stroke-dasharray="1 10 10 10 1 10" fill="none"
+          stroke="darkslategray" stroke-width="2" stroke-linecap="round"/>
+    <line x1="40" y1="100" x2="200" y2="100"
+          stroke-dasharray="1 10 10 10 10 10" fill="none"
+          stroke="darkslategray" stroke-width="2" stroke-linecap="round" />
+    <line x1="40" y1="120" x2="200" y2="120"
+          stroke-dasharray="1 10 10 10 10 10" fill="none"
+          stroke="darkslategray" stroke-width="2" stroke-linecap="round" stroke-dashoffset='-3' />
+</svg>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+         "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+<svg width="800" height="600" viewBox="0 0 800 600">
+<defs>
+<filter id='Filter0' filterUnits='userSpaceOnUse' x='0' y='0' width='400' height='400'>
+<feImage xlink:href='#MyImage1' result='pict1'/>
+<feImage xlink:href='#MyImage2' result='pict2'/>
+<feDisplacementMap scale='19' xChannelSelector='B' yChannelSelector='B' in2='pict2' in='pict1'/>
+</filter>
+<image id='MyImage1' width='400' height='400' xlink:href='puzzle.jpg'/>
+<g id='MyImage2'>
+<circle cx="200" cy="200" r="200" style="stroke:none;fill:red"/>
+<circle cx="200" cy="200" r="180" style="stroke:none;fill:white"/>
+<circle cx="200" cy="200" r="160" style="stroke:none;fill:red"/>
+<circle cx="200" cy="200" r="140" style="stroke:none;fill:white"/>
+<circle cx="200" cy="200" r="120" style="stroke:none;fill:red"/>
+<circle cx="200" cy="200" r="100" style="stroke:none;fill:white"/>
+<circle cx="200" cy="200" r="80" style="stroke:none;fill:red"/>
+<circle cx="200" cy="200" r="60" style="stroke:none;fill:white"/>
+<circle cx="200" cy="200" r="40" style="stroke:none;fill:red"/>
+<circle cx="200" cy="200" r="20" style="stroke:none;fill:white"/>
+</g>
+<pattern id='motif1' x='0' y='0' width='40' height='40' overflow='visible' patternUnits="userSpaceOnUse">
+<circle cx='10' cy='10' r='10' style='stroke:black;stroke-width:1;fill:red'/>
+<circle cx='30' cy='30' r='10' height='20' style='stroke:black;stroke-width:1;fill:red'/>
+</pattern>
+<rect id='MyImage3' x="0" y="0" width="400" height="400" fill="url(#motif1)"/>
+<filter id='Filter1' filterUnits='userSpaceOnUse' x='0' y='0' width='400' height='400'>
+<feImage xlink:href='#MyImage1' result='pict1'/>
+<feImage xlink:href='#MyImage3' result='pict2'/>
+<feDisplacementMap id='fdm' scale='19' xChannelSelector='R' yChannelSelector='R' in2='pict2' in='pict1'/>
+</filter>
+<pattern id='motif2' x='0' y='0' width='40' height='40' overflow='visible' patternUnits="userSpaceOnUse">
+<rect x='0' y='0' width='40' height='20' style='stroke:red;stroke-width:1;fill:red'/>
+</pattern>
+<rect id="MyImage4" x="0" y="0" width="400" height="400" fill="url(#motif2)"/>
+<filter id='Filter2' filterUnits='userSpaceOnUse' x='0' y='0' width='400' height='400'>
+<feImage xlink:href='#MyImage1' result='pict1'/>
+<feImage xlink:href='#MyImage4' result='pict2'/>
+<feDisplacementMap id='fdm' scale='19' xChannelSelector='R' yChannelSelector='R' in2='pict2' in='pict1'/>
+</filter>
+<pattern id='motif3' x='0' y='0' width='40' height='40' overflow='visible' patternUnits="userSpaceOnUse">
+<rect x='0' y='0' width='20' height='20' style='stroke:black;stroke-width:1;fill:red'/>
+<rect x='20' y='20' width='20' height='20' style='stroke:black;stroke-width:1;fill:red'/>
+</pattern>
+<rect id="MyImage5" x="0" y="0" width="400" height="400" fill="url(#motif3)"/>
+<filter id="Filter3" filterUnits="userSpaceOnUse" x="0" y="0" width="400" height="400">
+<feImage xlink:href='#MyImage1' result='pict1'/>
+<feImage xlink:href='#MyImage5' result='pict2'/>
+<feDisplacementMap id='fdm' scale='19' xChannelSelector='R' yChannelSelector='R' in2='pict2' in='pict1'/>
+</filter>
+<radialGradient id='gradient1' spreadMethod='repeat' gradientTransform='' gradientUnits='userSpaceOnUse' cx='50%' cy='50%' r='5%' fx='40%' fy='35%'>
+<stop id='c1' offset='5%' stop-color='red' stop-opacity='1'/>
+<stop id='c2' offset='95%' stop-color='yellow' stop-opacity='1'/>
+</radialGradient>
+<rect id='MyImage6' x='0' y='0' width='400' height='400' fill='url(#gradient1)' stroke='black'/>
+<filter id="Filter4" filterUnits="userSpaceOnUse" x="0" y="0" width="400" height="400">
+<feImage xlink:href='#MyImage1' result='pict1'/>
+<feImage xlink:href='#MyImage6' result='pict2'/>
+<feDisplacementMap id='fdm' scale='20' xChannelSelector='G' yChannelSelector='G' in2='pict2' in='pict1'/>
+</filter>
+<radialGradient id='gradient' spreadMethod='reflect' gradientTransform='' gradientUnits='userSpaceOnUse' cx='50%' cy='50%' r='5%' fx='50%' fy='50%'>
+<stop id='c1' offset='5%' stop-color='red' stop-opacity='1'/>
+<stop id='c2' offset='95%' stop-color='yellow' stop-opacity='1'/>
+</radialGradient>
+<rect id='MyImage7' x='0' y='0' width='400' height='400' fill='url(#gradient)' stroke='black'/>
+<filter id="Filter5" filterUnits="userSpaceOnUse" x="0" y="0" width="400" height="400">
+<feImage xlink:href='#MyImage1' result='pict1'/>
+<feImage xlink:href='#MyImage7' result='pict2'/>
+<feDisplacementMap id='fdm' scale='30' xChannelSelector='G' yChannelSelector='G' in2='pict2' in='pict1'/>
+</filter>
+</defs>
+<rect x="0" y="0" width="800" height="600" style="fill:white;stroke:black;fill-opacity:0.5"/>
+<text x="400" y="75" style="text-anchor:middle;font-size:20">
+feDisplacementMap examples on JPEG picture</text>
+<svg x="100" y="100" width="200" height="200" viewBox='0 0 400 400'>
+<rect width="400" height="400" filter='url(#Filter0)' x='0' y='0'/></svg>
+<svg x="310" y="100" width="200" height="200" viewBox='0 0 400 400'>
+<rect width="400" height="400" filter='url(#Filter1)' x='0' y='0'/>
+</svg>
+<svg x="520" y="100" width="200" height="200" viewBox='0 0 400 400'>
+<rect width="400" height="400" filter='url(#Filter2)' x='0' y='0'/>
+</svg>
+<text x="200" y="320" style="text-anchor:middle;font-size:15">
+circles</text>
+<text x="410" y="320" style="text-anchor:middle;font-size:15">
+dots</text>
+<text x="620" y="320" style="text-anchor:middle;font-size:15">
+strips</text>
+<svg x="100" y="330" width='200' height='200' viewBox="0 0 400 400">
+<rect width="400" height="400" filter='url(#Filter3)' x='0' y='0'/></svg>
+<svg x="310" y="330" width='200' height='200' viewBox="0 0 400 400">
+<rect width="400" height="400" filter='url(#Filter4)' x='0' y='0'/>
+</svg>
+<svg x="520" y="330" width='200' height='200' viewBox="0 0 400 400">
+<rect width="400" height="400" filter='url(#Filter5)' x='0' y='0'/>
+</svg>
+<text x="200" y="550" style="text-anchor:middle;font-size:15">
+squares</text>
+<text x="410" y="550" style="text-anchor:middle;font-size:15">
+radial gradient</text>
+<text x="620" y="550" style="text-anchor:middle;font-size:15">
+radial gradient</text>
+</svg>

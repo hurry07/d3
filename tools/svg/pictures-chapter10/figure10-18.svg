@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<svg width="600" height="300" onmousemove="Eyes(evt);" >
+  <script type="text/ecmascript" xlink:href="RemoveWhiteSpace.js"/>
+  <script type="text/ecmascript">
+  <![CDATA[
+    function Eyes(evt)
+    {
+       RemoveWhiteSpaceChildNodesOf(evt.target.ownerDocument.documentElement);
+       MoveEye(evt.target.ownerDocument.getElementById("leftEye"),  
+               evt.clientX, evt.clientY);
+       MoveEye(evt.target.ownerDocument.getElementById("rightEye"),  
+               evt.clientX, evt.clientY);
+    }
+
+    function MoveEye(eyeGroup, x, y)
+    {
+       var pupil = eyeGroup.lastChild,
+           ray   = pupil.previousSibling,
+           xc    = parseFloat(ray.getAttribute("x1")), // eye center x-coordinate
+           yc    = parseFloat(ray.getAttribute("y1")), // eye center y-coordinate
+           angle = Math.atan2(y-yc, x-xc);             // angle between ray and x-axis
+       pupil.setAttribute("transform", "rotate(" + angle/Math.PI*180 + "," + xc + "," +
+                                               yc + ")");
+       ray.setAttribute("x2", x);                      // set endpoint of ray ..
+       ray.setAttribute("y2", y);                      // .. onto mousecoordinates.
+    }
+  ]]>
+  </script>
+  <rect width="600" height="300" stroke="none" fill="white" />
+  <g id="leftEye">
+    <circle cx="280" cy="50" r="20" stroke="black" fill="wheat" />
+    <line x1="280" y1="50" x2="290" y2="50" stroke="lightgrey" stroke-width="0.5" />
+    <circle cx="290" cy="50" r="10" stroke="none" fill="black" />
+  </g>
+  <g id="rightEye">
+    <circle cx="320" cy="50" r="20" stroke="black" fill="wheat" />
+    <line x1="320" y1="50" x2="330" y2="50" stroke="lightgrey" stroke-width="0.5" />
+    <circle cx="330" cy="50" r="10" stroke="none" fill="black" />
+  </g>
+</svg>

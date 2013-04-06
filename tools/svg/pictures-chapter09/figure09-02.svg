@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+         "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+<svg id="root" width='400' height='400' viewBox="-200 -200 2000 2000" onmousemove='souris(evt)'>
+<script><![CDATA[
+function souris(evt)
+{xm=evt.getClientX();ym=evt.getClientY();
+svgdoc=evt.getTarget().getOwnerDocument();
+root=svgdoc.getElementById("root");
+scale=root.currentScale;
+tx=root.currentTranslate.x;ty=root.currentTranslate.y;
+xsvg=-200+(xm-tx)*5/scale;ysvg=-200+(ym-ty)*5/scale;
+svgdoc.getElementById('pos').getFirstChild().setData('SVG window getClientX() getClientY(): '+xm+' '+ym);
+svgdoc.getElementById('pos2').getFirstChild().setData('Coordinates in  viewBox: '+xsvg+' '+ysvg);
+svgdoc.getElementById('pos3').getFirstChild().setData('currentTranslate: '+tx+' '+ty);
+svgdoc.getElementById('pos4').getFirstChild().setData('currentScale: '+scale)
+}
+]]></script>
+<rect x='-200' y='-200' width='2000' height='2000' style='stroke-width:1;stroke:black;fill:yellow'/>
+<text id='pos' x='-180' y='-100' style='font-size:60'>Coordinates in SVG window: </text>
+<text id='pos2' x='-180' y='0' style='font-size:60'>Coordinates in  viewBox: </text>
+<text x='-180' y='100' style='font-size:60'>ViewBox: -200 -200 2000 2000</text>
+<text x='-180' y='200' style='font-size:60'>Test circle: center 600 180</text>
+<circle cx='600' cy='180' r='20' fill='red'/>
+<text id='pos3' x='-180' y='300' style='font-size:60'>currentTranslate :</text>
+<text id='pos4' x='-180' y='400' style='font-size:60'>currentScale :</text>
+</svg>

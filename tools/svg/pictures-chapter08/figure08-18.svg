@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+         "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+<svg width="450" height="250" viewBox="-50 -50 900 500">
+<defs>
+<filter id="MyFilter" filterUnits="userSpaceOnUse" x="400" y="0" width="400" height="400">
+<feImage xlink:href='memo.svgz' result='pict1'/>
+<feConvolveMatrix in='pict1' order="5 5" targetX="2" targetY="2" 
+kernelMatrix="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1" preserveAlpha='true'/>
+</filter>
+</defs>
+<rect x="400" y="0" width="400" height="400" filter="url(#MyFilter)"/>
+<image x="0" y="0" width="400" height="400" xlink:href="memo.svgz"/>
+</svg>

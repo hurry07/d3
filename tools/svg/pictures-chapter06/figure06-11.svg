@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?> 
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+         "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+<svg width="500" height="200" xmlns="http://www.w3.org/2000/svg" viewBox="-50 200 500 200">
+  <defs>
+    <pattern id="holes" width="10" height="10" patternUnits="userSpaceOnUse">
+      <rect width="10" height="10" stroke="none" fill="steelblue" />
+      <circle cx="5" cy="5" r="2" fill="lightgray" />
+    </pattern> 
+     <g id="pallet" stroke="black" stroke-width="0.2" fill="tan" >
+       <defs>
+         <rect id="block" width="16" height="12" />
+       </defs>
+       <rect x="-66"   y="-15" width="132" height="3" />
+       <use xlink:href="#block" x="-66" y="-12" />
+       <use xlink:href="#block" x="-8" y="-12" />
+       <use xlink:href="#block" x="50" y="-12" />
+     </g>
+    <g id="uprightPost">
+      <rect width="10" height="300" fill="url(#holes)" stroke="black" />
+    </g>
+    <g id="column">
+      <defs>
+        <g id="beam">
+          <rect x="0" width="3" height="16" />
+          <rect x="5" width="276" height="8" />
+          <rect x="283" width="3" height="16" />
+        </g>
+      </defs>
+      <use xlink:href="#beam" x="12" y="0" />
+      <use xlink:href="#beam" x="12" y="100" />
+      <use xlink:href="#beam" x="12" y="200" />
+      <use xlink:href="#uprightPost" x="0" y="0" />
+    </g>
+    <g id="rack" fill="steelblue" stroke="black" >
+      <g id="ground">
+        <rect x="-40" y="300" width="680" height="10" stroke="none" fill="lightgray" />
+        <line x1="-40" y1="300" x2="640" y2="300" stroke="black" />
+      </g>
+      <use xlink:href="#uprightPost" x="600" y="0" />
+      <use xlink:href="#column" x="0" y="0" />
+      <use xlink:href="#column" x="300" y="0" />
+    </g>
+<g id="system" transform="scale(0.5)">
+<path d="M0 0 h60 M60 5l30 -5l-30 -5z" stroke="black" stroke-width="1" />
+<path d="M0 0 v60 M5 60l-5 30l-5 -30z" stroke="black" stroke-width="1" />
+<circle cx="0" cy="0" r="5" stroke="black" stroke-width="1"/>
+</g>
+</defs>
+  <use xlink:href="#rack" x="50" y="50" />
+  <use xlink:href="#pallet" x="133" y="350" />
+<text x="62" y="42" text-anchor="middle">(0,0)</text>
+<path d="M133,350 l10 -10" stroke-width="1" stroke="black"/>
+<text x="143" y="332" text-anchor="middle">(71,300)</text>
+<path d="M433,50 l10 -10" stroke-width="1" stroke="black"/>
+<text x="443" y="32" text-anchor="middle">(371,0)</text>
+<path d="M575,250 l10 -10" stroke-width="1" stroke="black"/>
+<text x="585" y="232" text-anchor="middle">(513,200)</text>
+  <use xlink:href="#system" x="133" y="350" fill="blue"/>
+</svg>

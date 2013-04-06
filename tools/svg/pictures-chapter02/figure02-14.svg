@@ -1,0 +1,21 @@
+<svg width="250" height="200">
+	<rect x="10" y="10" width="50" height="50"
+		 fill="magenta" 
+		 stroke="black"
+		 stroke-width="10"
+		 stroke-linejoin="round"
+		 />
+	<rect x="80" y="10" width="50" height="50"
+		 fill="maroon" 
+		 stroke="black"
+		 stroke-width="15"
+		 stroke-linejoin="bevel"
+		 />
+		 	<rect x="150" y="10" width="50" height="50"
+		 fill="gray" 
+		 stroke="black"
+		 stroke-width="10"
+		 stroke-linejoin="miter"
+		 />
+
+</svg>

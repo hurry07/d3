@@ -1,0 +1,29 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+	"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<svg width="350" height="300">
+	<path transform="translate(-150 -80)"
+		d="M314.669 164.186 C320.812 160.386 324 153.585 324 148.857 L324 117.286 C324 108.844
+			313.907 102 301.457 102 L204.543 102 C192.093 102 182 108.844 182 117.286
+			L182 148.857 C182 157.299 192.093 164.143 204.543 164.143 L285.024 164.143 L276.175
+			188 z"
+		 fill="white" stroke="black" stroke-width="3"/>
+	<switch>
+		<text systemLanguage="de" x="40" y="50" fill="black" font-size="12" font-family="Verdana">
+			<tspan dy="-5">Die Liebe geht</tspan>
+			<tspan x="40" dy="20">durch den Magen.</tspan>
+		</text>
+		<text systemLanguage="en" x="40" y="50" fill="black" font-size="12" font-family="Verdana">
+			<tspan dy="-5">Love comes</tspan>
+			<tspan x="40" dy="20">through the stomach.</tspan>
+		</text>
+		<text systemLanguage="fr" x="40" y="50" fill="black" font-size="12" font-family="Verdana">
+			<tspan dy="-5">L'amour va</tspan>
+			<tspan x="40" dy="20">par l'estomac.</tspan>
+		</text>
+		<text systemLanguage="es" x="40" y="50" fill="black" font-size="12" font-family="Verdana">
+			<tspan dy="-5">El amor viene a</tspan>
+			<tspan x="40" dy="20">traves del estomago.</tspan>
+		</text>
+	</switch>
+</svg>

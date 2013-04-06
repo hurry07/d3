@@ -1,0 +1,57 @@
+<?xml version="1.0" ?>
+<svg width="800" height="600">
+  <defs>
+    <pattern id="gridPattern" width="10" height="10" patternUnits="userSpaceOnUse">
+      <path d="M10,0 H0 V10" fill="none" stroke="gray" stroke-width="0.25"/>
+    </pattern>
+    <marker id="tick" viewBox="-10 -5 10 10" markerUnits="strokeWidth"
+            markerWidth="10" markerHeight="10" orient="auto">
+      <path d="M0,-2 V2" stroke="black"/>
+    </marker>
+    <marker id="endArrow" viewBox="-10 -5 10 10" markerUnits="strokeWidth"
+            markerWidth="10" markerHeight="10" orient="auto">
+      <path d="M-10,-2 L0,0 -10,2 z" fill="black" stroke="none"/>
+    </marker>
+    <marker id="startDimArrow" viewBox="0 -5 10 10" markerUnits="strokeWidth"
+            markerWidth="10" markerHeight="10" orient="auto">
+      <path d="M0,0 L10,-2 10,2 z M0,-5 L0,5" stroke="black" />
+    </marker>
+    <marker id="endDimArrow" viewBox="-10 -5 10 10" markerUnits="strokeWidth"
+            markerWidth="10" markerHeight="10" orient="auto">
+      <path d="M-10,-2 L0,0 -10,2 z M0,-5 L0,5" stroke="black" />
+    </marker>
+    <circle id="node" r="2" stroke-width="0.6" fill="white" />
+    <path id="arrow" d="m0,0l-10-2v4z" stroke="none" />
+    <g id="coords" stroke="black" transform="scale(2)">
+      <path d="M15,0 H0 V15" fill="none" stroke-width="0.5"/>
+      <use xlink:href="#arrow" transform="translate(20,0) scale(0.5)" />
+      <use xlink:href="#arrow" transform="translate(0,20) rotate(90) scale(0.5)" />
+      <circle r="1" stroke-width="0.2" fill="white" />
+    </g>
+    <circle id="crvpnt" r="2" stroke="black" fill="lightgray" />
+    <circle id="wheel" r="10" stroke="black" stroke-width="5" 
+            fill="lightgray" />
+  </defs>
+  <rect id="grid" width="350" height="201" stroke="gray" stroke-width="0.25" fill="url(#gridPattern)" /> 
+  <!-- grid -->
+  <use xlink:href="#coords" />
+  <text x="3" y="15" font-size="13">(0,0)</text>
+	<!-- example -->
+  <!-- Triangle -->
+  <polygon points="175,10 100,60 250,60"
+	fill="darkblue"/>
+  <!-- Plane -->
+  <polygon points="73,34 90,50 80,85 40,50"
+	fill="green" stroke-width="1"/>
+  <!-- Trapezoid -->
+  <polygon points="150,80 200,80 220,110, 130,110"
+	fill="white" stroke="black" stroke-width="2"/>
+  <!-- Octagon -->
+  <polygon points="47,108 22,133 22,166 47,184 85,184 108,166 108,133 85,108"
+	fill="darkred" stroke-width="1"/>
+  <!-- ART -->
+  <polygon points="150,120 200,120 130,180, 220,180"
+	fill="pink" stroke="black" stroke-width="2"/>
+  <polygon points="265,180 300,5 265,5 300,180" 
+	stroke="black" stroke-width="2" fill="lightgrey" />
+</svg>

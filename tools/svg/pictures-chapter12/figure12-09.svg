@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+         "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+<svg width="350" height="370">
+   <defs>
+     <path id="level_0" fill="none" stroke="black" d="M0 0h300" />
+     <g id="level_1">
+         <use xlink:href="#level_0" transform="scale(0.333)" />
+         <use xlink:href="#level_0" transform="translate(100 0) rotate(-60) scale(0.333)" />
+         <use xlink:href="#level_0" transform="translate(150 -86.6) rotate(60) scale(0.333)" />
+         <use xlink:href="#level_0" transform="translate(200 0) scale(0.333)" />
+     </g>
+     <g id="level_2">
+         <use xlink:href="#level_1" transform="scale(0.333)" />
+         <use xlink:href="#level_1" transform="translate(100 0) rotate(-60) scale(0.333)" />
+         <use xlink:href="#level_1" transform="translate(150 -86.6) rotate(60) scale(0.333)" />
+         <use xlink:href="#level_1" transform="translate(200 0) scale(0.333)" />
+     </g>
+     <g id="level_3">
+         <use xlink:href="#level_2" transform="scale(0.333)" />
+         <use xlink:href="#level_2" transform="translate(100 0) rotate(-60) scale(0.333)" />
+         <use xlink:href="#level_2" transform="translate(150 -86.6) rotate(60) scale(0.333)" />
+         <use xlink:href="#level_2" transform="translate(200 0) scale(0.333)" />
+     </g>
+     <g id="level_4">
+         <use xlink:href="#level_3" transform="scale(0.333)" />
+         <use xlink:href="#level_3" transform="translate(100 0) rotate(-60) scale(0.333)" />
+         <use xlink:href="#level_3" transform="translate(150 -86.6) rotate(60) scale(0.333)" />
+         <use xlink:href="#level_3" transform="translate(200 0) scale(0.333)" />
+     </g>
+     <g id="level_5">
+         <use xlink:href="#level_4" transform="scale(0.333)" />
+         <use xlink:href="#level_4" transform="translate(100 0) rotate(-60) scale(0.333)" />
+         <use xlink:href="#level_4" transform="translate(150 -86.6) rotate(60) scale(0.333)" />
+         <use xlink:href="#level_4" transform="translate(200 0) scale(0.333)" />
+     </g>
+
+   </defs>
+   <use xlink:href="#level_5" stroke-width="243" transform="translate(20,100)" />
+   <use xlink:href="#level_5" stroke-width="243" transform="translate(320,100) rotate(120)" />
+   <use xlink:href="#level_5" stroke-width="243" transform="translate(170,360) rotate(-120)" />
+</svg>

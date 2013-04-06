@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+<svg width="400" height="300" xmlns="http://www.w3.org/2000/svg" >
+  <script type="text/ecmascript">
+  <![CDATA[
+    function ShowCoords(evt)
+    {
+       var coordText = evt.target.ownerDocument.getElementById("coords").firstChild;
+       coordText.nodeValue = "mouse position (" + evt.clientX + "," + evt.clientY + ")";
+    }
+  ]]>
+  </script>
+  <text id="coords" x="385" y="20" text-anchor="end">mouse position (?, ?)</text>
+  <rect x="100"  y="50" width="250" height="200" stroke="black" fill="moccasin" 
+        onmousemove="ShowCoords(evt);"/>
+  <text x="100" y="45" text-anchor="middle">(100,50)</text>
+  <text x="350" y="264" text-anchor="middle">(350,250)</text>
+</svg>

@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+         "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+<svg width="640" height="180" viewBox="-10 -10 320 90">
+<defs>
+<pattern id="Pat01" width="10" height="10" patternUnits="userSpaceOnUse">
+	<rect width="10" height="10" fill="#FFFFFF" stroke="#000000" stroke-width="0.1"/>
+</pattern>
+</defs>
+<rect x="0" y="0" width="301" height="71" fill="url(#Pat01)"/>
+
+<path stroke="blue" stroke-width="8" fill="none" stroke-linecap="round"
+d="M20,20 Z M80,30 Z M140,20 Z M200,30 Z M260,30 Z"/>
+<text x="150" y="50" font-size="8" text-anchor="middle">&lt;stroke="blue" stroke-width="8" fill="none" stroke-linecap="round"
+<tspan x="150" dy="1.2em">
+d="M20,20 Z M80,30 Z M140,20 Z M200,30 Z M260,30 Z"/&gt;
+</tspan>
+</text>
+</svg>

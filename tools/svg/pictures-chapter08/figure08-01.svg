@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+         "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+<svg width="800" height="500" viewBox="0 80 800 500">
+<defs>
+    <filter id="MyFilter0" filterRes="10" filterUnits="userSpaceOnUse" x="0" y="0" width="400" height="400">
+    <feTurbulence type="fractalNoise" baseFrequency="0.01,0.1" numOctaves="4" seed='10'/>
+    </filter>
+    <pattern id="motif0" patternUnits="userSpaceOnUse" x="0" y="0" width="400" height="400">
+    <rect x="0" y="0" width="400" height="400" filter="url(#MyFilter0)"/>
+    </pattern> 
+    <filter id="MyFilter1" filterRes="20" filterUnits="userSpaceOnUse" x="0" y="0" width="400" height="400">
+    <feTurbulence type="fractalNoise" baseFrequency="0.01,0.1" numOctaves="4" seed='10'/>
+    </filter>
+    <pattern id="motif1" patternUnits="userSpaceOnUse" x="0" y="0" width="400" height="400">
+    <rect x="0" y="0" width="400" height="400" filter="url(#MyFilter1)"/>
+    </pattern> 
+    <filter id="MyFilter2" filterRes="50" filterUnits="userSpaceOnUse" x="0" y="0" width="400" height="400">
+    <feTurbulence type="fractalNoise" baseFrequency="0.01,0.1" numOctaves="4" seed='10'/>
+    </filter>
+    <pattern id="motif2" patternUnits="userSpaceOnUse" x="0" y="0" width="400" height="400">
+    <rect x="0" y="0" width="400" height="400" filter="url(#MyFilter2)"/>
+    </pattern> 
+<filter id="MyFilter3" filterRes="10" filterUnits="userSpaceOnUse" x="0" y="0" width="400" height="400">
+<feImage xlink:href="memo.svgz"/>
+</filter>
+<filter id="MyFilter4" filterRes="20" filterUnits="userSpaceOnUse" x="0" y="0" width="400" height="400">
+<feImage xlink:href="memo.svgz"/>
+</filter>
+<filter id="MyFilter5" filterRes="50" filterUnits="userSpaceOnUse" x="0" y="0" width="400" height="400">
+<feImage xlink:href="memo.svgz"/>
+</filter>
+</defs>
+<rect x="0" y="80" width="800" height="500" style="fill:white;stroke:black;fill-opacity:0.5"/>
+<svg x="100" y="100" width="200" height="200" viewBox='0 0 400 400'>
+<circle cx='200' cy='200' r='200' style='stroke:black;fill:url(#motif0)'/>
+</svg>
+<svg x="310" y="100" width="200" height="200" viewBox='0 0 400 400'>
+<circle cx='200' cy='200' r='200' style='stroke:black;fill:url(#motif1)'/>
+</svg>
+<svg x="520" y="100" width="200" height="200" viewBox='0 0 400 400'>
+<circle cx='200' cy='200' r='200' style='stroke:black;fill:url(#motif2)'/>
+</svg>
+<text x="200" y="320" style="text-anchor:middle;font-size:15">
+filterRes : 10
+</text>
+<text x="410" y="320" style="text-anchor:middle;font-size:15">
+filterRes : 20
+</text>
+<text x="620" y="320" style="text-anchor:middle;font-size:15">
+filterRes : 50
+</text>
+<svg x="100" y="330" width='200' height='200' viewBox="0 0 400 400">
+<rect filter="url(#MyFilter3)" x="0" y="0" width='400' height='400'/>
+</svg>
+<svg x="310" y="330" width='200' height='200' viewBox="0 0 400 400">
+<rect filter="url(#MyFilter4)" x="0" y="0" width='400' height='400'/>
+</svg>
+<svg x="520" y="330" width='200' height='200' viewBox="0 0 400 400">
+<rect filter="url(#MyFilter5)" x="0" y="0" width='400' height='400'/>
+</svg>
+</svg>

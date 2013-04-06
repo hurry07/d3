@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+         "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+<svg width="660" height="300" viewBox="-30 -30 660 300">
+<defs>
+<radialGradient id='gradient' spreadMethod='repeat' 
+cx='50%' cy='50%' r='10%' fx='50%' fy='50%'>
+<stop id='c1' offset='5%' stop-color='red' stop-opacity='1'/>
+<stop id='c2' offset='95%' stop-color='yellow' stop-opacity='0'/>
+</radialGradient>
+<filter id='Filter0' filterUnits='objectBoundingBox' 
+x='0%' y='0%' width='100%' height='100%'>
+<feImage result="pict0" xlink:href="#Image2"/>
+<feDiffuseLighting result='pict1' in='pict0' 
+lighting-color='white' diffuseConstant='1' 
+kernelUnitLength='1,1' surfaceScale='4.2'>
+<feDistantLight azimuth='60' elevation='25'/>
+</feDiffuseLighting>
+<feComposite in2='pict1' in='pict0' operator='xor'/>
+</filter>
+<filter id='Filter1' filterUnits='objectBoundingBox' 
+x='0%' y='0%' width='100%' height='100%'>
+<feImage result="pict0" xlink:href="#Image1"/>
+<feDiffuseLighting result='pict1' in='pict0' 
+lighting-color='white' diffuseConstant='1' 
+kernelUnitLength='1,1' surfaceScale='4.2'>
+<feDistantLight azimuth='60' elevation='25'/>
+</feDiffuseLighting>
+</filter>
+<rect id="Image1" x="200" y="0" width='200' height='200' fill='url(#gradient)'/>
+<rect id="Image2" x="400" y="0" width='200' height='200' fill='url(#gradient)'/>
+</defs>
+<rect x='0' y='0' width='200' height='200' fill='url(#gradient)'/>
+<rect x="200" y="0" width='200' height='200' filter='url(#Filter1)'/>
+<rect x="400" y="0" width='200' height='200' filter='url(#Filter0)'/>
+<text x="100" y="225" style="text-anchor:middle">radial gradient</text>
+<text x="300" y="225" style="text-anchor:middle">lighting gradient</text>
+<text x="500" y="225" style="text-anchor:middle">composite pictures</text>
+</svg>

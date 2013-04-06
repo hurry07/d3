@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+         "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+<svg width="550" height="230"  viewBox="-50 -30 550 230">
+<defs>
+<g id="fond">
+<rect x="0" y="0" width="500" height="100" fill="white"/>
+<text x="250" y="60" style="text-anchor:middle;font-size:35;font-family:Arial;fill:black">Scalable Vector Graphics</text>
+</g>
+<g id="fond2">
+<rect x="0" y="100" width="500" height="100" fill="white"/>
+<text x="250" y="160" style="text-anchor:middle;font-size:35;font-family:Arial;fill:black">Scalable Vector Graphics</text>
+</g>
+<mask id="spot" maskUnits="userSpaceOnUse" x="0" y="0" width="500" height="100">
+<circle cx="200" cy="50" r="50" fill="white"/>
+</mask>
+<mask id="spot2" maskUnits="userSpaceOnUse" x="0" y="100" width="500" height="100">
+<circle cx="200" cy="150" r="50" fill="green"/>
+</mask>
+</defs>
+<rect x="0" y="0" width="500" height="100" fill="black" fill-opacity="1"/>
+<text x="250" y="60" style="text-anchor:middle;font-size:35;font-family:Arial;fill:white;fill-opacity:1">Scalable Vector Graphics</text>
+<use mask="url(#spot)" xlink:href="#fond"/>
+<rect x="0" y="100" width="500" height="100" fill="black" fill-opacity="1"/>
+<text x="250" y="160" style="text-anchor:middle;font-size:35;font-family:Arial;fill:white;fill-opacity:1">Scalable Vector Graphics</text>
+<use mask="url(#spot2)" xlink:href="#fond2"/>
+</svg>

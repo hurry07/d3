@@ -1,0 +1,62 @@
+<?xml version="1.0" standalone="no"?>
+<html xmlns:iSvg="http://www.w3.org/2000/svg"
+      xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+<object id="AdobeSVG" classid="clsid:78156a80-c6a1-4bbf-8e6a-3cd390eeb4e2">
+	<img src="rasterSVG.png" border="0"/>
+</object>
+<?import namespace="iSvg" implementation="#AdobeSVG"?>
+
+</head>
+<body>
+
+<div style="font-family:Verdana,Arial,san-serif;font-size:20px">Multi-Namespace Document in Internet Explorer</div>
+<p></p>
+<div style="position:absolute; left:120; top:215; width:270px; height:25px; padding:3px; border:solid; background-color: #CCCCCC; layer-background-color: #CCCCCC;font-family:Verdana,Arial,san-serif;font-size:15px;">Absolute positioned XHTML text.</div>
+
+<iSvg:svg id="inlineSVG" width="800" height="600" viewBox="0 0 400 300" xmlns:svg="http://www.w3.org/2000/svg">
+
+<iSvg:defs>
+	<iSvg:pattern id="gridPattern" width="10" height="10" patternUnits="userSpaceOnUse">
+		<iSvg:path d="M10 0 L0 0 L0 10" style="fill:none;stroke:rgb(128,128,128);stroke-width:0.25"/>
+	</iSvg:pattern>
+	<!-- Pattern Gradient 01 -->
+	<iSvg:radialGradient id="bubblePattern01" gradientUnits="objectBoundingBox"
+	                        fx="20%" fy="20%" style="opacity:0.5;">
+		<iSvg:stop offset="0%" style="stop-color:white;" />
+		<iSvg:stop offset="70%" style="stop-color:pink;" />
+		<iSvg:stop offset="100%" style="stop-color:blue;" />
+	</iSvg:radialGradient>
+</iSvg:defs>
+
+	<iSvg:rect id="grid" width="250" height="100"
+		 style="stroke:rgb(128,128,128);stroke-width:0.25;fill:url(#gridPattern)"/>
+	<!-- grid -->
+	<iSvg:text x="3" y="9" style="font-size:8">(0,0)</iSvg:text>
+	<!-- example -->
+	<iSvg:path 
+			d="M30 20 L220 20 
+				M30 40 L220 40 
+				M30 60 L220 60"
+		 fill="none" stroke="black" stroke-width="0.5"/>
+  <iSvg:text fill="black">
+  	<iSvg:tspan x="30" y="20" style="font-size:12;font-family:Verdana,serif;">Absolute positioned SVG text.</iSvg:tspan>
+  	<iSvg:tspan x="30" y="40" style="font-size:9;font-family:Verdana,serif;">This text spans multiple lines.  Word-</iSvg:tspan>
+  	<iSvg:tspan x="30" y="60" style="font-size:9;font-family:Verdana,serif;">wrapping needs more intelligence.</iSvg:tspan>
+  </iSvg:text>
+  <iSvg:circle cx="10" cy="90" r="10" stroke="black" 
+          stroke-width="10" fill="lightgray" />
+  <iSvg:circle cx="240" cy="90" r="10" stroke="black" 
+          stroke-width="10" fill="lightgray" />
+	<iSvg:circle id="bubble" cx="50" cy="50" r="10" 
+		style="fill:url(#bubblePattern01);opacity:0.5;">
+    <iSvg:animateTransform attributeName="transform" type="translate" 
+                           values="0 -40;190 40;100 -40;20 0;-40 40;" 
+                           additive="sum" dur="30s" repeatDur="indefinite"/>
+  </iSvg:circle>
+</iSvg:svg>
+
+</body>
+</html>
+ 

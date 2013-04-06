@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+         "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+<svg width="640" height="220" viewBox="-20 -20 640 220">
+<defs>
+        <linearGradient id="MyGradient1" x1="20%" y1="0%" x2="50%" y2="0%">
+            <stop offset="30%" stop-color="red"/>
+            <stop offset="70%" stop-color="yellow"/>
+        </linearGradient>
+        <linearGradient id="MyGradient2" spreadMethod="pad" 
+   x1="20%" y1="0%" x2="50%" y2="0%">
+            <stop offset="30%" stop-color="red"/>
+            <stop offset="70%" stop-color="yellow"/>
+        </linearGradient>
+        <linearGradient id="MyGradient3" spreadMethod="reflect" 
+  x1="20%" y1="0%" x2="50%" y2="0%">
+            <stop offset="30%" stop-color="red"/>
+            <stop offset="70%" stop-color="yellow"/>
+        </linearGradient>
+        <linearGradient id="MyGradient4" spreadMethod="repeat" 
+  x1="20%" y1="0%" x2="50%" y2="0%">
+            <stop offset="30%" stop-color="red"/>
+            <stop offset="70%" stop-color="yellow"/>
+        </linearGradient>
+</defs>
+<rect x="0" y="0" width="150" height="150" style="fill:url(#MyGradient1)"/>
+<rect x="150" y="0" width="150" height="150" style="fill:url(#MyGradient2)"/>
+<rect x="300" y="0" width="150" height="150" style="fill:url(#MyGradient3)"/>
+<rect x="450" y="0" width="150" height="150" style="fill:url(#MyGradient4)"/>
+<text x="75" y="175" style="text-anchor:middle">default</text>
+<text x="225" y="175" style="text-anchor:middle">pad</text>
+<text x="375" y="175" style="text-anchor:middle">reflect</text>
+<text x="525" y="175" style="text-anchor:middle">repeat</text>
+</svg>

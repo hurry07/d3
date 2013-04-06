@@ -1,0 +1,18 @@
+<svg width="300" height="300">
+	<rect x="10" y="10" width="70" height="70"
+		fill="pink" stroke="blue" stroke-width="5"
+		stroke-dasharray="35 35" stroke-dashoffset="-17.5"
+		/>
+	<line x1="90" y1="45" x2="215" y2="45"
+		stroke-width="10" stroke="black"
+		stroke-dasharray="2 13"
+	 	/>
+	<line x1="120" y1="80" x2="215" y2="45"
+		stroke-width="2" stroke="black"
+		stroke-dasharray="1 10 5 10"
+	 	/>
+	<line x1="120" y1="10" x2="215" y2="45"
+		stroke-width="2" stroke="black"
+		stroke-dasharray="1 10 5 10"
+	 	/>
+</svg>

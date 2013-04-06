@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml-stylesheet type="text/xsl"
+      href="http://www.w3.org/Math/Group/XSL/pmathml.xsl"?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+  <title>MathML and SVG in Amaya 6.1</title>
+ </head>
+
+ <body>
+ <h2 style="text-align:center">MathML and 
+     SVG Support in Amaya 6.1</h2>
+ <p> This polynomial is the equation of the quadratic Bézier curve -
+     a simple parabolic curve </p>
+
+ <p style="text-align:center">
+ <math xmlns='http://www.w3.org/1998/Math/MathML'>
+ <mrow>
+  <mi>p</mi><mo>(</mo><mi>t</mi><mo>)</mo><mo>=</mo>
+  <msup>
+   <mrow>
+    <mo>(</mo><mn>1</mn><mo>&minus;</mo><mi>t</mi><mo>)</mo>
+   </mrow>
+   <mn>2</mn>
+  </msup>
+  <mo>&sdot;</mo>
+  <msub> <mi>p</mi> <mn>1</mn> </msub>
+  <mo>+</mo><mn>2</mn><mi>t</mi><mo>&sdot;</mo>
+  <mo>(</mo><mn>1</mn><mo>&minus;</mo><mi>t</mi><mo>)</mo>
+  <mo>&sdot;</mo>
+  <msub> <mi>p</mi> <mn>2</mn> </msub>
+  <mo>+</mo>
+  <msup> <mi>t</mi> <mn>2</mn> </msup>
+  <mo>&sdot;</mo>
+  <msub> <mi>p</mi> <mn>3</mn> </msub>
+ </mrow>
+</math>
+</p>
+
+<svg  xmlns="http://www.w3.org/2000/svg">
+    <path fill="lightgray" stroke="black" stroke-width="2"
+          d="M 100,200
+             Q 80,150 180,140
+             Q 190,120 190,100
+             Q 360,80 340,200 
+             Z" />
+    <circle cx="160" cy="200" r="20" stroke="black" 
+            stroke-width="10" fill="lightgray" />
+    <circle cx="290" cy="200" r="20" stroke="black" 
+            stroke-width="10" fill="lightgray" />
+  </svg>
+</body>
+</html>

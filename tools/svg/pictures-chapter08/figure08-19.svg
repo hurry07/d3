@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+         "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+<svg width="100%" height="100%" viewBox="0 -50 850 600" onload="init(evt)">
+<script type="text/ecmascript"><![CDATA[
+var svgdoc,filtre;
+var coldis = new Array("red","green","yellow","blue","purple","lime","navy","aqua","fuchsia","maroon","gray","teal","olive","black","silver","white");
+var operateurs=new Array("arithmetic","over","in","out","atop","xor");
+var color=10,spe_c=0.75,spe_exp=32,x=-5000,y=-10000,z=20000,dx=4,dy=4,st=4,ss=4;
+var k1=0,k2=1,k3=1,k4=0,operateur=0;
+
+function init(evt) 
+{svgdoc = evt.target.ownerDocument;
+filtre1 = svgdoc.getElementById('fpl');
+filtre0 = svgdoc.getElementById('fsl');
+filtre2 = svgdoc.getElementById('fco');
+filtre3 = svgdoc.getElementById('fof');
+filtre4 = svgdoc.getElementById('fgb');
+}
+
+function changer(evt)
+{cible=evt.target.getAttribute("id");
+switch(cible.substring(0,2))
+{case "st":
+operation=cible.substring(2,3);
+if (operation=="+")
+{st=parseInt(st)+1} else {st=parseInt(st)-1};
+obj=svgdoc.getElementById("st");
+child=obj.firstChild;child.setData(st);
+filtre4.setAttribute("stdDeviation",st.toString());break;
+case "ss":
+operation=cible.substring(2,3);
+if (operation=="+")
+{ss=parseInt(ss)+1} else {ss=parseInt(ss)-1};
+if (ss<0) {ss=0};
+obj=svgdoc.getElementById("ss");
+child=obj.firstChild;child.setData(ss);
+filtre0.setAttribute("surfaceScale",ss.toString());break;
+case "dx":
+operation=cible.substring(2,3);
+if (operation=="+")
+{dx=parseInt(dx)+1} else {dx=parseInt(dx)-1};
+obj=svgdoc.getElementById("dx");
+child=obj.firstChild;child.setData(dx);
+filtre3.setAttribute("dx",dx.toString());break;
+case "dy":
+operation=cible.substring(2,3);
+if (operation=="+")
+{dy=parseInt(dy)+1} else {dy=parseInt(dy)-1};
+obj=svgdoc.getElementById("dy");
+child=obj.firstChild;child.setData(dy);
+filtre3.setAttribute("dy",dy.toString());break;
+case "lc":
+operation=cible.substring(2,3);
+if (operation=="+")
+{color=parseInt(color)+1} else {color=parseInt(color)-1};
+if (color==-1) {color=15};if (color==16) {color=0};
+obj=svgdoc.getElementById("lc");
+child=obj.firstChild;child.setData(coldis[color]);
+filtre0.setAttribute("lighting-color",coldis[color]);break;
+case "sc":
+operation=cible.substring(2,3);
+if (operation=="+")
+{spe_c=parseFloat(spe_c)+0.05} else {spe_c=parseFloat(spe_c)-0.05};
+if (spe_c<0.05) {spe_c=0};
+obj=svgdoc.getElementById("sc");
+child=obj.firstChild;child.setData(spe_c);
+filtre0.setAttribute("specularConstant",spe_c.toString());break;
+case "se":
+operation=cible.substring(2,3);
+if (operation=="+")
+{spe_exp=parseInt(spe_exp)*2} else {spe_exp=parseInt(spe_exp)/2};
+if (spe_exp<1) {spe_exp=1};
+obj=svgdoc.getElementById("se");
+child=obj.firstChild;child.setData(spe_exp);
+filtre0.setAttribute("specularExponent",spe_exp.toString());break;
+case "xs":
+operation=cible.substring(2,3);
+if (operation=="+")
+{x=parseInt(x)+500} else {x=parseInt(x)-500};
+obj=svgdoc.getElementById("xs");
+child=obj.firstChild;child.setData(x);
+filtre1.setAttribute("x",x.toString());break;
+case "ys":
+operation=cible.substring(2,3);
+if (operation=="+")
+{y=parseInt(y)+500} else {y=parseInt(y)-500};
+obj=svgdoc.getElementById("ys");
+child=obj.firstChild;child.setData(y);
+filtre1.setAttribute("y",y.toString());break;
+case "zs":
+operation=cible.substring(2,3);
+if (operation=="+")
+{z=parseInt(z)+500} else {z=parseInt(z)-500};
+obj=svgdoc.getElementById("zs");
+child=obj.firstChild;child.setData(z);
+filtre1.setAttribute("z",z.toString());break;
+case "op":
+operateur=parseInt(cible.substring(2,3));
+if (operateur<3) {x_c=90+100*operateur;y_c=295} else {x_c=90+100*(operateur-3);y_c=315};
+obj=svgdoc.getElementById("choix");
+obj.setAttribute("cx",x_c.toString());obj.setAttribute("cy",y_c.toString());
+filtre2.setAttribute("operator",operateurs[operateur]);break;
+case "k1":
+operation=cible.substring(2,3);
+if (operation=="+")
+{k1=parseFloat(k1)+0.1} else {k1=parseFloat(k1)-0.1};
+if (k1<0.1) {k1=0};
+obj=svgdoc.getElementById("k1");
+child=obj.firstChild;child.setData(k1);
+filtre2.setAttribute("k1",k1.toString());break;
+case "k2":
+operation=cible.substring(2,3);
+if (operation=="+")
+{k2=parseFloat(k2)+0.1} else {k2=parseFloat(k2)-0.1};
+if (k2<0.1) {k2=0};
+obj=svgdoc.getElementById("k2");
+child=obj.firstChild;child.setData(k2);
+filtre2.setAttribute("k2",k2.toString());break;
+case "k3":
+operation=cible.substring(2,3);
+if (operation=="+")
+{k3=parseFloat(k3)+0.1} else {k3=parseFloat(k3)-0.1};
+if (k3<0.1) {k3=0};
+obj=svgdoc.getElementById("k3");
+child=obj.firstChild;child.setData(k3);
+filtre2.setAttribute("k3",k3.toString());break;
+case "k4":
+operation=cible.substring(2,3);
+if (operation=="+")
+{k4=parseFloat(k4)+0.1} else {k4=parseFloat(k4)-0.1};
+if (k4<0.1) {k4=0};
+obj=svgdoc.getElementById("k4");
+child=obj.firstChild;child.setData(k4);
+filtre2.setAttribute("k4",k4.toString());break;
+}}
+
+]]></script>
+<defs>
+    <filter id="MyFilter" filterUnits="userSpaceOnUse" x="0" y="0" width="400" height="400">
+      <feGaussianBlur id='fgb' in="SourceAlpha" stdDeviation="4" result="blur"/>
+      <feOffset id='fof' in="blur" dx="4" dy="4" result="offsetBlur"/>
+      <feSpecularLighting id="fsl" in="blur" surfaceScale="4" specularConstant=".75" 
+                          specularExponent="32" lighting-color="gray"  
+                          result="specOut">
+        <fePointLight id="fpl" x="-5000" y="-10000" z="20000"/>
+      </feSpecularLighting>
+      <feComposite in="specOut" in2="SourceAlpha" operator="in" result="specOut"/>
+      <feComposite id="fco" in="SourceGraphic" in2="specOut" operator="arithmetic" 
+                   k1="0" k2="1" k3="1" k4="0" result="litPaint"/>
+      <feMerge>
+        <feMergeNode in="offsetBlur"/>
+        <feMergeNode in="litPaint"/>
+      </feMerge>
+    </filter>
+</defs>
+<rect x="0" y="-50" width="850" height="600" style="fill:orange;stroke:black;fill-opacity:0.5"/>
+<g filter="url(#MyFilter)" >
+<image id="MyImage" x='0' y='0' width='400' height='400' xlink:href="memo.svgz"/>	  
+</g>
+<g id="tools" transform="translate(400,0)">
+<text x="200" y="30" style="text-anchor:middle;font-size:20;font-family:Arial;fill:black">3D lighting effect on a graphic</text>
+<text x="200" y="60" style="text-anchor:middle;font-size:15;font-family:Arial;fill:black">Filter feGaussianBlur</text>
+<text x="20" y="80" style="font-size:15;font-family:Arial;fill:black">stdDeviation</text>
+<rect x="150" y="67" width="50" height="15" style="stroke:black;fill:none"/>
+<text id="st" x="195" y="80" style="text-anchor:end;font-size:15;font-family:Arial;fill:black">4</text>
+<path d="M203 74l18 0"  style="stroke:blue;fill:none;stroke-width:3"/>
+<path d="M228 74l18 0 M237 68l0 12"  style="stroke:red;fill:none;stroke-width:3"/>
+<text x="200" y="100" style="text-anchor:middle;font-size:15;font-family:Arial;fill:black">Filter feOffset</text>
+<text x="20" y="120" style="font-size:15;font-family:Arial;fill:black">dx</text>
+<rect x="50" y="107" width="50" height="15" style="stroke:black;fill:none"/>
+<text id="dx" x="95" y="120" style="text-anchor:end;font-size:15;font-family:Arial;fill:black">4</text>
+<path d="M103 114l18 0"  style="stroke:blue;fill:none;stroke-width:3"/>
+<path d="M128 114l18 0 M137 108l0 12"  style="stroke:red;fill:none;stroke-width:3"/>
+<text x="170" y="120" style="font-size:15;font-family:Arial;fill:black">dy</text>
+<rect x="200" y="107" width="50" height="15" style="stroke:black;fill:none"/>
+<text id="dy" x="245" y="120" style="text-anchor:end;font-size:15;font-family:Arial;fill:black">4</text>
+<path d="M253 114l18 0"  style="stroke:blue;fill:none;stroke-width:3"/>
+<path d="M278 114l18 0 M287 108l0 12"  style="stroke:red;fill:none;stroke-width:3"/>
+<text x="200" y="140" style="text-anchor:middle;font-size:15;font-family:Arial;fill:black">Filter feSpecularLighting</text>
+<text x="20" y="160" style="font-size:15;font-family:Arial;fill:black">specularConstant </text>
+<rect x="150" y="147" width="50" height="15" style="stroke:black;fill:none"/>
+<text id="sc" x="195" y="160" style="text-anchor:end;font-size:15;font-family:Arial;fill:black">0.75</text>
+<path d="M203 154l18 0"  style="stroke:blue;fill:none;stroke-width:3"/>
+<path d="M228 154l18 0 M237 148l0 12"  style="stroke:red;fill:none;stroke-width:3"/>
+<text x="20" y="180" style="font-size:15;font-family:Arial;fill:black">specularExponent </text>
+<rect x="150" y="167" width="50" height="15" style="stroke:black;fill:none"/>
+<text id="se" x="195" y="180" style="text-anchor:end;font-size:15;font-family:Arial;fill:black">32</text>
+<path d="M203 174l18 0"  style="stroke:blue;fill:none;stroke-width:3"/>
+<path d="M228 174l18 0 M237 168l0 12"  style="stroke:red;fill:none;stroke-width:3"/>
+<text x="20" y="200" style="font-size:15;font-family:Arial;fill:black">surfaceScale</text>
+<rect x="150" y="187" width="50" height="15" style="stroke:black;fill:none"/>
+<text id="ss" x="195" y="200" style="text-anchor:end;font-size:15;font-family:Arial;fill:black">4</text>
+<path d="M203 194l18 0"  style="stroke:blue;fill:none;stroke-width:3"/>
+<path d="M228 194l18 0 M237 188l0 12"  style="stroke:red;fill:none;stroke-width:3"/>
+<text x="20" y="220" style="font-size:15;font-family:Arial;fill:black">lighting-color </text>
+<rect x="150" y="207" width="70" height="15" style="stroke:black;fill:none"/>
+<text id="lc" x="200" y="220" style="text-anchor:end;font-size:15;font-family:Arial;fill:black">gray</text>
+<path d="M223 214l18 0"  style="stroke:blue;fill:none;stroke-width:3"/>
+<path d="M248 214l18 0 M257 208l0 12"  style="stroke:red;fill:none;stroke-width:3"/>
+<text x="200" y="240" style="text-anchor:middle;font-size:15;font-family:Arial;fill:black">Filter fePointLight</text>
+<text x="20" y="260" style="font-size:15;font-family:Arial;fill:black">x</text>
+<rect x="30" y="247" width="70" height="15" style="stroke:black;fill:none"/>
+<text id="xs" x="95" y="260" style="text-anchor:end;font-size:15;font-family:Arial;fill:black">-5000</text>
+<path d="M103 254l18 0"  style="stroke:blue;fill:none;stroke-width:3"/>
+<path d="M128 254l18 0 M137 248l0 12"  style="stroke:red;fill:none;stroke-width:3"/>
+<text x="160" y="260" style="font-size:15;font-family:Arial;fill:black">y</text>
+<rect x="170" y="247" width="70" height="15" style="stroke:black;fill:none"/>
+<text id="ys" x="235" y="260" style="text-anchor:end;font-size:15;font-family:Arial;fill:black">-10000</text>
+<path d="M243 254l18 0"  style="stroke:blue;fill:none;stroke-width:3"/>
+<path d="M268 254l18 0 M277 248l0 12"  style="stroke:red;fill:none;stroke-width:3"/>
+<text x="300" y="260" style="font-size:15;font-family:Arial;fill:black">z</text>
+<rect x="310" y="247" width="70" height="15" style="stroke:black;fill:none"/>
+<text id="zs" x="375" y="260" style="text-anchor:end;font-size:15;font-family:Arial;fill:black">20000</text>
+<path d="M383 254l18 0"  style="stroke:blue;fill:none;stroke-width:3"/>
+<path d="M408 254l18 0 M417 248l0 12"  style="stroke:red;fill:none;stroke-width:3"/>
+<text x="200" y="280" style="text-anchor:middle;font-size:15;font-family:Arial;fill:black">Filter feComposite</text>
+<text x='20' y='300' style="font-size:15;font-family:Arial;fill:black">operator</text>
+<circle cx="90" cy="295" r="6" style="stroke:black;fill:white"/>
+<text x='100' y='300' style="font-size:15;font-family:Arial;fill:black">arithmetic</text>
+<circle cx="190" cy="295" r="6" style="stroke:black;fill:white"/>
+<text x='200' y='300' style="font-size:15;font-family:Arial;fill:black">over</text>
+<circle cx="290" cy="295" r="6" style="stroke:black;fill:white"/>
+<text x='300' y='300' style="font-size:15;font-family:Arial;fill:black">in</text>
+<circle cx="90" cy="315" r="6" style="stroke:black;fill:white"/>
+<text x='100' y='320' style="font-size:15;font-family:Arial;fill:black">out</text>
+<circle cx="190" cy="315" r="6" style="stroke:black;fill:white"/>
+<text x='200' y='320' style="font-size:15;font-family:Arial;fill:black">atop</text>
+<circle cx="290" cy="315" r="6" style="stroke:black;fill:white"/>
+<text x='300' y='320' style="font-size:15;font-family:Arial;fill:black">xor</text>
+<text x="20" y="340" style="font-size:15;font-family:Arial;fill:black">k1</text>
+<rect x="50" y="327" width="50" height="15" style="stroke:black;fill:none"/>
+<text id="k1" x="95" y="340" style="text-anchor:end;font-size:15;font-family:Arial;fill:black">0</text>
+<path d="M103 334l18 0"  style="stroke:blue;fill:none;stroke-width:3"/>
+<path d="M128 334l18 0 M137 328l0 12"  style="stroke:red;fill:none;stroke-width:3"/>
+<text x="170" y="340" style="font-size:15;font-family:Arial;fill:black">k2</text>
+<rect x="200" y="327" width="50" height="15" style="stroke:black;fill:none"/>
+<text id="k2" x="245" y="340" style="text-anchor:end;font-size:15;font-family:Arial;fill:black">1</text>
+<path d="M253 334l18 0"  style="stroke:blue;fill:none;stroke-width:3"/>
+<path d="M278 334l18 0 M287 328l0 12"  style="stroke:red;fill:none;stroke-width:3"/>
+<text x="20" y="360" style="font-size:15;font-family:Arial;fill:black">k3</text>
+<rect x="50" y="347" width="50" height="15" style="stroke:black;fill:none"/>
+<text id="k3" x="95" y="360" style="text-anchor:end;font-size:15;font-family:Arial;fill:black">1</text>
+<path d="M103 354l18 0"  style="stroke:blue;fill:none;stroke-width:3"/>
+<path d="M128 354l18 0 M137 348l0 12"  style="stroke:red;fill:none;stroke-width:3"/>
+<text x="170" y="360" style="font-size:15;font-family:Arial;fill:black">k4</text>
+<rect x="200" y="347" width="50" height="15" style="stroke:black;fill:none"/>
+<text id="k4" x="245" y="360" style="text-anchor:end;font-size:15;font-family:Arial;fill:black">0</text>
+<path d="M253 354l18 0"  style="stroke:blue;fill:none;stroke-width:3"/>
+<path d="M278 354l18 0 M287 348l0 12"  style="stroke:red;fill:none;stroke-width:3"/>
+<circle id="choix" cx="90" cy="295" r="4" style="stroke:black;fill:black"/>
+<text x="200" y="395" style="text-anchor:middle;font-size:15;font-family:Arial;fill:black">Click + or - for each parameter</text>
+<g id="clics" onclick="changer(evt)">
+<rect id="st-" x="200" y="67" width="25" height="15" style="stroke:black;fill:red;fill-opacity:0.1"/>
+<rect id="st+" x="225" y="67" width="25" height="15" style="stroke:black;fill:red;fill-opacity:0.1"/>
+<rect id="dx-" x="100" y="107" width="25" height="15" style="stroke:black;fill:red;fill-opacity:0.1"/>
+<rect id="dx+" x="125" y="107" width="25" height="15" style="stroke:black;fill:red;fill-opacity:0.1"/>
+<rect id="dy-" x="250" y="107" width="25" height="15" style="stroke:black;fill:red;fill-opacity:0.1"/>
+<rect id="dy+" x="275" y="107" width="25" height="15" style="stroke:black;fill:red;fill-opacity:0.1"/>
+<rect id="sc-" x="200" y="147" width="25" height="15" style="stroke:black;fill:red;fill-opacity:0.1"/>
+<rect id="sc+" x="225" y="147" width="25" height="15" style="stroke:black;fill:red;fill-opacity:0.1"/>
+<rect id="se-" x="200" y="167" width="25" height="15" style="stroke:black;fill:red;fill-opacity:0.1"/>
+<rect id="se+" x="225" y="167" width="25" height="15" style="stroke:black;fill:red;fill-opacity:0.1"/>
+<rect id="ss-" x="200" y="187" width="25" height="15" style="stroke:black;fill:red;fill-opacity:0.1"/>
+<rect id="ss+" x="225" y="187" width="25" height="15" style="stroke:black;fill:red;fill-opacity:0.1"/>
+<rect id="lc-" x="220" y="207" width="25" height="15" style="stroke:black;fill:red;fill-opacity:0.1"/>
+<rect id="lc+" x="245" y="207" width="25" height="15" style="stroke:black;fill:red;fill-opacity:0.1"/>
+<rect id="xs-" x="100" y="247" width="25" height="15" style="stroke:black;fill:red;fill-opacity:0.1"/>
+<rect id="xs+" x="125" y="247" width="25" height="15" style="stroke:black;fill:red;fill-opacity:0.1"/>
+<rect id="ys-" x="240" y="247" width="25" height="15" style="stroke:black;fill:red;fill-opacity:0.1"/>
+<rect id="ys+" x="265" y="247" width="25" height="15" style="stroke:black;fill:red;fill-opacity:0.1"/>
+<rect id="zs-" x="380" y="247" width="25" height="15" style="stroke:black;fill:red;fill-opacity:0.1"/>
+<rect id="zs+" x="405" y="247" width="25" height="15" style="stroke:black;fill:red;fill-opacity:0.1"/>
+<rect id="op0" x="80" y="288" width="90" height="18" style="stroke:none;fill:red;fill-opacity:0"/>
+<rect id="op1" x="180" y="288" width="90" height="18" style="stroke:none;fill:red;fill-opacity:0"/>
+<rect id="op2" x="280" y="288" width="90" height="18" style="stroke:none;fill:red;fill-opacity:0"/>
+<rect id="op3" x="80" y="308" width="90" height="18" style="stroke:none;fill:red;fill-opacity:0"/>
+<rect id="op4" x="180" y="308" width="90" height="18" style="stroke:none;fill:red;fill-opacity:0"/>
+<rect id="op5" x="280" y="308" width="90" height="18" style="stroke:none;fill:red;fill-opacity:0"/>
+<rect id="k1-" x="100" y="327" width="25" height="15" style="stroke:black;fill:red;fill-opacity:0.1"/>
+<rect id="k1+" x="125" y="327" width="25" height="15" style="stroke:black;fill:red;fill-opacity:0.1"/>
+<rect id="k2-" x="250" y="327" width="25" height="15" style="stroke:black;fill:red;fill-opacity:0.1"/>
+<rect id="k2+" x="275" y="327" width="25" height="15" style="stroke:black;fill:red;fill-opacity:0.1"/>
+<rect id="k3-" x="100" y="347" width="25" height="15" style="stroke:black;fill:red;fill-opacity:0.1"/>
+<rect id="k3+" x="125" y="347" width="25" height="15" style="stroke:black;fill:red;fill-opacity:0.1"/>
+<rect id="k4-" x="250" y="347" width="25" height="15" style="stroke:black;fill:red;fill-opacity:0.1"/>
+<rect id="k4+" x="275" y="347" width="25" height="15" style="stroke:black;fill:red;fill-opacity:0.1"/>
+</g>
+</g>
+<g id="commandes" transform="translate(100,50)">
+</g>
+</svg>

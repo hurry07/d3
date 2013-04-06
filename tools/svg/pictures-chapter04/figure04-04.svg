@@ -1,0 +1,36 @@
+<?xml version="1.0" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+         "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+<svg width="420" height="300" viewBox="-20 -10 140 100">
+<defs>
+<pattern id="Pat01" width="10" height="10" patternUnits="userSpaceOnUse">
+	<rect width="10" height="10" fill="#FFFFFF" stroke="#000000" stroke-width="0.1"/>
+</pattern>
+<marker id="Marker01" viewBox="0 0 10 10" refX="0" refY="5" 
+     markerUnits="strokeWidth" markerWidth="10" markerHeight="6" 
+     orient="auto">
+  <path d="M 0 0 L 15 5 L 0 10 z" />
+</marker>
+<marker id="Marker02" viewBox="0 -5 10 10" refX="0" refY="0" 
+     markerUnits="strokeWidth" markerWidth="10" markerHeight="6" 
+     orient="auto">
+  <path d="M 0 0l 15 -5 l 0 10z" />
+</marker>
+<circle id="dot" cx="0" cy="0" r="1" stroke="black" stroke-width="0.3" fill="white"/>
+<g id="origin">
+<path d="M0,0 h8" stroke-width="0.3" stroke="black" fill="none" marker-end="url(#Marker01)"/>
+<path d="M0,0 v8" stroke-width="0.3" stroke="black" fill="none" marker-end="url(#Marker01)"/>
+</g>
+</defs>
+<rect x="0" y="0" width="101" height="61" fill="url(#Pat01)"/>
+<path d="M10,30 A40 20 15 0 1 60,11" stroke-width="1" stroke="black" fill="lightGray"/>
+<path d="M10,30 A40 20 15 1 0 60,11" stroke-width="0.5" stroke="black" stroke-dasharray="1 1" fill="none"/>
+<use transform="rotate(15,45,25)" x="45" y="25" xlink:href="#origin"/>
+<use x="45" y="25" xlink:href="#dot"/>
+<use x="10" y="30" xlink:href="#dot"/>
+<use x="60" y="11" xlink:href="#dot"/>
+<text x="6" y="6" font-size="4" text-anchor="middle">(0,0)</text>
+<text x="37" y="27" font-size="4" text-anchor="middle">center</text>
+<text x="70" y="9" font-size="4" text-anchor="middle">new point</text>
+<text x="-2" y="29" font-size="4" text-anchor="middle">current point</text>
+</svg>

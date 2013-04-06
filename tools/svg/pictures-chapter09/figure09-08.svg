@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+         "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+<svg id="root" xml:space="preserve" width="600" height="400" viewBox="-300 -200 600 400">
+<rect x="-300" y="-200" width="600" height="500" style="fill:#E0E0E0"/> 
+<path d="M-100 -100l100 0 100 0 0 100 0 100 -100 0 -100 0 0 -100 0 -100z" style="stroke:blue;fill-opacity:0.8; fill:blue">
+<animate begin="go.click" dur="10s" repeatCount="1" attributeName="d" 
+values="M-100 -100l100 0 100 0 0 100 0 100 -100 0 -100 0 0 -100z;
+M-20 -20l20 -80 20 80 80 20 -80 20 -20 80 -20 -80 -80 -20z;
+M-100 -100l100 0 100 0 0 100 0 100 -100 0 -100 0 0 -100z"/>
+<animate begin="go.click" dur="10s" repeatCount="1" attributeName="fill"
+values="blue;green;blue"/> 
+</path>
+<text x="250" y="180" style="font-size:25;fill:black;text-anchor:middle">GO</text>
+<rect id="go" x="220" y="155" width="60" height="30" style="fill:black;fill-opacity:0.1"/>
+</svg>
+

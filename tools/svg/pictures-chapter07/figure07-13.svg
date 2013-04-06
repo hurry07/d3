@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+         "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+<svg width="640" height="220" viewBox="-20 -20 640 220">
+<defs>
+	<marker id="Marker01" viewBox="0 0 20 20" refX="0" refY="5" 
+    	markerUnits="strokeWidth" markerWidth="10" markerHeight="6" 
+	orient="auto">
+    		<path d="M 0 0 L 15 5 L 0 10 z" />
+	</marker>
+        <linearGradient id="MyGradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="red"/>
+            <stop offset="100%" stop-color="yellow"/>
+        </linearGradient>
+        <linearGradient id="MyGradient2" gradientTransform="rotate(45)">
+            <stop offset="0%" stop-color="red"/>
+            <stop offset="100%" stop-color="yellow"/>
+        </linearGradient>
+        <linearGradient id="MyGradient3" x1="0%" y1="100%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="red"/>
+            <stop offset="100%" stop-color="yellow"/>
+        </linearGradient>
+        <linearGradient gradientUnits="userSpaceOnUse" id="MyGradient4" x1="450" y1="150" x2="600" y2="150" gradientTransform="rotate(-45,450,150)">
+            <stop offset="0%" stop-color="red"/>
+            <stop offset="100%" stop-color="yellow"/>
+        </linearGradient>
+</defs>
+<rect x="0" y="0" width="150" height="150" style="fill:url(#MyGradient1)"/>
+<rect x="150" y="0" width="150" height="150" style="fill:url(#MyGradient2)"/>
+<rect x="300" y="0" width="150" height="150" style="fill:url(#MyGradient3)"/>
+<rect x="450" y="0" width="150" height="150" style="fill:url(#MyGradient4)"/>
+<text x="75" y="175" style="text-anchor:middle">0 0 100 100</text>
+<text x="225" y="175" style="text-anchor:middle">rotate(45)</text>
+<text x="375" y="175" style="text-anchor:middle">0 100 100 0</text>
+<text x="525" y="175" style="text-anchor:middle">rotate(-45,450,150)</text>
+<line x1="0" y1="0" x2="140" y2="140" stroke="black" stroke-width="3" marker-end="url(#Marker01)"/>
+<line x1="150" y1="0" x2="290" y2="0" stroke="black" stroke-width="3" marker-end="url(#Marker01)"/>
+<line transform="rotate(45,150,0)" x1="150" y1="0" x2="290" y2="0" stroke="black" stroke-width="3" marker-end="url(#Marker01)"/>
+<line x1="300" y1="150" x2="440" y2="10" stroke="black" stroke-width="3" marker-end="url(#Marker01)"/>
+<line x1="450" y1="150" x2="590" y2="150" stroke="black" stroke-width="3" marker-end="url(#Marker01)"/>
+<line transform="rotate(-45,450,150)" x1="450" y1="150" x2="590" y2="150" stroke="black" stroke-width="3" marker-end="url(#Marker01)"/>
+
+</svg>

@@ -1,0 +1,56 @@
+<?xml version="1.0" ?>
+<svg width="800" height="600" viewBox="0 0 400 300">
+  <defs>
+    <pattern id="gridPattern" width="10" height="10" patternUnits="userSpaceOnUse">
+      <path d="M10,0 H0 V10" fill="none" stroke="gray" stroke-width="0.25"/>
+    </pattern>
+    <marker id="tick" viewBox="-10 -5 10 10" markerUnits="strokeWidth"
+            markerWidth="10" markerHeight="10" orient="auto">
+      <path d="M0,-2 V2" stroke="black"/>
+    </marker>
+    <marker id="endArrow" viewBox="-10 -5 10 10" markerUnits="strokeWidth"
+            markerWidth="10" markerHeight="10" orient="auto">
+      <path d="M-10,-2 L0,0 -10,2 z" fill="black" stroke="none"/>
+    </marker>
+    <marker id="startDimArrow" viewBox="0 -5 10 10" markerUnits="strokeWidth"
+            markerWidth="10" markerHeight="10" orient="auto">
+      <path d="M0,0 L10,-2 10,2 z M0,-5 L0,5" stroke="black" />
+    </marker>
+    <marker id="endDimArrow" viewBox="-10 -5 10 10" markerUnits="strokeWidth"
+            markerWidth="10" markerHeight="10" orient="auto">
+      <path d="M-10,-2 L0,0 -10,2 z M0,-5 L0,5" stroke="black" />
+    </marker>
+    <circle id="node" r="2" stroke-width="0.6" fill="white" />
+    <path id="arrow" d="m0,0l-10-2v4z" stroke="none" />
+    <g id="coords" stroke="black">
+      <path d="M15,0 H0 V15" fill="none" stroke-width="0.5"/>
+      <use xlink:href="#arrow" transform="translate(20,0) scale(0.5)" />
+      <use xlink:href="#arrow" transform="translate(0,20) rotate(90) scale(0.5)" />
+      <circle r="1" stroke-width="0.2" fill="white" />
+    </g>
+  </defs>
+  <rect id="grid" width="240" height="130" stroke="gray" stroke-width="0.25" fill="url(#gridPattern)" /> 
+  <!-- grid -->
+  <use xlink:href="#coords" />
+  <text x="3" y="9" font-size="8">(0,0)</text>
+	<!-- example -->
+<!-- Horizontal Lines -->
+	<line x1="0" y1="20" x2="100" y2="20"
+		stroke="darkslategray"/>
+	<line x1="25" y1="30" x2="125" y2="30"
+		stroke="darkslategray" stroke-width="4"/>
+	<line x1="50" y1="40" x2="150" y2="40"
+		stroke="darkslategray" stroke-width="6"/>
+	<line x1="75" y1="50" x2="175" y2="50"
+		stroke="green" stroke-width="8"/>
+	<line x1="100" y1="60" x2="200" y2="60"
+		stroke="blue" stroke-width="10"/>		
+	<!-- Diagonal Lines -->
+	<line x1="0" y1="20" x2="100" y2="60"
+		stroke="black" stroke-width="1"/>
+	<line x1="100" y1="20" x2="200" y2="60"
+		stroke="black" stroke-width="1"/>
+  
+  <!-- decoratation -->
+
+</svg>

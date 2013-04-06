@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+         "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+<svg width="600" height="600" viewBox="0 0 600 600">
+<defs>
+    <pattern id="gridPattern" x="0" y="0" width="10" height="10" patternUnits="userSpaceOnUse">
+      <rect x="0" y="0" width="10" height="10" stroke="none" fill="none" />
+      <path d="M 0 0 L 10 0 M 0 0 L 0 10" fill="none" stroke="gray" stroke-width="0.25"/>
+    </pattern>
+
+<path id="line" style="stroke-width:2;stroke:black" d="m0 0l400 0"/>
+</defs>
+<rect x="0" y="0" width="600" height="600" fill="url(#gridPattern)"/>
+<text x="220" y="20" style="text-anchor:middle">stroke-dasharray:400 400</text>
+<text x="510" y="20" style="text-anchor:middle">stroke-dashoffset</text>
+<use style="stroke-dasharray:400 400;stroke-dashoffset:400" xlink:href="#line" x="20" y="50"/>
+<text x="510" y="50" style="text-anchor:middle">400</text>
+<use style="stroke-dasharray:400 400;stroke-dashoffset:420" xlink:href="#line" x="20" y="70"/>
+<text x="510" y="70" style="text-anchor:middle">420</text>
+<use style="stroke-dasharray:400 400;stroke-dashoffset:450" xlink:href="#line" x="20" y="90"/>
+<text x="510" y="90" style="text-anchor:middle">450</text>
+<use style="stroke-dasharray:400 400;stroke-dashoffset:500" xlink:href="#line" x="20" y="110"/>
+<text x="510" y="110" style="text-anchor:middle">500</text>
+<use style="stroke-dasharray:400 400;stroke-dashoffset:800" xlink:href="#line" x="20" y="130"/>
+<text x="510" y="130" style="text-anchor:middle">800</text>
+<use style="stroke-dasharray:400 400;stroke-dashoffset:380" xlink:href="#line" x="20" y="170"/>
+<text x="510" y="170" style="text-anchor:middle">380</text>
+<use style="stroke-dasharray:400 400;stroke-dashoffset:350" xlink:href="#line" x="20" y="190"/>
+<text x="510" y="190" style="text-anchor:middle">350</text>
+<use style="stroke-dasharray:400 400;stroke-dashoffset:300" xlink:href="#line" x="20" y="210"/>
+<text x="510" y="210" style="text-anchor:middle">300</text>
+<use style="stroke-dasharray:400 400;stroke-dashoffset:0" xlink:href="#line" x="20" y="230"/>
+<text x="510" y="230" style="text-anchor:middle">0</text>
+<path d="M20 50l400 0" style="stroke:green;stroke-width:2;stroke-dasharray:400 400;stroke-dashoffset:400">
+<animate attributeName="stroke-dashoffset" from="400" to="0" dur="4" begin="2" repeatCount="1" fill="freeze"/>
+</path>
+</svg>

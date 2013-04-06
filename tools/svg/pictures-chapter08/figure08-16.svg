@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+         "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+<svg width="800" height="600" viewBox="0 0 800 600">
+<defs>
+<filter id='Filter1' filterUnits='userSpaceOnUse' x='0' y='0' width='400' height='400'>
+<feImage xlink:href='memo.svgz' result='image1'/>
+<feMorphology in='image1' radius='4,4' operator='erode'/>
+</filter>
+<filter id='Filter2' filterUnits='userSpaceOnUse' x='0' y='0' width='400' height='400'>
+<feImage xlink:href='memo.svgz' result='image1'/>
+<feMorphology in='image1' radius='4,4' operator='dilate'/>
+</filter>
+<filter id="Filter4" filterUnits="userSpaceOnUse" x="0" y="0" width="400" height="400">
+<feImage xlink:href='puzzle.jpg' result='image1'/>
+<feMorphology in='image1' radius='4,4' operator='erode'/>
+</filter>
+<filter id="Filter5" filterUnits="userSpaceOnUse" x="0" y="0" width="400" height="400">
+<feImage xlink:href='puzzle.jpg' result='image1'/>
+<feMorphology in='image1' radius='4,4' operator='dilate'/>
+</filter>
+</defs>
+<rect x="0" y="0" width="800" height="600" style="fill:white;stroke:black;fill-opacity:0.5"/>
+<text x="400" y="75" style="text-anchor:middle;font-size:20">
+feMorphology erode and dilate examples</text>
+<svg x="100" y="100" width="200" height="200" viewBox='0 0 400 400'>
+<image x="0" y="0" width='400' height='400' xlink:href='memo.svgz'/>
+</svg>
+<svg x="310" y="100" width="200" height="200" viewBox='0 0 400 400'>
+<rect width="400" height="400" filter='url(#Filter1)' x='0' y='0'/>
+</svg>
+<svg x="520" y="100" width="200" height="200" viewBox='0 0 400 400'>
+<rect width="400" height="400" filter='url(#Filter2)' x='0' y='0'/>
+</svg>
+<text x="200" y="320" style="text-anchor:middle;font-size:15">
+Original SVG</text>
+<text x="410" y="320" style="text-anchor:middle;font-size:15">
+SVG with erode</text>
+<text x="620" y="320" style="text-anchor:middle;font-size:15">
+SVG with dilate</text>
+<svg x="100" y="330" width='200' height='200' viewBox="0 0 400 400">
+<image x="0" y="0" width='400' height='400' xlink:href='puzzle.jpg'/>
+</svg>
+<svg x="310" y="330" width='200' height='200' viewBox="0 0 400 400">
+<rect width="400" height="400" filter='url(#Filter4)' x='0' y='0'/>
+</svg>
+<svg x="520" y="330" width='200' height='200' viewBox="0 0 400 400">
+<rect width="400" height="400" filter='url(#Filter5)' x='0' y='0'/>
+</svg>
+<text x="200" y="550" style="text-anchor:middle;font-size:15">
+Original JPEG</text>
+<text x="410" y="550" style="text-anchor:middle;font-size:15">
+JPEG with erode</text>
+<text x="620" y="550" style="text-anchor:middle;font-size:15">
+JPEG with dilate</text>
+</svg>

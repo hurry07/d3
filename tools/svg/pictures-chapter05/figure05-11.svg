@@ -1,0 +1,52 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+	"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<svg width="800" height="600" viewBox="0 0 400 300">
+	<defs>
+		<pattern id="gridPattern" width="10" height="10" patternUnits="userSpaceOnUse">
+			<path d="M10 0 L0 0 L0 10" style="fill:none;stroke:rgb(128,128,128);stroke-width:0.25"/>
+		</pattern>
+		<circle id="node" r="2" style="stroke-width:0.6;fill:rgb(255,255,255)"/>
+		<path id="arrow" d="M0 0 L-10 -2 L-10 2 z"
+			 style="stroke:none"/>
+		<g id="coords" style="stroke:rgb(0,0,0)">
+			<path d="M15 0 L0 0 L0 15" style="fill:none;stroke-width:0.5"/>
+			<use xlink:href="#arrow" transform="translate(20 0) scale(0.5)"/>
+			<use xlink:href="#arrow" transform="translate(0 20) rotate(90) scale(0.5)"/>
+			<circle r="1" style="stroke-width:0.2;fill:rgb(255,255,255)"/>
+		</g>
+		<marker id="startArrow" viewBox="0 -4 8 8" markerUnits="userSpaceOnUse"
+			refX="0" refY="0" markerWidth="8" markerHeight="8" orient="auto">
+			<path d="M0 0 L8 -2 L8 2 zM0 -4 L0 4"
+				 style="stroke:rgb(0,0,0)"/>
+		</marker>
+		<marker id="endArrow" viewBox="-10 -5 10 10" markerUnits="strokeWidth" refX="0"
+			refY="0" markerWidth="10" markerHeight="10" orient="auto">
+			<path d="M-10 -2 L0 0 L-10 2 zM0 -5 L0 5"
+				 style="stroke:rgb(0,0,0)"/>
+		</marker>
+	</defs>
+	<rect id="grid" width="200" height="100"
+		 style="stroke:rgb(128,128,128);stroke-width:0.25;fill:url(#gridPattern)"/>
+<!-- grid -->
+	<use xlink:href="#coords"/>
+	<text x="3" y="9" style="font-size:8">(0,0)</text>
+<!-- example -->
+	<text x="10" y="30" fill="black" font-size="7" textLength="150"
+		lengthAdjust="spacing">The average person thinks he isn&apos;t.</text>
+	<text x="10" y="40" fill="black" font-size="7" textLength="150"
+		lengthAdjust="spacingAndGlyphs">The average person thinks he isn&apos;t.</text>
+	<text x="10" y="70" fill="black" font-size="7" textLength="180"
+		lengthAdjust="spacing">The average person thinks he isn&apos;t.</text>
+	<text x="10" y="80" fill="black" font-size="7" textLength="180"
+		lengthAdjust="spacingAndGlyphs">The average person thinks he isn&apos;t.</text>
+<!-- dimensions -->
+	<g id="dimensions">
+		<line x1="10" y1="50" x2="160" y2="50"
+			 style="stroke:grey;marker-start:url(#startArrow);marker-end:url(#endArrow)"/>
+		<text x="85" y="49" style="text-anchor:middle;font-size:6">150</text>
+		<line x1="10" y1="90" x2="190" y2="90"
+			 style="stroke:grey;marker-start:url(#startArrow);marker-end:url(#endArrow)"/>
+		<text x="100" y="89" style="text-anchor:middle;font-size:6">180</text>
+	</g>
+</svg>

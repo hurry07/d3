@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+         "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+<svg width="600" height="200" viewBox="0 0 1200 400">
+<defs>
+<filter id="MyFilter3" filterUnits="userSpaceOnUse" x="0" y="0" width="400" height="400"> 
+<feImage xlink:href='pie.svgz' result='image1'/> 
+<feGaussianBlur in='image1' stdDeviation='2,2' /> 
+</filter> 
+<filter id="MyFilter2" filterUnits="userSpaceOnUse" x="0" y="0" width="400" height="400"> 
+<feGaussianBlur in='SourceGraphic' stdDeviation='2,2' /> 
+</filter> 
+<filter id="MyFilter1" filterUnits="userSpaceOnUse" x="0" y="0" width="400" height="400"> 
+<feGaussianBlur in='SourceAlpha' stdDeviation='2,2' /> 
+</filter> 
+</defs>
+<image filter="url(#MyFilter2)" xlink:href='memo.svgz' x="0" y="0" width="400" height="400"/>
+
+<image transform="translate(400,0)" filter="url(#MyFilter1)" xlink:href='memo.svgz' x="0" y="0" width="400" height="400"/>
+
+<rect width="400" height="400" transform="translate(800,0)" filter="url(#MyFilter3)" x="0" y="0"/>
+</svg>

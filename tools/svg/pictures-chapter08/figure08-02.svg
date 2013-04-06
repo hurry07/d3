@@ -1,0 +1,45 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<svg width="340" height="470" viewBox="-20 -20 340 470"  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs>
+<linearGradient id="MyGradient1">
+            <stop offset="0%" stop-color="red"/>
+            <stop offset="100%" stop-color="yellow"/>
+</linearGradient>
+<filter id="MyFilter1" filterUnits="userSpaceOnUse" x="0" y="100" width="150" height="100">
+  	<feImage result="inter1" xlink:href="#grad1"/>
+        <feColorMatrix type="saturate" in="inter1" values="0"/>
+</filter>
+  <filter id="MyFilter2" filterUnits="userSpaceOnUse" x="0" y="200" width="150" height="100">
+  	<feImage result="inter1" xlink:href="#grad2"/>
+        <feColorMatrix type="saturate" in="inter1" color-interpolation-filters="sRGB"
+           values="0"/>
+</filter>
+  <filter id="MyFilter3" filterUnits="userSpaceOnUse" x="0" y="300" width="150" height="100">
+  	<feImage result="inter1" xlink:href="#grad3"/>
+        <feColorMatrix type="saturate" in="inter1" color-interpolation-filters="linearRGB"
+           values="0"/>
+</filter>
+<rect id="grad1" x="0" y="100" width="150" height="100" style="fill:url(#MyGradient1)"/>
+<rect id="grad2" x="0" y="200" width="150" height="100" style="fill:url(#MyGradient1)"/>
+<rect id="grad3" x="0" y="300" width="150" height="100" style="fill:url(#MyGradient1)"/>
+</defs>
+<rect x="0" y="0" width="150" height="100" style="fill:url(#MyGradient1)"/>
+<text x="225" y="35" style="text-anchor:middle">feColorMatrix 
+<tspan x="225" dy="20">with saturate(0)</tspan>
+<tspan x="225" dy="20">on this gradient</tspan>
+</text>
+<rect x="0" y="100" width="150" height="100" filter="url(#MyFilter1)"/>
+<text x="225" y="135" style="text-anchor:middle">color-interpolation-filters
+<tspan x="225" dy="20">auto</tspan>
+</text>
+<rect x="0" y="200" width="150" height="100" filter="url(#MyFilter2)"/>
+<rect x="0" y="300" width="150" height="100" filter="url(#MyFilter3)"/>
+<text x="225" y="235" style="text-anchor:middle">color-interpolation-filters
+<tspan x="225" dy="20">sRGB</tspan>
+</text>
+<text id="MyText" x="225" y="335" style="text-anchor:middle">color-interpolation-filters
+<tspan x="225" dy="20">linearRGB</tspan>
+<tspan x="225" dy="20">default value</tspan></text>
+</svg>

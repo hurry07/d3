@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+         "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+<svg width="340" height="320" viewBox="-20 -20 340 320"  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs>
+        <linearGradient id="MyGradient1">
+            <stop offset="0%" stop-color="red"/>
+            <stop offset="100%" stop-color="yellow"/>
+        </linearGradient>
+        <linearGradient id="MyGradient2">
+            <stop offset="20%" stop-color="red"/>
+            <stop offset="80%" stop-color="yellow"/>
+        </linearGradient>
+<view id="MyView" viewBox="140 0 170 150"/>
+</defs>
+<rect x="0" y="0" width="150" height="150" style="fill:url(#MyGradient1)"/>
+<a xlink:href="#MyView">
+<rect x="150" y="0" width="150" height="150" style="fill:url(#MyGradient2)"/>
+</a>
+<text x="75" y="175" style="text-anchor:middle">Offset 0 and 100</text>
+<text id="MyText" x="225" y="175" style="text-anchor:middle">Offset 20 and 80</text>
+<g style="stroke-dasharray:2 2;stroke:black">
+<path d="M180 0l0 150"/>
+<path d="M270 0l0 150"/>
+<path d="M0 0l0 150"/>
+<path d="M150 0l0 150"/>
+</g>
+</svg>

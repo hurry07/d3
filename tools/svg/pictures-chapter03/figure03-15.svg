@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?> 
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+         "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+<svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+<g fill="green">
+    <defs>
+      <g id="inner">
+        <circle cx="50" cy="50" r="20" />
+        <circle cx="100" cy="50" r="20" fill="red" />
+      </g>
+    </defs>
+    <rect x="130" y="30" width="40" height="40" />
+    <use xlink:href="#inner" fill="moccasin" />
+  </g>
+</svg>

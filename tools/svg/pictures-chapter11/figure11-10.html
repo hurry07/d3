@@ -1,0 +1,59 @@
+<html xmlns:g="http://www.w3.org/2000/svg"
+      xmlns:m="http://www.w3.org/1998/Math/MathML">
+ <head>
+  <title>MathML and SVG Support in Internet Explorer</title>
+  <object id="MathPlayer" 
+          classid="clsid:32f66a20-7614-11d4-bd11-00104bd3f987">
+  </object>
+  <object id="AdobeSVG" 
+          classid="clsid:78156a80-c6a1-4bbf-8e6a-3cd390eeb4e2">
+  </object>
+  <?import namespace="g" implementation="#AdobeSVG"?>
+  <?import namespace="m" implementation="#MathPlayer"?>
+ </head>
+
+ <body>
+ <h2 style="text-align:center">MathML and SVG Support in Internet Explorer</h2>
+ <p> This polynomial is the equation of the quadratic Bézier curve -
+     a simple parabolic curve </p>
+
+ <p style="text-align:center">
+ <m:math xmlns='http://www.w3.org/1998/Math/MathML'>
+ <m:mrow>
+  <m:mi>p</m:mi><m:mo>(</m:mo><m:mi>t</m:mi><m:mo>)</m:mo><m:mo>=</m:mo>
+  <m:msup>
+   <m:mrow>
+    <m:mo>(</m:mo><m:mn>1</m:mn><m:mo>&minus;</m:mo><m:mi>t</m:mi>
+<m:mo>)</m:mo>
+   </m:mrow>
+   <m:mn>2</m:mn>
+  </m:msup>
+  <m:mo>&sdot;</m:mo>
+  <m:msub> <m:mi>p</m:mi> <m:mn>1</m:mn> </m:msub>
+  <m:mo>+</m:mo><m:mn>2</m:mn><m:mi>t</m:mi><m:mo>&sdot;</m:mo>
+  <m:mo>(</m:mo><m:mn>1</m:mn><m:mo>&minus;</m:mo><m:mi>t</m:mi>
+<m:mo>)</m:mo>
+  <m:mo>&sdot;</m:mo>
+  <m:msub> <m:mi>p</m:mi> <m:mn>2</m:mn> </m:msub>
+  <m:mo>+</m:mo>
+  <m:msup> <m:mi>t</m:mi> <m:mn>2</m:mn> </m:msup>
+  <m:mo>&sdot;</m:mo>
+  <m:msub> <m:mi>p</m:mi> <m:mn>3</m:mn> </m:msub>
+ </m:mrow>
+</m:math>
+</p>
+
+<g:svg  xmlns="http://www.w3.org/2000/svg">
+    <g:path fill="lightgray" stroke="black" stroke-width="2"
+          d="M 100,200
+             Q 80,150 180,140
+             Q 190,120 190,100
+             Q 360,80 340,200 
+             Z" />
+    <g:circle cx="160" cy="200" r="20" stroke="black" 
+            stroke-width="10" fill="lightgray" />
+    <g:circle cx="290" cy="200" r="20" stroke="black" 
+            stroke-width="10" fill="lightgray" />
+  </g:svg>
+</body>
+</html>

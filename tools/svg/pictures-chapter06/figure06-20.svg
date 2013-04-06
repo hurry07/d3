@@ -1,0 +1,49 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+	"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<svg width="800" height="800" viewBox="-50 -50 800 800">
+<defs>
+<pattern id="Pat01" width="20" height="20" patternUnits="userSpaceOnUse">
+	<rect width="20" height="20" fill="none" stroke="#000000" stroke-width="0.1"/>
+</pattern>
+<marker id="Marker01" viewBox="0 0 10 10" refX="0" refY="5" 
+     markerUnits="strokeWidth" markerWidth="10" markerHeight="6" 
+     orient="auto">
+  <path d="M 0 0 L 15 5 L 0 10 z" />
+</marker>
+    <linearGradient  id="zylinderShade" x2="0%" y2="50%" spreadMethod="reflect">
+      <stop offset="0%" stop-color="darkslategray"/>
+      <stop offset="100%" stop-color="white"/>
+    </linearGradient>
+    <radialGradient  id="pincolor">
+      <stop offset="0%" stop-color="white"/>
+      <stop offset="100%" stop-color="blue"/>
+    </radialGradient>
+
+    <g id="system">
+	<path d="M0 0h60l-4 6 36 -6 -36 -6 4 6" stroke="black"/>
+	<path d="M0 0v60l6 -4 -6 36 -6 -36 6 4" stroke="black"/>
+	<circle cx="0" cy="0" r="5" stroke="black"/>
+    </g>
+    <g id="screw" stroke="black" stroke-linejoin="round" >
+      <path fill="url(#zylinderShade)" d="M0,-36 -4,-40 -4,40 0,36 z 
+                                          M-32,-36 -28,-40 -28,40 -32,36 z 
+                                          M-4,-40 -28,-40 -28,40 -4,40 z" />
+      <path fill="url(#zylinderShade)" d="M0,-16 120,-16 120,16 0,16 z 
+                                          M120,-16 120,16 124,12 124,-12 120,-16 z" />
+      <path stroke-width="0.4" fill="none" stroke-linecap="round" 
+            stroke-dasharray="24 12 4 12" d="M-40,0 132,0" />
+      <path stroke-width="0.4" fill="none" stroke-linecap="round" 
+            d="M0,-12 124,-12 M0,12 124,12" />
+    </g>
+ <g id="global">
+	<rect x="0" y="0" width="301" height="201" fill="url(#Pat01)"/>
+	<use x="100" y="100" xlink:href="#screw" />
+	<use x="0" y="0" xlink:href="#system" fill="orange"/>
+ </g>
+
+</defs>
+<use x="0" y="0" transform="scale(1.5)" fill="lightBlue" opacity="0.5" xlink:href="#system" />
+<use x="0" y="0" xlink:href="#global" opacity="0.3"/>
+<use transform="scale(0.5)" x="0" y="0" xlink:href="#global"/>
+</svg>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+         "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+<svg width="640" height="300">
+<defs>
+<marker id="Marker01" viewBox="0 0 10 10" refX="0" refY="5" 
+    	markerUnits="strokeWidth" markerWidth="10" markerHeight="6" 
+	orient="auto">
+    	<path d="M 0 0 L 15 5 L 0 10 z" />
+</marker>
+<pattern id="Pat01" width="10" height="10" patternUnits="userSpaceOnUse">
+	<rect width="10" height="10" fill="#FFFFFF" stroke="#000000" stroke-width="0.1"/>
+</pattern>
+<linearGradient id="linear" x1="10%" x2="40%">
+            <stop offset="30%" stop-color="red"/>
+            <stop offset="70%" stop-color="yellow"/>
+</linearGradient>
+<linearGradient id="linear2" x1="10%" x2="40%" spreadMethod="repeat">
+            <stop offset="30%" stop-color="red"/>
+            <stop offset="70%" stop-color="yellow"/>
+</linearGradient>
+<linearGradient id="linear3" x1="10%" x2="40%" spreadMethod="reflect">
+            <stop offset="30%" stop-color="red"/>
+            <stop offset="70%" stop-color="yellow"/>
+</linearGradient>
+</defs>
+<rect x="0" y="0" width="640" height="300" fill="url(#Pat01)" />
+<rect x="20" y="30" width="600" height="50" fill="url(#linear)"/>
+<rect x="20" y="120" width="600" height="50" fill="url(#linear2)"/>
+<rect x="20" y="210" width="600" height="50" fill="url(#linear3)"/>
+<line x1="134" x2="134" y1="30" y2="260" stroke="white" stroke-dasharray="5 5"/>
+<line x1="206" x2="206" y1="30" y2="260" stroke="black" stroke-dasharray="5 5"/>
+<line x1="80" x2="80" y1="30" y2="260" stroke="white" stroke-dasharray="2 2"/>
+<line x1="260" x2="260" y1="30" y2="260" stroke="black" stroke-dasharray="2 2"/>
+
+<text x="235" y="140" style="text-anchor:middle">second
+<tspan x="235" dy="1em">stop-color</tspan></text>
+<text x="110" y="140" style="text-anchor:middle;fill:white">first
+<tspan x="105" dy="1em">stop-color</tspan></text>
+<text x="175" y="140" style="text-anchor:middle">smooth
+<tspan x="175" dy="1em">color</tspan></text>
+
+
+
+
+<text x="400" y="50" style="text-anchor:middle">second
+<tspan x="400" dy="1em">stop-color</tspan></text>
+<text x="80" y="50" style="text-anchor:middle;fill:white">first
+<tspan x="80" dy="1em">stop-color</tspan></text>
+<text x="175" y="50" style="text-anchor:middle">smooth
+<tspan x="175" dy="1em">color</tspan></text>
+<text x="250" y="230" style="text-anchor:middle">second
+<tspan x="250" dy="1em">stop-color</tspan></text>
+<text x="80" y="230" style="text-anchor:middle;fill:white">first
+<tspan x="80" dy="1em">stop-color</tspan></text>
+<text x="175" y="230" style="text-anchor:middle">smooth
+<tspan x="175" dy="1em">color</tspan></text>
+
+<circle cx="80" cy="10" r="3" style="fill:none;stroke:black"/>
+<circle cx="260" cy="10" r="3" style="fill:none;stroke:black"/>
+<circle cx="20" cy="10" r="3" style="fill:none;stroke:black"/>
+<circle cx="620" cy="10" r="3" style="fill:none;stroke:black"/>
+
+<line x1="80" y1="10" x2="250" y2="10" stroke="black" stroke-width="1.5" marker-end="url(#Marker01)"/>
+<text x="320" y="105" style="text-anchor:middle">spreadMethod="pad" ( default value )</text>
+<text x="320" y="195" style="text-anchor:middle">spreadMethod="repeat"</text>
+<text x="320" y="285" style="text-anchor:middle">spreadMethod="reflect"</text>
+<text x="80" y="25" style="text-anchor:middle">(x1,y1)</text>
+<text x="260" y="25" style="text-anchor:middle">(x2,y2)</text>
+<text x="30" y="25" style="text-anchor:middle">(0%,0%)</text>
+
+<text x="610" y="25" style="text-anchor:middle">(100%,0%)</text>
+
+</svg>

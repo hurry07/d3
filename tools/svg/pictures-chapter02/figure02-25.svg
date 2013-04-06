@@ -1,0 +1,18 @@
+<svg>
+	<!-- Horizontal Ellipse -->
+  <ellipse cx="70" cy="50" rx="50" ry="20" 
+		fill="yellow" stroke="black" stroke-width="4"/>
+	<!-- Vertical Ellipses -->
+  <ellipse cx="180" cy="90" rx="35" ry="60" 
+		fill="powderblue" stroke="black" stroke-width="4"/>
+  <ellipse cx="180" cy="110" rx="35" ry="60" 
+		fill="powderblue" stroke="black" stroke-width="4"/>
+	<ellipse cx="180" cy="100" rx="55" ry="60" 
+		fill="white" stroke="black"/>
+	<!-- Circle Ellipse -->
+	<ellipse cx="70" cy="80" rx="20" ry="20" 
+		fill="yellow" fill-opacity="0.4" stroke="black" stroke-width="4"/>
+	<!-- Odd Ellipse -->
+	<ellipse cx="70" cy="150" rx="25" ry="0" 
+		fill="yellow" stroke="black" stroke-width="4"/>
+</svg>

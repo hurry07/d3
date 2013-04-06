@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+         "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+<svg width="100%" height="100%" viewBox="-10 0 420 330" onkeypress="commandes(evt)">
+<script xlink:href="commandes.js"/>
+<rect x="-10" y="0" width="420" height="330" style="fill:orange;fill-opacity:0.5"/>
+<path d="M10 50C120 -30 250 200 390 50" stroke="green" fill="none"/>
+<g>
+<circle cx="0" cy="0" r="20" style="fill:white;stroke:black"/>
+<path d="M-17 -10l34 0 -17 30z" fill="red" stroke="black"/>
+<animateMotion dur="10s" repeatCount="1" begin="go1.click" path="M10 50c110 -80 240 150 380 0" fill="freeze"/>
+</g>
+<path d="M10 150C120 70 250 300 390 150" stroke="green" fill="none"/>
+<g>
+<circle cx="0" cy="0" r="20" style="fill:white;stroke:black"/>
+<path d="M-17 -10l34 0 -17 30z" fill="blue" stroke="black"/>
+<animateMotion dur="10s" rotate="auto" repeatCount="1" begin="go2.click" path="M10 150c110 -80 240 150 380 0" fill="freeze"/>
+</g>
+<path d="M10 250C120 170 250 400 390 250" stroke="green" fill="none"/>
+<g>
+<circle cx="0" cy="0" r="20" style="fill:white;stroke:black"/>
+<path d="M-17 -10l34 0 -17 30z" fill="green" stroke="black"/>
+<animateMotion dur="10s" rotate="auto-reverse" repeatCount="1" begin="go3.click" path="M10 250c110 -80 240 150 380 0" fill="freeze"/>
+</g>
+<text x="10" y="20" style="font-weight:bold;font-size:15;font-family:Arial;fill:black">rotate="0" by default</text>
+<text x="10" y="120" style="font-weight:bold;font-size:15;font-family:Arial;fill:black">rotate="auto"</text>
+<text x="10" y="220" style="font-weight:bold;font-size:15;font-family:Arial;fill:black">rotate="auto-reverse"</text>
+<text x="335" y="35" style="text-anchor:middle;font-weight:bold;font-size:15;font-family:Arial;fill:white;stroke:black">
+GO</text>
+<rect id="go1" x="310" y="20" width="50" height="18" opacity="0.3"/>
+<text x="335" y="135" style="text-anchor:middle;font-weight:bold;font-size:15;font-family:Arial;fill:white;stroke:black">
+GO</text>
+<rect id="go2" x="310" y="120" width="50" height="18" opacity="0.3"/>
+<text x="335" y="235" style="text-anchor:middle;font-weight:bold;font-size:15;font-family:Arial;fill:white;stroke:black">
+GO</text>
+<rect id="go3" x="310" y="220" width="50" height="18" opacity="0.3"/>
+<svg viewBox="0 0 800 600">
+<g id="commandes" transform="translate(100,100)">
+</g>
+</svg>
+</svg>

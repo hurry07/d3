@@ -1,0 +1,72 @@
+<svg width="500" height="300" viewBox="0 0 110 90" xml:space="preserve" onload="Init(evt); InitContextMenu();">
+<script>
+<!--
+var SVGDoc=null;
+var L1=null;
+function Init( evt ) {
+	SVGDoc = evt.getTarget().getOwnerDocument();
+}
+function InitContextMenu() {
+	var newMenuRoot = parseXML(printNode(document.getElementById('myMenu')), contextMenu);
+	contextMenu.replaceChild( newMenuRoot, contextMenu.firstChild );
+}
+-->
+</script>
+<defs>
+<menu id="myMenu" xmlns="http://fundamentalsvg.com/">
+<header>Custom Menu</header>
+<item action="ZoomIn">Zoom &amp;In</item>
+<item id="ZoomOut" action="ZoomOut">Zoom &amp;Out</item>
+<item action="OriginalView">Original Vie&amp;w</item>
+<separator />
+<item action="Quality">Higher &amp;Quality</item>
+<item action="Pause">&amp;Pause</item>
+<item action="Mute">&amp;Mute</item>
+<separator />
+<item action="Find">&amp;Find...</item>
+<item action="FindAgain">Find &amp;Again</item>
+<separator />
+<item action="Copy">&amp;Copy Selected Text</item>
+<item action="CopySVG">&amp;Copy SVG</item>
+<item action="ViewSVG">View SV&amp;G...</item>
+<item action="ViewSource">View Sourc&amp;e...</item>
+<item action="SaveAs">&amp;Save SVG As...</item>
+<item action="SaveSnapshotAs">Save &amp;Current State...</item>
+<separator />
+<item xlink:href="http://www.fundamentalsvg.com" target="blank window" xmlns:xlink="http://www.w3.org/1999/xlink">FundamentalSVG.com</item>
+<menu id="Submenu1">
+<header>Submenu</header>
+<item checked="no" xlink:href="http://www.fundamentalsvg.com/about.aspx" target="blank window" xmlns:xlink="http://www.w3.org/1999/xlink">About</item>
+<item checked="no" xlink:href="http://www.fundamentalsvg.com/contactus.aspx" target="blank window" xmlns:xlink="http://www.w3.org/1999/xlink">Contact Us</item>
+<item onactivate="alert('Please define an action.')" checked="no">Item3</item>
+</menu>
+<separator />
+<item action="Help">&amp;Help...</item>
+<item action="About">A&amp;bout SVG Viewer...</item>
+</menu>
+</defs>
+<g id="Chart" font-size="5" transform="translate( 10, 70 ) rotate( -90 )">
+	<defs>
+		<pattern id="gridPattern" width="10" height="8.33" patternUnits="userSpaceOnUse">
+			<rect x="0" y="0" width="10" height="8.33" style="fill:none;stroke:rgb(128,128,128);stroke-width:.1" />
+		</pattern>
+	</defs>
+	
+	<text x="55" y="15" style="fill:black" writing-mode="tb">2002 Pond <tspan fill="darkorange">Level</tspan> and <tspan fill="blue">Precip</tspan></text>
+	
+	<text x="-2" writing-mode="rl" y="8.33">Jan</text><text x="-2" writing-mode="rl" y="16.66">Feb</text><text x="-2" writing-mode="rl" y="24.990000000000002">Mar</text><text x="-2" writing-mode="rl" y="33.32">Apr</text><text x="-2" writing-mode="rl" y="41.65">May</text><text x="-2" writing-mode="rl" y="49.980000000000004">Jun</text><text x="-2" writing-mode="rl" y="58.31">Jul</text><text x="-2" writing-mode="rl" y="66.64">Aug</text><text x="-2" writing-mode="rl" y="74.97">Sep</text><text x="-2" writing-mode="rl" y="83.3">Oct</text><text x="-2" writing-mode="rl" y="91.63">Nov</text><text x="-2" writing-mode="rl" y="99.960000000000008">Dec</text>
+	
+	<text x="50" y="-10" writing-mode="tb">50</text>
+	<text x="40" y="-10" writing-mode="tb">40</text>
+	<text x="30" y="-10" writing-mode="tb">30</text>
+	<text x="20" y="-10" writing-mode="tb">20</text>
+	<text x="10" y="-10" writing-mode="tb">10</text>
+	
+	<rect x="0" y="0" width="50" height="100" fill="url(#gridPattern)" />
+	
+	<line x1="0" y1="0" x2="0" y2="100" style="stroke:black;" />
+	<line x1="0" y1="0" x2="50" y2="0" style="stroke:black;" />
+	<g id="grid">
+	</g>
+</g>
+</svg>

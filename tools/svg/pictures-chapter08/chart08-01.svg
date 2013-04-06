@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+         "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+<svg width="800" height="600">
+<line x1="130" y1="100" x2="630" y2="100" style="stroke-width:2;stroke:red"/>
+<line x1="630" y1="90" x2="630" y2="110" style="stroke-width:2;stroke:red"/>
+<line x1="330" y1="90" x2="330" y2="110" style="stroke-width:2;stroke:red"/>
+<line x1="450" y1="90" x2="450" y2="110" style="stroke-width:2;stroke:red"/>
+<line x1="560" y1="90" x2="560" y2="110" style="stroke-width:2;stroke:red"/>
+<path d="M80 150l0 100 100 0" style="stroke-width:2;stroke:blue;fill:none"/>
+<line x1="150" y1="250" x2="700" y2="250" style="stroke-width:2;stroke-dasharray:5 5;stroke:blue"/>
+
+<path d="M80 250l0 140 150 0" style="stroke-width:2;stroke:blue;fill:none"/>
+
+<g transform="translate(0,70)">
+<circle cx="190" cy="320" r="30" style="fill:white;stroke:red"/>
+<text x="190" y="320" dy="0.25em" style="text-anchor:middle;fill:black;font-size:12">
+set</text>
+<circle cx="260" cy="320" r="30" style="fill:white;stroke:red"/>
+<text x="260" y="320" dy="0.25em" style="text-anchor:middle;fill:black;font-size:12">
+animate</text>
+<path d="M290 320l200 0" style="stroke-dasharray:5 5;stroke-width:2;stroke:blue;fill:none"/>
+
+</g>
+<line x1="80" y1="320" x2="200" y2="320" style="stroke-width:2;stroke:blue"/>
+
+<path d="M190 320l510 0" style="stroke-dasharray:5 5;stroke-width:2;stroke:blue;fill:none"/>
+
+<circle cx="150" cy="320" r="30" style="fill:white;stroke:red"/>
+<text x="150" y="320" dy="0.25em" style="text-anchor:middle;fill:black;font-size:12">
+feTile</text>
+<circle cx="220" cy="320" r="30" style="fill:white;stroke:red"/>
+<text x="220" y="320" dy="0.25em" style="text-anchor:middle;fill:black;font-size:12">
+feFlood</text>
+<circle cx="290" cy="320" r="30" style="fill:white;stroke:red"/>
+<text x="290" y="320" dy="-0.25em" style="text-anchor:middle;fill:black;font-size:10">
+feColor
+<tspan x="290" dy="15">Matrix</tspan></text>
+<circle cx="360" cy="320" r="30" style="fill:white;stroke:red"/>
+<text x="360" y="320" dy="-0.25em" style="text-anchor:middle;fill:black;font-size:10">
+feComponent
+<tspan x="360" dy="15">Transfer</tspan>
+</text>
+<circle cx="430" cy="320" r="30" style="fill:white;stroke:red"/>
+<text x="430" y="320" dy="0.25em" style="text-anchor:middle;fill:black;font-size:10">
+feMorphology
+</text>
+<circle cx="500" cy="320" r="30" style="fill:white;stroke:red"/>
+<text x="500" y="320" dy="0.25em" style="text-anchor:middle;fill:black;font-size:12">
+feOffset
+</text>
+<circle cx="570" cy="320" r="30" style="fill:white;stroke:red"/>
+<text x="570" y="320" dy="-0.25em" style="text-anchor:middle;fill:black;font-size:10">
+feGaussian
+<tspan x="570" dy="15">Blur</tspan>
+</text>
+<circle cx="640" cy="320" r="30" style="fill:white;stroke:red"/>
+<text x="640" y="320" dy="-1.25em" style="text-anchor:middle;fill:black;font-size:10">
+fe
+<tspan x="640" dy="15">Displacement</tspan>
+<tspan x="640" dy="15">Map</tspan>
+</text>
+
+<circle cx="150" cy="250" r="30" style="fill:white;stroke:red"/>
+<text x="150" y="250" dy="0.25em" style="text-anchor:middle;fill:black;font-size:12">
+feBlend</text>
+<circle cx="220" cy="250" r="30" style="fill:white;stroke:red"/>
+<text x="220" y="250" dy="0.25em" style="text-anchor:middle;fill:black;font-size:12">
+feMerge</text>
+<circle cx="290" cy="250" r="30" style="fill:white;stroke:red"/>
+<text x="290" y="250" dy="0.25em" style="text-anchor:middle;fill:black;font-size:10">
+feComposite</text>
+<circle cx="360" cy="250" r="30" style="fill:white;stroke:red"/>
+<text x="360" y="250" dy="0.25em" style="text-anchor:middle;fill:black;font-size:10">
+feImage</text>
+<circle cx="430" cy="250" r="30" style="fill:white;stroke:red"/>
+<text x="430" y="250" dy="0.25em" style="text-anchor:middle;fill:black;font-size:10">
+feTurbulence</text>
+<circle cx="500" cy="250" r="30" style="fill:white;stroke:red"/>
+<text x="500" y="250" dy="-0.25em" style="text-anchor:middle;fill:black;font-size:10">
+feDiffuse
+<tspan x="500" dy="15">Lighting</tspan>
+</text>
+<circle cx="570" cy="250" r="30" style="fill:white;stroke:red"/>
+<text x="570" y="250" dy="-0.25em" style="text-anchor:middle;fill:black;font-size:10">
+feSpecular
+<tspan x="570" dy="15">Lighting</tspan>
+</text>
+<circle cx="640" cy="250" r="30" style="fill:white;stroke:red"/>
+<text x="640" y="250" dy="-0.25em" style="text-anchor:middle;fill:black;font-size:10">
+feConvolve
+<tspan x="640" dy="15">Matrix</tspan>
+</text>
+
+
+<circle cx="80" cy="100" r="50" style="fill:white;stroke:red"/>
+<text x="80" y="100" dy="0.25em" style="text-anchor:middle;fill:black;font-size:12">
+filter</text>
+<rect x="140" y="70" width="60" height="60" style="fill:white;stroke:black"/>
+<text x="170" y="90" dy="0.25em" style="text-anchor:middle;fill:black;font-size:12">
+id
+<tspan x="170" dy="15" fill="red">''</tspan>
+<tspan x="170" dy="15" fill="green">name</tspan>
+</text>
+<rect x="210" y="70" width="60" height="60" style="fill:white;stroke:black"/>
+<text x="240" y="90" dy="0.25em" style="text-anchor:middle;fill:black;font-size:12">
+xlink:href
+<tspan x="240" dy="15" fill="red">''</tspan>
+<tspan x="240" dy="15" fill="green">uri</tspan>
+</text>
+<rect x="280" y="30" width="100" height="60" style="fill:white;stroke:black"/>
+<text x="330" y="50" dy="0.25em" style="text-anchor:middle;fill:black;font-size:12">
+filterUnits
+<tspan x="330" dy="15" style="fill:red;font-size:10">'objectBoundingBox'</tspan>
+<tspan x="330" dy="15" style="fill:green;font-size:10">'userSpaceOnUse'</tspan></text>
+
+<rect x="280" y="110" width="100" height="60" style="fill:white;stroke:black"/>
+<text x="330" y="130" dy="0.25em" style="text-anchor:middle;fill:black;font-size:12">
+filterRes
+<tspan x="330" dy="15" style="fill:red;font-size:12">pixel</tspan>
+<tspan x="330" dy="15" style="fill:green;font-size:12">number-number</tspan>
+</text>
+
+
+<rect x="390" y="70" width="120" height="60" style="fill:white;stroke:black"/>
+<text x="450" y="90" dy="0.25em" style="text-anchor:middle;fill:black;font-size:12">
+primitiveUnits
+<tspan x="450" dy="15" fill="red">'userSpaceOnUse'</tspan>
+<tspan x="450" dy="15" fill="green">'objectBoundingBox'</tspan>
+</text>
+
+<rect x="530" y="30" width="60" height="60" style="fill:white;stroke:black"/>
+<text x="560" y="50" dy="0.25em" style="text-anchor:middle;fill:black;font-size:12">
+x
+<tspan x="560" dy="15" fill="red">-10%</tspan>
+<tspan x="560" dy="15" style="fill:green;font-size:10">coordinate</tspan>
+</text>
+
+<rect x="600" y="30" width="60" height="60" style="fill:white;stroke:black"/>
+<text x="630" y="50" dy="0.25em" style="text-anchor:middle;fill:black;font-size:12">
+y
+<tspan x="630" dy="15" fill="red">-10%</tspan>
+<tspan x="630" dy="15" style="fill:green;font-size:10">coordinate</tspan>
+</text>
+
+<rect x="530" y="110" width="60" height="60" style="fill:white;stroke:black"/>
+<text x="560" y="130" dy="0.25em" style="text-anchor:middle;fill:black;font-size:12">
+width
+<tspan x="560" dy="15" fill="red">120%</tspan>
+<tspan x="560" dy="15" style="fill:green;font-size:10">coordinate</tspan>
+</text>
+
+<rect x="600" y="110" width="60" height="60" style="fill:white;stroke:black"/>
+<text x="630" y="130" dy="0.25em" style="text-anchor:middle;fill:black;font-size:12">
+height
+<tspan x="630" dy="15" fill="red">120%</tspan>
+<tspan x="630" dy="15" style="fill:green;font-size:10">coordinate</tspan>
+</text>
+</svg>

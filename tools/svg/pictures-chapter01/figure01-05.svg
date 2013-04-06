@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+         "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+<svg width="200" height="200">
+<defs>
+<g id="star">
+<path d="M0 0L17 -23 0 -80z" style="fill:blue;stroke:black"/>
+<path d="M0 0L-17 -23 0 -80z" style="fill:white;stroke:black"/>
+</g>
+</defs>
+<use x="100" y="100" xlink:href="#star"/>
+<use x="0" y="0" transform="translate(100 100) rotate(72)" xlink:href="#star"/>
+<use x="0" y="0" transform="translate(100 100) rotate(144)" xlink:href="#star"/>
+<use x="0" y="0" transform="translate(100 100) rotate(-72)" xlink:href="#star"/>
+<use x="0" y="0" transform="translate(100 100) rotate(-144)" xlink:href="#star"/>
+</svg>

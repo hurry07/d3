@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+         "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+<svg width="800" height="600" viewBox="0 0 800 600">
+<defs>
+<filter id="Filter0" filterUnits="userSpaceOnUse" x="0" y="0" width="400" height="400">
+<feTurbulence result='pict1' type='fractalNoise' baseFrequency='0.01,0.08' numOctaves='4' seed='5' stitchTiles='noStitch'/>
+<feDiffuseLighting result='pict2' in='pict1' lighting-color='#a7c4f5' diffuseConstant='1' kernelUnitLength='1,1' surfaceScale='3.7'>
+<feDistantLight azimuth='45' elevation='45'/>
+</feDiffuseLighting>
+<feComposite in2='pict2' in='pict1' operator='xor' k1='0.4' k2='0.4' k3='1' k4='0'/>
+</filter>
+<pattern id="motif0" patternUnits="userSpaceOnUse" x="0" y="0" width="400" height="400">
+<rect x="0" y="0" width="400" height="400" filter="url(#Filter0)"/>
+</pattern> 
+<filter id="Filter1" filterUnits="userSpaceOnUse" x="0" y="0" width="400" height="400">
+<feTurbulence result='pict1' type='turbulence' baseFrequency='0.01,0.01' numOctaves='4' seed='5' stitchTiles='noStitch'/>
+<feDiffuseLighting result='pict2' in='pict1' lighting-color='#a7c4f5' diffuseConstant='1' kernelUnitLength='1,1' surfaceScale='3.7'>
+<feDistantLight azimuth='45' elevation='45'/>
+</feDiffuseLighting>
+<feComposite in2='pict2' in='pict1' operator='xor' k1='0.4' k2='0.4' k3='1' k4='0'/>
+</filter>
+<pattern id="motif1" patternUnits="userSpaceOnUse" x="0" y="0" width="400" height="400">
+<rect x="0" y="0" width="400" height="400" filter="url(#Filter1)"/>
+</pattern> 
+<filter id="Filter2" filterUnits="userSpaceOnUse" x="0" y="0" width="400" height="400">
+<feTurbulence result='pict0' type='fractalNoise' baseFrequency='0.01,0.1' numOctaves='4' seed='0' stitchTiles='noStitch'/>
+<feDiffuseLighting result='pict1' in='pict0' lighting-color='#f0f537' diffuseConstant='1' kernelUnitLength='1,1' surfaceScale='6.999999999999992'>
+<feDistantLight azimuth='45' elevation='45'/>
+</feDiffuseLighting>
+<feComposite in2='pict1' in='pict0' operator='xor' k1='0.4' k2='0.4' k3='1' k4='0'/>
+</filter>
+<pattern id="motif2" patternUnits="userSpaceOnUse" x="0" y="0" width="400" height="400">
+<rect x="0" y="0" width="400" height="400" filter="url(#Filter2)"/>
+</pattern> 
+<filter id="Filter3" filterUnits="userSpaceOnUse" x="0" y="0" width="400" height="400">
+<feTurbulence result='pict0' type='fractalNoise' baseFrequency='0.04,0.04' numOctaves='4' seed='0' stitchTiles='noStitch'/>
+<feDiffuseLighting result='pict1' in='pict0' lighting-color='#f0f537' diffuseConstant='1' kernelUnitLength='1,1' surfaceScale='6.999999999999992'>
+<feDistantLight azimuth='45' elevation='45'/>
+</feDiffuseLighting>
+<feComposite in2='pict1' in='pict0' operator='xor' k1='0.4' k2='0.4' k3='1' k4='0'/>
+</filter>
+<pattern id="motif3" patternUnits="userSpaceOnUse" x="0" y="0" width="400" height="400">
+<rect x="0" y="0" width="400" height="400" filter="url(#Filter3)"/>
+</pattern> 
+<filter id="Filter4" filterUnits="userSpaceOnUse" x="0" y="0" width="400" height="400">
+<feTurbulence result='pict0' type='fractalNoise' baseFrequency='0.01,0.01' numOctaves='4' seed='0' stitchTiles='noStitch'/>
+<feDiffuseLighting result='pict1' in='pict0' lighting-color='#d7eb2f' diffuseConstant='1' kernelUnitLength='1,1' surfaceScale='12.699999999999972'>
+<feDistantLight azimuth='45' elevation='35'/>
+</feDiffuseLighting>
+<feComposite in2='pict1' in='pict0' operator='arithmetic' k1='0.4' k2='0.4' k3='1' k4='0'/>
+</filter>
+<pattern id="motif4" patternUnits="userSpaceOnUse" x="0" y="0" width="400" height="400">
+<rect x="0" y="0" width="400" height="400" filter="url(#Filter4)"/>
+</pattern> 
+<filter id="Filter5" filterUnits="userSpaceOnUse" x="0" y="0" width="400" height="400">
+<feTurbulence result='pict0' type='fractalNoise' baseFrequency='0.2,0.2' numOctaves='4' seed='0' stitchTiles='noStitch'/>
+<feDiffuseLighting result='pict1' in='pict0' lighting-color='#d7eb2f' diffuseConstant='1' kernelUnitLength='1,1' surfaceScale='12.699999999999972'>
+<feDistantLight azimuth='45' elevation='35'/>
+</feDiffuseLighting>
+<feComposite in2='pict1' in='pict0' operator='arithmetic' k1='0.4' k2='0.4' k3='1' k4='0'/>
+</filter>
+<pattern id="motif5" patternUnits="userSpaceOnUse" x="0" y="0" width="400" height="400">
+<rect x="0" y="0" width="400" height="400" filter="url(#Filter5)"/>
+</pattern> 
+</defs>
+<rect x="0" y="0" width="800" height="600" style="fill:white;stroke:black;fill-opacity:0.5"/>
+<text x="400" y="75" style="text-anchor:middle;font-size:20">
+feTurbulence with feDiffuseLighting examples</text>
+<svg x="100" y="100" width="200" height="200" viewBox='0 0 400 400'>
+<circle cx='200' cy='200' r='190' style='stroke:black;fill:white'/>
+<circle cx='200' cy='200' r='190' style='stroke:black;fill:url(#motif0)'/>
+</svg>
+<svg x="310" y="100" width="200" height="200" viewBox='0 0 400 400'>
+<circle cx='200' cy='200' r='190' style='stroke:black;fill:white'/>
+<circle cx='200' cy='200' r='190' style='stroke:black;fill:url(#motif1)'/>
+</svg>
+<svg x="520" y="100" width="200" height="200" viewBox='0 0 400 400'>
+<circle cx='200' cy='200' r='190' style='stroke:black;fill:white'/>
+<circle cx='200' cy='200' r='190' style='stroke:black;fill:url(#motif2)'/>
+</svg>
+<text x="200" y="320" style="text-anchor:middle;font-size:15">
+fractalNoise 0.01;0.08</text>
+<text x="410" y="320" style="text-anchor:middle;font-size:15">
+turbulence 0.01;0.01</text>
+<text x="620" y="320" style="text-anchor:middle;font-size:15">
+fractalNoise 0.01;0.1</text>
+<svg x="100" y="330" width='200' height='200' viewBox="0 0 400 400">
+<circle cx='200' cy='200' r='190' style='stroke:black;fill:white'/>
+<circle cx='200' cy='200' r='190' style='stroke:black;fill:url(#motif3)'/>
+</svg>
+<svg x="310" y="330" width='200' height='200' viewBox="0 0 400 400">
+<circle cx='200' cy='200' r='190' style='stroke:black;fill:white'/>
+<circle cx='200' cy='200' r='190' style='stroke:black;fill:url(#motif4)'/>
+</svg>
+<svg x="520" y="330" width='200' height='200' viewBox="0 0 400 400">
+<circle cx='200' cy='200' r='190' style='stroke:black;fill:white'/>
+<circle cx='200' cy='200' r='190' style='stroke:black;fill:url(#motif5)'/>
+</svg>
+<text x="200" y="550" style="text-anchor:middle;font-size:15">
+fractalNoise 0.04;0.04</text>
+<text x="410" y="550" style="text-anchor:middle;font-size:15">
+fractalNoise 0.01;0.01</text>
+<text x="620" y="550" style="text-anchor:middle;font-size:15">
+fractalNoise 0.2;0.2</text>
+</svg>

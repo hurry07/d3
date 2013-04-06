@@ -1,0 +1,32 @@
+<?xml version="1.0" standalone="no"?>
+<html xmlns:iSvg="http://www.w3.org/2000/svg"
+      xmlns="http://www.w3.org/1999/xhtml">
+<body>
+
+<div style="font-family:Verdana,Arial,san-serif;font-size:20px">Multi-Namespace Document in Amaya</div>
+<p></p>
+<div style="position:absolute; left:120; top:215; width:270px; height:25px; padding:3px; border:solid; background-color: #CCCCCC; layer-background-color: #CCCCCC;font-family:Verdana,Arial,san-serif;font-size:15px;">Absolute positioned XHTML text.</div>
+
+<iSvg:svg id="inlineSVG" width="800" height="600" viewBox="0 0 400 300" xmlns:svg="http://www.w3.org/2000/svg">
+	<!-- grid -->
+	<iSvg:text x="3" y="9" style="font-size:8">(0,0)</iSvg:text>
+	<!-- example -->
+	<iSvg:path 
+			d="M30 20 L220 20 
+				M30 40 L220 40 
+				M30 60 L220 60"
+		 fill="none" stroke="black" stroke-width="0.5"/>
+  <iSvg:text fill="black">
+  	<iSvg:tspan x="30" y="20" style="font-size:12;font-family:Verdana,serif;">Absolute positioned SVG text.</iSvg:tspan>
+  	<iSvg:tspan x="30" y="40" style="font-size:9;font-family:Verdana,serif;">This text spans multiple lines.  Word-</iSvg:tspan>
+  	<iSvg:tspan x="30" y="60" style="font-size:9;font-family:Verdana,serif;">wrapping needs more intelligence.</iSvg:tspan>
+  </iSvg:text>
+  <iSvg:circle cx="10" cy="90" r="10" stroke="black" 
+          stroke-width="10" fill="lightgray" />
+  <iSvg:circle cx="240" cy="90" r="10" stroke="black" 
+          stroke-width="10" fill="lightgray" />
+</iSvg:svg>
+
+</body>
+</html>
+ 

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+         "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+<svg width="640" height="440" viewBox="-20 -20 640 440">
+<defs>
+	<marker id="Marker01" viewBox="-15 -5 20 20" refX="0" refY="0" 
+    	markerUnits="strokeWidth" markerWidth="10" markerHeight="6" 
+	orient="auto">
+    		<path d="M -15 -5 L 0 0 L -15 5 z" />
+	</marker>
+        <linearGradient id="MyGradient1" x1="0" y1="200" x2="150" y2="350" gradientUnits="userSpaceOnUse">
+            <stop offset="20%" stop-color="red"/>
+            <stop offset="80%" stop-color="yellow"/>
+        </linearGradient>
+        <linearGradient id="MyGradient2" x1="0%" y1="0%" x2="100%" y2="100%" >
+            <stop offset="20%" stop-color="red"/>
+            <stop offset="80%" stop-color="yellow"/>
+        </linearGradient>
+        <linearGradient id="MyGradient3" x1="160" y1="200" x2="310" y2="350" gradientUnits="userSpaceOnUse">
+            <stop offset="20%" stop-color="red"/>
+            <stop offset="80%" stop-color="yellow"/>
+        </linearGradient>
+</defs>
+<rect x="0" y="0" width="150" height="150" style="fill:url(#MyGradient2)"/>
+<rect x="160" y="0" width="300" height="150" style="fill:url(#MyGradient2)"/>
+<rect x="0" y="200" width="150" height="150" style="fill:url(#MyGradient1)"/>
+<rect x="160" y="200" width="300" height="150" style="fill:url(#MyGradient3)"/>
+<text x="230" y="175" style="text-anchor:middle">gradientUnits="objectBoundingBox" ( value by default )</text>
+<text x="230" y="375" style="text-anchor:middle">gradientUnits="userSpaceOnUse"</text>
+<line x1="0" y1="0" x2="150" y2="150" stroke="black" stroke-width="3" marker-end="url(#Marker01)"/>
+<line x1="160" y1="0" x2="460" y2="150" stroke="black" stroke-width="3" marker-end="url(#Marker01)"/>
+<line x1="0" y1="200" x2="150" y2="350" stroke="black" stroke-width="3" marker-end="url(#Marker01)"/>
+<line x1="160" y1="200" x2="310" y2="350" stroke="black" stroke-width="3" marker-end="url(#Marker01)"/>
+<g stroke-dasharray="5 5">
+<line x1="60" y1="0" x2="0" y2="60" stroke="black"/>
+<line x1="150" y1="90" x2="90" y2="150" stroke="black"/>
+<line x1="280" y1="0" x2="160" y2="60" stroke="black"/>
+<line x1="460" y1="90" x2="340" y2="150" stroke="black"/>
+<line x1="60" y1="200" x2="0" y2="260" stroke="black"/>
+<line x1="150" y1="290" x2="90" y2="350" stroke="black"/>
+<line x1="220" y1="200" x2="160" y2="260" stroke="black"/>
+<line x1="400" y1="200" x2="250" y2="350" stroke="black"/>
+</g>
+</svg>

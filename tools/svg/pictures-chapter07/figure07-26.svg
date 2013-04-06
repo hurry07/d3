@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+         "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="600" height="400" onload="init(evt)">
+<script  type="text/ecmascript" xlink:href="list_scroll.js.gz"/>
+<script type="text/ecmascript"><![CDATA[
+var svgdoc="";
+var color=new Array("red","yellow","green","blue","black","purple","fuchsia","lime","maroon","orange","navy","gray","olive");
+
+function init(evt)
+{svgdoc=evt.getTarget().getOwnerDocument()}
+
+function liste(evt,num)
+{
+add_list_scroll("list_scroll.svg","messages","Choose color\nfor rectangle\nif you want..",color.join("\n"),num);
+}
+
+
+function messages_use_list_scroll(result,data,num_w)
+{if (result==true)
+{switch(num_w)
+{case 0:
+obj=svgdoc.getElementById("rect1");
+obj.getStyle().setProperty("fill",color[data]);break;
+case 1:
+obj=svgdoc.getElementById("rect2");
+obj.getStyle().setProperty("fill",color[data]);break;
+}
+}
+}
+]]></script>
+<text x="100" y="50" style="text-anchor:middle;font-size:15;font-family:Arial;fill:black">Drop-down scroll</text>
+<rect id="rect1" onclick="liste(evt,0)" x="30" y="25" width="150" height="60" style="fill:green;fill-opacity:0.3"/>
+<text x="100" y="150" style="text-anchor:middle;font-size:15;font-family:Arial;fill:black">Drop-down scroll</text>
+<rect id="rect2" onclick="liste(evt,1)" x="30" y="125" width="150" height="60" style="fill:blue;fill-opacity:0.3"/>
+<text x="30" y="250" style="font-size:25;font-family:Arial;fill:black">Click on rectangle to test</text>
+<g id="messages" transform="translate(100,50)">
+</g>
+</svg>

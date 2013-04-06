@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?> 
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+         "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+<svg width="400" height="400" xmlns="http://www.w3.org/2000/svg" viewBox="-50 -50 800 800">
+  <defs>
+    <rect id="inner" width="200" height="200" fill="seagreen" 
+          transform="rotate(45) translate(-100,-100)" />
+<g id="system" transform="scale(0.5)">
+<path d="M0 0 h60 M60 5l30 -5l-30 -5z" stroke="black" stroke-width="1" />
+<path d="M0 0 v60 M5 60l-5 30l-5 -30z" stroke="black" stroke-width="1" />
+<circle cx="0" cy="0" r="5" stroke="black" stroke-width="1"/>
+</g>
+</defs>
+  <g transform="translate(300,200)">
+     <circle r="100" stroke="none" fill="tomato" />
+  </g>
+    <use xlink:href="#system" fill="blueLight"/>
+</svg>
+

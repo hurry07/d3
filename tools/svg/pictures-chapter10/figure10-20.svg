@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<svg width="800" height="400" onload="Init(evt)">
+
+  <script><![CDATA[
+    var ball = null;
+
+    function window.Animate()  // continuously get called after 10 milliseconds ..
+    {
+      var cx = parseFloat(ball.getAttribute("cx"));  // current x-coordinate ..
+      ball.setAttribute("cx", cx+1);                 // set new x-coordinate ..
+      if (cx < 200)
+         window.setTimeout("window.Animate()", 10);
+    }
+
+    function Init(evt)
+    {
+      ball = evt.getTarget().getOwnerDocument().getElementById("ball");
+      window.Animate();
+    }
+  ]]></script> 
+  <circle id="ball" cx="10" cy="200" r="20" fill="red" />
+</svg>

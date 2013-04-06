@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+         "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+<svg width="400" height="400">
+<defs>
+<pattern id='motif' x='0' y='0' width='40' height='40' overflow='visible' patternUnits="userSpaceOnUse">
+<rect x='0' y='0' width='40' height='20' style='stroke:red;stroke-width:1;fill:red'/>
+</pattern>
+</defs>
+<rect x="0" y="0" width="400" height="400" fill="url(#motif)"/>
+</svg>

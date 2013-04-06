@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+         "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+<svg width="800" height="600" viewBox="0 0 800 600">
+<defs>
+<filter id="Filter0" filterUnits="userSpaceOnUse" x="0" y="0" width="400" height="400">
+<feTurbulence type='fractalNoise' baseFrequency='0.01,0.12' numOctaves='4' seed='4' stitchTiles='noStitch'/>    
+<feComponentTransfer>     
+<feFuncR type='discrete' tableValues='0 1 1 0'/>     
+<feFuncG type='discrete' tableValues='1 0 0 1'/>     
+<feFuncB type='discrete' tableValues='0 0'/>     
+<feFuncA type='identity'/>    
+</feComponentTransfer>    
+</filter>
+<pattern id="motif0" patternUnits="userSpaceOnUse" x="0" y="0" width="400" height="400">
+<rect x="0" y="0" width="400" height="400" filter="url(#Filter0)"/>
+</pattern> 
+<filter id="Filter1" filterUnits="userSpaceOnUse" x="0" y="0" width="400" height="400">
+<feTurbulence type='turbulence' baseFrequency='0.01,0.04' numOctaves='2' seed='1' stitchTiles='noStitch'/>
+<feComponentTransfer>
+<feFuncR type='linear' slope='0' intercept='0'/>
+<feFuncG type='linear' slope='0' intercept='0'/>
+<feFuncB type='linear' slope='0' intercept='0'/>
+<feFuncA type='identity'/>
+</feComponentTransfer>
+</filter>
+<pattern id="motif1" patternUnits="userSpaceOnUse" x="0" y="0" width="400" height="400">
+<rect x="0" y="0" width="400" height="400" filter="url(#Filter1)"/>
+</pattern> 
+<filter id="Filter2" filterUnits="userSpaceOnUse" x="0" y="0" width="400" height="400">
+<feTurbulence type='fractalNoise' baseFrequency='0.012,0.03' numOctaves='4' seed='4' stitchTiles='noStitch'/>
+<feComponentTransfer>
+<feFuncR type='linear' slope='1' intercept='0'/>
+<feFuncG type='linear' slope='0' intercept='0'/>
+<feFuncB type='linear' slope='0' intercept='0'/>
+<feFuncA type='identity'/>
+</feComponentTransfer>
+</filter>
+<pattern id="motif2" patternUnits="userSpaceOnUse" x="0" y="0" width="400" height="400">
+<rect x="0" y="0" width="400" height="400" filter="url(#Filter2)"/>
+</pattern> 
+<filter id="Filter3" filterUnits="userSpaceOnUse" x="0" y="0" width="400" height="400">
+<feTurbulence type='fractalNoise' baseFrequency='0.01,0.03' numOctaves='4' seed='4' stitchTiles='noStitch'/>
+<feComponentTransfer>
+<feFuncR type='linear' slope='0' intercept='0'/>
+<feFuncG type='linear' slope='0' intercept='0'/>
+<feFuncB type='linear' slope='0' intercept='0'/>
+<feFuncA type='identity'/>
+</feComponentTransfer>
+</filter>
+<pattern id="motif3" patternUnits="userSpaceOnUse" x="0" y="0" width="400" height="400">
+<rect x="0" y="0" width="400" height="400" filter="url(#Filter3)"/>
+</pattern> 
+<filter id="Filter4" filterUnits="userSpaceOnUse" x="0" y="0" width="400" height="400">
+<feTurbulence type='turbulence' baseFrequency='0.01,0.03' numOctaves='5' seed='1' stitchTiles='noStitch'/>
+<feComponentTransfer>
+<feFuncR type='gamma' amplitude='1.6' exponent='1.4' offset='0'/>
+<feFuncG type='gamma' amplitude='1' exponent='0' offset='0'/>
+<feFuncB type='gamma' amplitude='1' exponent='0' offset='0'/>
+<feFuncA id='col3' type='gamma' amplitude='1' exponent='1' offset='0'/>
+</feComponentTransfer></filter>
+<pattern id="motif4" patternUnits="userSpaceOnUse" x="0" y="0" width="400" height="400">
+<rect x="0" y="0" width="400" height="400" filter="url(#Filter4)"/>
+</pattern> 
+<filter id="Filter5" filterUnits="userSpaceOnUse" x="0" y="0" width="400" height="400">
+<feTurbulence type='turbulence' baseFrequency='0.02,0.06' numOctaves='6' seed='2' stitchTiles='noStitch'/>
+<feComponentTransfer>
+<feFuncR type='gamma' amplitude='1.3' exponent='1' offset='0'/>
+<feFuncG type='gamma' amplitude='1' exponent='0.3' offset='0.1'/>
+<feFuncB type='gamma' amplitude='1' exponent='-0.1' offset='0'/>
+<feFuncA type='gamma' amplitude='1' exponent='1' offset='0'/>
+</feComponentTransfer>
+</filter>
+<pattern id="motif5" patternUnits="userSpaceOnUse" x="0" y="0" width="400" height="400">
+<rect x="0" y="0" width="400" height="400" filter="url(#Filter5)"/>
+</pattern> 
+</defs>
+<rect x="0" y="0" width="800" height="600" style="fill:white;stroke:black;fill-opacity:0.5"/>
+<text x="400" y="75" style="text-anchor:middle;font-size:20">
+feTurbulence with feComponentTransfer examples</text>
+<svg x="100" y="100" width="200" height="200" viewBox='0 0 400 400'>
+<circle cx='200' cy='200' r='190' style='stroke:black;fill:white'/>
+<circle cx='200' cy='200' r='190' style='stroke:black;fill:url(#motif0)'/>
+</svg>
+<svg x="310" y="100" width="200" height="200" viewBox='0 0 400 400'>
+<circle cx='200' cy='200' r='190' style='stroke:black;fill:white'/>
+<circle cx='200' cy='200' r='190' style='stroke:black;fill:url(#motif1)'/>
+</svg>
+<svg x="520" y="100" width="200" height="200" viewBox='0 0 400 400'>
+<circle cx='200' cy='200' r='190' style='stroke:black;fill:white'/>
+<circle cx='200' cy='200' r='190' style='stroke:black;fill:url(#motif2)'/>
+</svg>
+<text x="200" y="320" style="text-anchor:middle;font-size:15">
+fractalNoise 0.01;0.12</text>
+<text x="410" y="320" style="text-anchor:middle;font-size:15">
+fractalNoise 0.01;0.04</text>
+<text x="620" y="320" style="text-anchor:middle;font-size:15">
+turbulence 0.012;0.03</text>
+<svg x="100" y="330" width='200' height='200' viewBox="0 0 400 400">
+<circle cx='200' cy='200' r='190' style='stroke:black;fill:white'/>
+<circle cx='200' cy='200' r='190' style='stroke:black;fill:url(#motif3)'/>
+</svg>
+<svg x="310" y="330" width='200' height='200' viewBox="0 0 400 400">
+<circle cx='200' cy='200' r='190' style='stroke:black;fill:white'/>
+<circle cx='200' cy='200' r='190' style='stroke:black;fill:url(#motif4)'/>
+</svg>
+<svg x="520" y="330" width='200' height='200' viewBox="0 0 400 400">
+<circle cx='200' cy='200' r='190' style='stroke:black;fill:white'/>
+<circle cx='200' cy='200' r='190' style='stroke:black;fill:url(#motif5)'/>
+</svg>
+<text x="200" y="550" style="text-anchor:middle;font-size:15">
+fractalNoise 0.01;0.03</text>
+<text x="410" y="550" style="text-anchor:middle;font-size:15">
+turbulence 0.01;0.03</text>
+<text x="620" y="550" style="text-anchor:middle;font-size:15">
+turbulence 0.02;0.06</text>
+</svg>

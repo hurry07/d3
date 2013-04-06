@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- ====================================================================== -->
+<!-- Pond Wobegon Water Level and Precipitation Data			-->
+<!-- ====================================================================== -->
+
+<pond id="Wobegon">
+<title> Pond Level and Precip</title>
+<year id="2001">
+	<month id="January">
+		<level>31.9</level>
+		<precip>14.3</precip>
+	</month>
+	<month id="February">
+		<level>27.6</level>
+		<precip>11.8</precip>
+	</month>
+	<month id="March">
+		<level>34.7</level>
+		<precip>19.5</precip>
+	</month>
+	<month id="April">
+		<level>42.7</level>
+		<precip>38.9</precip>
+	</month>
+	<month id="May">
+		<level>46.7</level>
+		<precip>23.2</precip>
+	</month>
+	<month id="June">
+		<level>47.7</level>
+		<precip>19.5</precip>
+	</month>
+	<month id="July">
+		<level>34.2</level>
+		<precip>13.6</precip>
+	</month>
+	<month id="August">
+		<level>37.1</level>
+		<precip>9.8</precip>
+	</month>
+	<month id="September">
+		<level>24.7</level>
+		<precip>15.3</precip>
+	</month>
+	<month id="October">
+		<level>30.2</level>
+		<precip>45</precip>
+	</month>
+	<month id="November">
+		<level>32.8</level>
+		<precip>3.5</precip>
+	</month>
+	<month id="December">
+		<level>34.7</level>
+		<precip>3.1</precip>
+	</month>
+</year>
+<year id="2002">
+	<month id="January">
+		<level>35.9</level>
+		<precip>4.3</precip>
+	</month>
+	<month id="February">
+		<level>32.8</level>
+		<precip>3.5</precip>
+	</month>
+	<month id="March">
+		<level>34.7</level>
+		<precip>3.5</precip>
+	</month>
+	<month id="April">
+		<level>27.6</level>
+		<precip>1.8</precip>
+	</month>
+	<month id="May">
+		<level>34.2</level>
+		<precip>13.6</precip>
+	</month>
+	<month id="June">
+		<level>34.1</level>
+		<precip>3.1</precip>
+	</month>
+	<month id="July">
+		<level>42.2</level>
+		<precip>38.9</precip>
+	</month>
+	<month id="August">
+		<level>34.7</level>
+		<precip>3.5</precip>
+	</month>
+	<month id="September">
+		<level>27.9</level>
+		<precip>14.3</precip>
+	</month>
+	<month id="October">
+		<level>24.7</level>
+		<precip>8.5</precip>
+	</month>
+	<month id="November">
+		<level>20.3</level>
+		<precip>3.5</precip>
+	</month>
+	<month id="December">
+		<level>34.7</level>
+		<precip>3.5</precip>
+	</month>
+</year>
+<year id="2003">
+	<month id="January">
+ 		<level>29.2</level>
+		<precip>22.9</precip>
+	</month>
+	<month id="February">
+		<level>34.7</level>
+		<precip>31.5</precip>
+	</month>
+	<month id="March">
+		<level>31.9</level>
+		<precip>14.3</precip>
+	</month>
+	<month id="April">
+		<level>34.7</level>
+		<precip>13.5</precip>
+	</month>
+	<month id="May">
+		<level>32.8</level>
+		<precip>23.5</precip>
+	</month>
+	<month id="June">
+		<level>27.6</level>
+		<precip>11.8</precip>
+	</month>
+</year>
+</pond>

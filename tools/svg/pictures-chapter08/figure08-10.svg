@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+         "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+<svg width="600" height="200" viewBox="0 0 1200 400">
+<defs>
+<image id="Image1" opacity="0.5" x="0" y="0" width="400" height="400" xlink:href="bateau.jpg"/>
+<image id="Image2" opacity="0.5" x="0" y="0" width="400" height="400" xlink:href="puzzle.jpg"/>
+   <filter id="MyFilter" filterUnits="userSpaceOnUse" x="0" y="0" width="400" height="400">
+      <feImage xlink:href='#Image1' result='pict1'/>
+      <feImage xlink:href='#Image2' result='pict2'/>
+      <feMerge>
+         <feMergeNode in="pict1"/>
+         <feMergeNode in="pict2"/>
+      </feMerge>
+   </filter>
+
+</defs>
+<use x="0" y="0" xlink:href="#Image1"/>
+<use x="400" y="0" xlink:href="#Image2"/>
+<rect transform="translate(800,0)" width="400" height="400" x="0" y="0" filter="url(#MyFilter)"/>
+</svg>

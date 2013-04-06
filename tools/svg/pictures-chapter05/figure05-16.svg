@@ -1,0 +1,55 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+	"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<svg width="350" height="300">
+	<defs>
+		<path id="textPath01" d="M90 80 L160 80 L160 160"/>
+		<path id="textPath03"
+			d="M133 44 C88.8176 44 53 79.5937 53 123.5 C53 167.406 88.8176 203 133 203 C177.182
+				203 213 167.406 213 123.5 C213 79.5937 177.182 44 133 44 z"/>
+	</defs>
+	<use x="0" y="0" xlink:href="#textPath03"
+		 fill="none" stroke="blue" stroke-width="3"/>
+	<text font-size="15" letter-spacing="3">
+		<textPath xlink:href="#textPath01">
+			Square people
+		</textPath>
+	</text>
+	<text font-size="15" baseline-shift="-15" letter-spacing="3" word-spacing="5" text-anchor="start"	fill="black">
+		<textPath xlink:href="#textPath03" startOffset="26%">
+			in a world that&apos;s round.
+		</textPath>
+	</text>
+	<g transform="translate(58 95) scale(0.25 0.25)">
+		<g transform="translate(-45 25)">
+			<rect x="222" y="9" width="30" height="30"
+				 stroke="black" stroke-width="5" fill="none"/>
+			<rect x="213" y="42" width="48" height="51"
+				 stroke="black" stroke-width="5" fill="none"/>
+			<rect x="217" y="93" width="13" height="25"
+				 stroke="black" stroke-width="5" fill="none"/>
+			<rect x="243" y="93" width="13" height="25"
+				 stroke="black" stroke-width="5" fill="none"/>
+		</g>
+		<g transform="translate(10 -15)">
+			<rect x="222" y="9" width="30" height="30"
+				 stroke="black" stroke-width="5" fill="none"/>
+			<rect x="213" y="42" width="48" height="51"
+				 stroke="black" stroke-width="5" fill="none"/>
+			<rect x="217" y="93" width="13" height="25"
+				 stroke="black" stroke-width="5" fill="none"/>
+			<rect x="243" y="93" width="13" height="25"
+				 stroke="black" stroke-width="5" fill="none"/>
+		</g>
+		<g transform="translate(60 25)">
+			<rect x="222" y="9" width="30" height="30"
+				 stroke="black" stroke-width="5" fill="none"/>
+			<rect x="213" y="42" width="48" height="51"
+				 stroke="black" stroke-width="5" fill="none"/>
+			<rect x="217" y="93" width="13" height="25"
+				 stroke="black" stroke-width="5" fill="none"/>
+			<rect x="243" y="93" width="13" height="25"
+				 stroke="black" stroke-width="5" fill="none"/>
+		</g>
+	</g>
+</svg>

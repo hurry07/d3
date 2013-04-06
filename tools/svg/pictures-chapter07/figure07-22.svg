@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+         "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="650" height="270" viewBox="-30 -30 650 270">
+<defs>
+<pattern id='motif' x='0' y='0' width='20' height='20' 
+patternUnits="userSpaceOnUse">
+<circle cx='5' cy='5' r='5' style='stroke:black;
+stroke-width:1;fill:red'/>
+<circle cx='15' cy='15' r='5' style='stroke:black;
+stroke-width:1;fill:red'/>
+</pattern>
+<filter id='Filter0' x="0%" y="0%" width="100%" height="100%">
+<feImage result='pict0' xlink:href='#Image1'/>
+<feDiffuseLighting result='pict1' in='pict0' 
+lighting-color='white' diffuseConstant='1' 
+kernelUnitLength='1,1' surfaceScale='1'>
+<feDistantLight azimuth='45' elevation='45'/>
+</feDiffuseLighting>
+<feComposite result='pict2' in2='pict0' in='pict1' 
+operator='over'/>
+</filter>
+<rect id='Image1' x="200" y="0" width='200' height='200'
+ fill="url(#motif)"/>
+<rect id='Image2' x="400" y="0" width='200' height='200' 
+fill="url(#motif)"/>
+<filter id='Filter1' x="0%" y="0%" width="100%" height="100%">
+<feImage result='pict0' xlink:href='#Image2'/>
+<feDiffuseLighting result='pict1' in='pict0' 
+lighting-color='white' diffuseConstant='1' 
+kernelUnitLength='1,1' surfaceScale='1'>
+<feDistantLight azimuth='95' elevation='35'/>
+</feDiffuseLighting>
+<feComposite result='pict2' in2='pict0' in='pict1' operator='in'/>
+</filter>
+</defs>
+<rect x="0" y="0" width="200" height="200" fill="url(#motif)"/>
+<rect x='200' y='0' width='200' height='200' filter='url(#Filter0)'/>
+<rect x='400' y='0' width='200' height='200' filter='url(#Filter1)'/>
+<text x="100" y="225" style="text-anchor:middle">pattern</text>
+<text x="300" y="225" style="text-anchor:middle">lighting</text>
+<text x="500" y="225" style="text-anchor:middle">other composite</text>
+</svg>

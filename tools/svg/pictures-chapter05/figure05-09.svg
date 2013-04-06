@@ -1,0 +1,14 @@
+<svg>
+	<!-- Circles -->
+	<circle cx="120" cy="120" r="100" 
+		fill="darkred" stroke="black" stroke-width="3" />
+	<!-- Advertisement Text -->
+	<text x="120" y="60"
+		fill="white"
+		font-family="Verdana"	text-anchor="middle" writing-mode="rl">
+		<tspan font-size="28">ALL</tspan>
+		<tspan font-size="28" x="120" dy="35">Men's Pants</tspan>
+		<tspan font-size="45" x="120" dy="55"><tspan font-size="30" baseline-shift="super">1</tspan><tspan font-size="30">/</tspan><tspan font-size="30" baseline-shift="sub">2</tspan> Off!</tspan>
+		<tspan font-size="15" x="120" dy="45">(today only)</tspan>
+	</text>
+</svg>

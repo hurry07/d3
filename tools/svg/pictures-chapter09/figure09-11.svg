@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+         "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+<svg width="500" height="500">
+<defs>
+<rect id="rect" x="-50" y="-25" width="100" height="50"/>
+<text id="svg" x="0" y="15" style="font-size:35;text-anchor:middle;fill:white">SVG</text>
+</defs>
+<text x="225" y="20" style="font-size:15;text-anchor:middle">animateTransform</text>
+<g transform="matrix(1,0,0,1,100,50)">
+<use xlink:href="#rect" fill="blue">
+<animateColor attributeName="fill" values="blue;red;blue" begin="go1.click" dur="4" repeatCount="1"/>
+</use>
+<use xlink:href="#svg"/>
+<animateTransform attributeName="transform" type="scale" 
+values="1 1;1 -1;1 1" begin="go1.click" dur="4" repeatCount="1" additive="sum" calcMode="linear" fill="freeze"/>
+</g>
+<text x="100" y="100" style="font-size:15;text-anchor:middle">scale 1 -1</text>
+<rect id="go1" x="65" y="85" width="70" height="20" style="fill:black;fill-opacity:0.2"/>
+<g transform="matrix(1,0,0,1,350,50)">
+<use xlink:href="#rect" fill="green">
+<animateColor attributeName="fill" values="green;yellow;green" begin="go2.click" dur="4" repeatCount="1" />
+</use>
+<use xlink:href="#svg"/>
+<animateTransform attributeName="transform" type="scale" 
+values="1 1;-1 1;1 1" begin="go2.click" dur="4" repeatCount="1" additive="sum" calcMode="linear" fill="freeze"/>
+</g>
+<text x="350" y="100" style="font-size:15;text-anchor:middle">scale -1 1</text>
+<rect id="go2" x="315" y="85" width="70" height="20" style="fill:black;fill-opacity:0.2"/>
+<g transform="matrix(1,0,0,1,100,170)">
+<use xlink:href="#rect" fill="red"/>
+<use xlink:href="#svg"/>
+<animateTransform attributeName="transform" type="rotate" 
+values="0;360" begin="go3.click" dur="4" repeatCount="1" additive="sum" calcMode="linear" fill="freeze"/>
+</g>
+<text x="100" y="250" style="font-size:15;text-anchor:middle">rotate</text>
+<rect id="go3" x="75" y="235" width="50" height="20" style="fill:black;fill-opacity:0.2"/>
+<g transform="matrix(1,0,0,1,350,170)">
+<use xlink:href="#rect" fill="black">
+<animateColor attributeName="fill" values="black;red;black" begin="go4.click" dur="4" repeatCount="1" />
+</use>
+<use xlink:href="#svg"/>
+<animateTransform attributeName="transform" type="scale" 
+values="1;2;1" begin="go4.click" dur="4" repeatCount="1" additive="sum" calcMode="linear" fill="freeze"/>
+</g>
+<text x="350" y="250" style="font-size:15;text-anchor:middle">scale 2 2</text>
+<rect id="go4" x="315" y="235" width="70" height="20" style="fill:black;fill-opacity:0.2"/>
+<g transform="matrix(1,0,0,1,100,300)">
+<use xlink:href="#rect" fill="orange">
+<animateColor attributeName="fill" values="orange;green;orange" begin="go5.click" dur="4" repeatCount="1" />
+</use>
+<use xlink:href="#svg"/>
+<animateTransform attributeName="transform" type="skewX" 
+values="0;30;0;-30;0" begin="go5.click" dur="4" repeatCount="1" additive="sum" calcMode="linear" fill="freeze"/>
+</g>
+<text x="100" y="350" style="font-size:15;text-anchor:middle">skewX</text>
+<rect id="go5" x="75" y="335" width="50" height="20" style="fill:black;fill-opacity:0.2"/>
+<g transform="matrix(1,0,0,1,350,300)">
+<use xlink:href="#rect" fill="purple">
+<animateColor attributeName="fill" values="purple;blue;purple" begin="go6.click" dur="4" repeatCount="1" />
+</use>
+<use xlink:href="#svg"/>
+<animateTransform attributeName="transform" type="skewY" 
+values="0;30;0;-30;0" begin="go6.click" dur="4" repeatCount="1" additive="sum" calcMode="linear" fill="freeze"/>
+</g>
+<text x="350" y="350" style="font-size:15;text-anchor:middle">skewY</text>
+<rect id="go6" x="325" y="335" width="50" height="20" style="fill:black;fill-opacity:0.2"/>
+<g transform="matrix(1,0,0,1,100,400)">
+<use xlink:href="#rect" fill="maroon">
+<animateColor attributeName="fill" values="maroon;orange;maroon" begin="go7.click" dur="4" repeatCount="1" />
+</use>
+<use xlink:href="#svg"/>
+<animateTransform attributeName="transform" type="translate" 
+values="0 0;250 0;0 0" begin="go7.click" dur="4" repeatCount="1" additive="sum" calcMode="linear" fill="freeze"/>
+</g>
+<text x="250" y="450" style="font-size:15;text-anchor:middle">translate</text>
+<rect id="go7" x="215" y="435" width="70" height="20" style="fill:black;fill-opacity:0.2"/>
+<text x="250" y="480" style="fill:red;font-size:15;text-anchor:middle">Click on type name to start animation</text>
+</svg>

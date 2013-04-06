@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?> 
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+         "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+<svg width="600" height="400" xmlns="http://www.w3.org/2000/svg" viewBox="-50 0 600 400">
+<defs>
+<linearGradient  id="zylinderShade" x2="0%" y2="50%" spreadMethod="reflect">
+      <stop offset="0%" stop-color="darkslategray"/>
+      <stop offset="100%" stop-color="white"/>
+    </linearGradient>
+    <pattern id="hatch" width="10" height="10" patternUnits="userSpaceOnUse">
+      <rect width="10" height="10" stroke="none" fill="silver" />
+      <polyline points="0,10 10,0" stroke="gray" stroke-width="0.25"/>
+    </pattern>
+    <g id="screw" stroke="black" stroke-linejoin="round" >
+      <path fill="url(#zylinderShade)" d="M0,-36 -4,-40 -4,40 0,36 z 
+                                          M-32,-36 -28,-40 -28,40 -32,36 z 
+                                          M-4,-40 -28,-40 -28,40 -4,40 z" />
+      <path fill="url(#zylinderShade)" d="M0,-16 120,-16 120,16 0,16 z 
+                                          M120,-16 120,16 124,12 124,-12 120,-16 z" />
+      <path stroke-width="0.4" fill="none" stroke-linecap="round" 
+            stroke-dasharray="24 12 4 12" d="M-40,0 132,0" />
+      <path stroke-width="0.4" fill="none" stroke-linecap="round" 
+            d="M0,-12 124,-12 M0,12 124,12" />
+    </g>
+     <g id="nut" stroke="black" stroke-linejoin="round">
+        <path fill="url(#zylinderShade)" d="M0,-36 -4,-40 -4,40 0,36 z 
+                                            M-32,-36 -28,-40 -28,40 -32,36 z 
+                                            M-4,-40 -28,-40 -28,40 -4,40 z" />
+        <path fill="gray" d="M-4,-40 -28,-40 -28,-16 -4,-16 z" />
+        <path fill="silver" d="M-4,-16 -28,-16 -28,16 -4,16 z" />
+        <path fill="gray" d="M-4,16 -28,16 -28,40 -4,40 z" />
+     </g>
+    <g id="plates">
+      <path id="upperPlate" fill="url(#hatch)" stroke="black" 
+            d="M10,100 81,100 81,120 10,120 12,116 9,113 11,111 9,107 12,104 8,101 z
+               M81,100 119,100
+               M81,120 119,120
+               M119,100 290,100 290,120 119,120 z
+               M290,100 310,100
+               M290,120 310,120
+               M310,100 380,100 380,120 310,120 z"/>
+      <path id="lowerPlate" fill="url(#hatch)" stroke="black" 
+            d="M30,122 81,122 81,142 30,142 z
+               M81,122 119,122
+               M81,142 119,142
+               M119,122 290,122 290,142 119,142 z
+               M290,122 310,122
+               M290,142 310,142
+               M310,122 410,122 412,126 408,131 411,135 409,138 412,142 310,142 z"/>
+      <path stroke="black" stroke-width="0.4" fill="none" stroke-dasharray="12 6 2 6" 
+            d="M100,90 100,150 M300,90 300,150" />
+      <path stroke="black" stroke-width="0.5" fill="none" 
+            d="M100,142 150,80 M300,100 320,80" />
+      <text x="150" y="80" text-anchor="start">(100, 142)</text>
+      <text x="320" y="80" text-anchor="start">(300, 100)</text>
+    </g>
+<g id="system" transform="scale(0.5)">
+<path d="M0 0 h60 M60 5l30 -5l-30 -5z" stroke="black" stroke-width="1" />
+<path d="M0 0 v60 M5 60l-5 30l-5 -30z" stroke="black" stroke-width="1" />
+<circle cx="0" cy="0" r="5" stroke="black" stroke-width="1"/>
+</g>
+</defs>
+  <use xlink:href="#plates" x="100" y="100"/>
+  <use xlink:href="#nut" x="100" y="100" opacity="0.3"/>
+  <use transform="rotate(-90,100,100)" xlink:href="#nut" x="100" y="100" opacity="0.3"/>
+  <use transform="scale(0.5) rotate(-90,200,200)" xlink:href="#nut" x="200" y="200"  opacity="0.3"/>
+  <use transform="translate(100,100) rotate(90,100,100)" xlink:href="#screw" x="100" y="100"/>
+  <use transform="translate(300,100) rotate(90,100,100) scale(0.5)" xlink:href="#screw" x="200" y="200"/>
+  <use transform="translate(300,142) rotate(-90,100,100) scale(0.5)" xlink:href="#nut" x="200" y="200"/>
+  <use xlink:href="#nut" transform="translate(100,142) rotate(-90,100,100)" x="100" y="100"/>
+  <use xlink:href="#system" x="100" y="100" fill="blue" opacity="0.4"/>
+
+</svg>

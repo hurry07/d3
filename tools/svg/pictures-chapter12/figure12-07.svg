@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+         "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+<svg width="650" height="120">
+   <defs>
+     <path id="level_0" fill="none" stroke="black" d="M0 0h300" />
+     <g id="level_1">
+         <use xlink:href="#level_0" transform="scale(0.333)" />
+         <use xlink:href="#level_0" transform="translate(100 0) rotate(-60) scale(0.333)" />
+         <use xlink:href="#level_0" transform="translate(150 -86.6) rotate(60) scale(0.333)" />
+         <use xlink:href="#level_0" transform="translate(200 0) scale(0.333)" />
+     </g>
+   </defs>
+   <use xlink:href="#level_0" stroke-width="1" transform="translate(20,100)" />
+   <use xlink:href="#level_1" stroke-width="3" transform="translate(340,100)" />
+</svg>

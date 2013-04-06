@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+         "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+<svg width="800" height="600" viewBox="0 0 800 600">
+<defs>
+<filter id='MyFilter0' filterUnits='objectBoundingBox' x='0%' y='0%' width='100%' height='100%'>
+<feColorMatrix result='pict0' in='SourceGraphic' type='luminanceToAlpha'/>
+<feDiffuseLighting result='pict1' in='pict0' lighting-color='white' diffuseConstant='1.2' kernelUnitLength='1,1' surfaceScale='2.2'>
+<feDistantLight azimuth='45' elevation='25'/>
+</feDiffuseLighting>
+<feComposite result='pict2' in2='pict1' in='SourceGraphic' operator='arithmetic' k1='1.1' k2='0.2' k3='0.3' k4='0'/>
+</filter>
+<filter id='MyFilter1' filterUnits='objectBoundingBox' x='0%' y='0%' width='100%' height='100%'>
+<feColorMatrix result='pict0' in='SourceGraphic' type='luminanceToAlpha'/>
+<feSpecularLighting result='pict1' in='pict0' lighting-color='white' specularConstant='1' specularExponent='16' surfaceScale='6'>
+<fePointLight x='200' y='200' z='480'/>
+</feSpecularLighting>
+<feComposite in2='pict1' in='SourceGraphic' operator='xor'/>
+</filter>
+<filter id='MyFilter2' filterUnits='objectBoundingBox' x='0%' y='0%' width='100%' height='100%'>
+<feColorMatrix result='pict0' in='SourceGraphic' type='luminanceToAlpha'/>
+<feSpecularLighting result='pict1' in='pict0' lighting-color='white' specularConstant='1' specularExponent='16' surfaceScale='6'>
+<fePointLight x='200' y='200' z='480'/>
+</feSpecularLighting>
+<feComposite in2='pict1' in='SourceGraphic' operator='arithmetic' k1='3.3' k2='0.2' k3='0.1' k4='0'/>
+</filter>
+<filter id='MyFilter4' filterUnits='objectBoundingBox' x='0%' y='0%' width='100%' height='100%'>
+<feColorMatrix result='pict0' in='SourceGraphic' type='luminanceToAlpha'/>
+<feSpecularLighting result='pict1' in='pict0' lighting-color='silver' specularConstant='1' specularExponent='16' surfaceScale='6'>
+<fePointLight x='200' y='200' z='480'/>
+</feSpecularLighting>
+<feComposite in2='pict1' in='SourceGraphic' operator='out' k1='3.3' k2='0.2' k3='0.1' k4='0'/>
+</filter>
+<filter id='MyFilter5' filterUnits='objectBoundingBox' x='0%' y='0%' width='100%' height='100%'>
+<feColorMatrix result='pict0' in='SourceGraphic' type='luminanceToAlpha'/>
+<feSpecularLighting result='pict1' in='pict0' lighting-color='white' specularConstant='1' specularExponent='16' surfaceScale='6'>
+<fePointLight x='200' y='200' z='480'/>
+</feSpecularLighting>
+<feComposite in2='pict1' in='SourceGraphic' operator='out' k1='3.3' k2='0.2' k3='0.1' k4='0'/>
+</filter>
+<filter id='MyFilter3' filterUnits='objectBoundingBox' x='0%' y='0%' width='100%' height='100%'>
+<feColorMatrix result='pict0' in='SourceGraphic' type='luminanceToAlpha'/>
+<feSpecularLighting result='pict1' in='pict0' lighting-color='white' specularConstant='1' specularExponent='16' surfaceScale='9'>
+<feDistantLight azimuth='45' elevation='45'/>
+</feSpecularLighting>
+<feComposite in2='pict1' in='SourceGraphic' operator='arithmetic' k1='0.6' k2='1.1' k3='0.6' k4='0'/>
+</filter>
+<image id="MyImage1" width='200' height='200' xlink:href='fondu1.jpg'/>
+<image id='MyImage2' xlink:href='fondu3.jpg' width='200' height='200'/>
+</defs>
+<rect x="0" y="0" width="800" height="600" style="fill:white;stroke:black;fill-opacity:0.5"/>
+<text x="400" y="35" style="text-anchor:middle;font-size:20">
+With lighting on luminanceToAlpha</text>
+<image x="100" y="80" width='200' height='200' filter='url(#MyFilter0)' xlink:href='fondu1.jpg'/>
+<use x="310" y="80" filter='url(#MyFilter1)' xlink:href='#MyImage1'/>
+<use x="520" y="80" filter='url(#MyFilter2)' xlink:href='#MyImage1'/>
+<use x="100" y="290" filter='url(#MyFilter3)' xlink:href='#MyImage2'/>
+<use x="310" y="290" filter='url(#MyFilter4)' xlink:href='#MyImage2'/>
+<use x="520" y="290" filter='url(#MyFilter5)' xlink:href='#MyImage2'/>
+</svg>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+         "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+<svg width="400" height="400" viewBox="0 0 300 300">
+<defs>
+<filter id='MyFilter' filterUnits='userSpaceOnUse' x='0' y='0' width='400' height='400'>
+<feTurbulence id='color' type='fractalNoise' baseFrequency='0.01,0.12' numOctaves='4' seed='4' stitchTiles='noStitch'/>
+<feComponentTransfer>
+<feFuncR id='col0' type='discrete' tableValues='0 1 1 0'/>
+<feFuncG id='col1' type='discrete' tableValues='1 0 0 1'/>
+<feFuncB id='col2' type='discrete' tableValues='0 0'/>
+<feFuncA id='col3' type='identity'/>
+</feComponentTransfer>
+</filter>
+<pattern id='motif2' patternUnits='userSpaceOnUse' x='0' y='0' width='400' height='400' preserveAspectRatio='xMidYMid meet'>
+<rect x='0' y='0' width='400' height='400' filter='url(#MyFilter)'/>
+</pattern>
+<filter id="dizzy" filterUnits="userSpaceOnUse" x="0" y="0" width="400" height="400">
+<feTurbulence type="turbulence" baseFrequency="0.5" numOctaves="1" seed="0"/>
+</filter>
+<pattern id="motif" patternUnits="userSpaceOnUse" x="-10" y="-10" width="400" height="400">
+<rect x='0' y='0' width='400' height='400' filter="url(#dizzy)"/>
+</pattern>
+</defs>
+
+<circle cx="150" cy="150" r="100" style="fill:none;stroke:url(#motif);stroke-width:20"/>
+<circle cx="150" cy="150" r="90" style="fill:url(#motif2);stroke:none;stroke-width:20"/>
+
+</svg>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
+         "http://www.w3.org/TR/SVG/DTD/svg10.dtd">
+<svg width="800" height="600" viewBox="0 0 800 600">
+<defs>
+<filter id="MyFilter" filterUnits="userSpaceOnUse" x="0" y="0" width="400" height="400">
+<feImage xlink:href='puzzle.jpg' result='image1'/>
+<feMorphology in='image1' radius='8,8' operator='dilate'>
+<animate attributeName='radius' from='8,8' to='0,0' dur='5s' fill='freeze' begin='go.click' calcMode='paced'/>
+</feMorphology>
+</filter>
+<image id="MyImage" width='400' height='400' xlink:href='puzzle.jpg'/>
+</defs>
+<rect x="0" y="0" width="800" height="600" style="fill:white;stroke:black;fill-opacity:0.5"/>
+<text x="400" y="75" style="text-anchor:middle;font-size:20">
+focussing with feMorphology</text>
+<svg width="400" height="450" x="200" y="100">
+<rect id="debut" x='0' y='0' width='400' height='450' fill='yellow' opacity='0.2'/>
+<rect filter="url(#MyFilter)" x='0' y='0' width='400' height='400'/>
+<text x="335" y="425" style="text-anchor:middle;font-size:15;font-family:Arial;fill:white;stroke:black">
+GO</text>
+<rect id="go" x="310" y="410" width="50" height="18" opacity="0.3"/>
+</svg>
+</svg>
