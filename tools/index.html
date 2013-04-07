@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <style>
+        svg {
+            border: 1px solid #000;
+        }
+    </style>
+    <script type="text/javascript" src="../d3.js"></script>
+    <script type="text/javascript" src="api/widget.js"></script>
+    <script type="text/ecmascript">
+        function repositionRects(evt) {
+        console.log('repositionRects(e)');
+        }
+    </script>
+</head>
+<body>
+<div class='chart'>
+</div>
+<script type="text/javascript">
+    var width = 400;
+    height = 200;
+
+    var Table = function (selector) {
+        Widget.apply(this, arguments);
+    }
+    Table.prototype = Object.create(Widget.prototype);
+    Table.prototype.constructor = Table;
+
+    Table.prototype.updateUI = function (g, d) {
+        var sel = d3.select(g);
+    }
+    Table.prototype.enterUI = function (g, d) {
+        var sel = d3.select(g);
+        sel.append('svg:rect').each(function () {
+            this.setAttribute('width', '100');
+            this.setAttribute('height', '100');
+        });
+    }
+
+    function Camera(svg) {
+        this.svg = svg;
+        this.width = svg.attr('width');
+        this.height = svg.attr('height');
+        this.x = 0;
+        this.y = 0;
+        this.scale = 1;
+
+        // touch start
+        this.startx = 0;
+        this.starty = 0;
+    }
+    Camera.prototype.touchStart = function(x, y) {
+        this.startx = x;
+        this.starty = y;
+    }
+    Camera.prototype.touchEnd = function(x, y) {
+        this.x -= (this.startx - x) / this.scale;
+        this.y -= (this.starty - y) / this.scale;
+        this.apply();
+    }
+    Camera.prototype.touchMove = function(x, y) {
+        var x = this.x - (this.startx - x) / this.scale;
+        var y = this.y - (this.starty - y) / this.scale;
+        this.apply(x, y);
+    }
+    Camera.prototype.scale = function(scale, currentx, currenty) {
+        this.scale = scale;
+        this.apply();
+    }
+    Camera.prototype.apply = function(endx, endy) {
+        var portx = this.x;
+        var porty = this.y;
+        this.width = this.svg.attr('width');
+        this.height = this.svg.attr('height');
+        this.svg.attr('viewBox', portx + ' ' + porty + ' ' + (this.width / this.scale) + ' ' + (this.height / this.scale));
+    }
+
+    var svg = d3.selectAll('.chart')
+            .append("svg")
+            .attr('width', '100%')
+            .attr('height', '100%');
+    var camera = new Camera(svg);
+
+    window.addEventListener('resize', function () {
+        var width = window.innerWidth;
+        var height = window.innerHeight;
+        camera.apply();
+    });
+
+    var tables = new Table(new Selection(svg, 'clock', function (d) {
+        return d.name;
+    }));
+    tables.bind([
+        {
+            position: {x: 10, y: 10},
+            fields : [
+                {name:'name', type:'s'},
+                {name:'width', type:'i'},
+                {name:'percent', type:'f'}
+            ],
+            links : [
+            ]
+        }
+    ]);
+</script>
+</body>
+</html>

@@ -71,6 +71,9 @@ var selected_node = null,
     mousedown_node = null,
     mouseup_node = null;
 
+/**
+ * 重设全局标志?
+ */
 function resetMouseVars() {
     mousedown_node = null;
     mouseup_node = null;
@@ -109,13 +112,12 @@ function restart() {
     path.classed('selected', function (d) {
         return d === selected_link;
     })
-        .style('marker-start', function (d) {
-            return d.left ? 'url(#start-arrow)' : '';
-        })
-        .style('marker-end', function (d) {
-            return d.right ? 'url(#end-arrow)' : '';
-        });
-
+    .style('marker-start', function (d) {
+        return d.left ? 'url(#start-arrow)' : '';
+    })
+    .style('marker-end', function (d) {
+        return d.right ? 'url(#end-arrow)' : '';
+    });
 
     // add new links
     path.enter().append('svg:path')
@@ -130,12 +132,16 @@ function restart() {
             return d.right ? 'url(#end-arrow)' : '';
         })
         .on('mousedown', function (d) {
-            if (d3.event.ctrlKey) return;
+            if (d3.event.ctrlKey)
+                return;
 
             // select link
             mousedown_link = d;
-            if (mousedown_link === selected_link) selected_link = null;
-            else selected_link = mousedown_link;
+            if (mousedown_link === selected_link) {
+                selected_link = null;
+            } else {
+                selected_link = mousedown_link;
+            }
             selected_node = null;
             restart();
         });
@@ -175,7 +181,10 @@ function restart() {
             return d.reflexive;
         })
         .on('mouseover', function (d) {
-            if (!mousedown_node || d === mousedown_node) return;
+            console.log('mouseover', d);
+            if (!mousedown_node || d === mousedown_node) {
+                return;
+            }
             // enlarge target node
             d3.select(this).attr('transform', 'scale(1.1)');
         })
@@ -185,12 +194,18 @@ function restart() {
             d3.select(this).attr('transform', '');
         })
         .on('mousedown', function (d) {
-            if (d3.event.ctrlKey) return;
+            // 如果按下 ctrl 什么都不做
+            if (d3.event.ctrlKey) {
+                return;
+            }
 
             // select node
             mousedown_node = d;
-            if (mousedown_node === selected_node) selected_node = null;
-            else selected_node = mousedown_node;
+            if (mousedown_node === selected_node) {
+                selected_node = null;
+            } else {
+                selected_node = mousedown_node;
+            }
             selected_link = null;
 
             // reposition drag line
@@ -201,8 +216,12 @@ function restart() {
 
             restart();
         })
+        // 一个园上抬起按钮的时候
         .on('mouseup', function (d) {
-            if (!mousedown_node) return;
+            // 如果鼠标按下的时候没有选中任何的节点, 那么返回
+            if (!mousedown_node) {
+                return;
+            }
 
             // needed by FF
             drag_line
@@ -212,11 +231,12 @@ function restart() {
             // check for drag-to-self
             mouseup_node = d;
             if (mouseup_node === mousedown_node) {
+                console.log('resetMouseVars');
                 resetMouseVars();
                 return;
             }
 
-            // unenlarge target node
+            // unenlarge target node, 让当前节点的大小回复正常
             d3.select(this).attr('transform', '');
 
             // add link to graph (update if exists)
@@ -237,9 +257,11 @@ function restart() {
                 return (l.source === source && l.target === target);
             })[0];
 
+            // 如果这个连接已经存在, 那么确保刚才建立起来的方向存在
             if (link) {
                 link[direction] = true;
             } else {
+                // 否则就增加新的链接
                 link = {source: source, target: target, left: false, right: false};
                 link[direction] = true;
                 links.push(link);
@@ -267,6 +289,9 @@ function restart() {
     force.start();
 }
 
+/**
+ * global mousedown
+ */
 function mousedown() {
     // prevent I-bar on drag
     //d3.event.preventDefault();
@@ -274,11 +299,13 @@ function mousedown() {
     // because :active only works in WebKit?
     svg.classed('active', true);
 
-    if (d3.event.ctrlKey || mousedown_node || mousedown_link) return;
+    // 如果已经选中了节点就不做操作
+    if (d3.event.ctrlKey || mousedown_node || mousedown_link) {
+        return;
+    }
 
     // insert new node at point
-    var point = d3.mouse(this),
-        node = {id: ++lastNodeId, reflexive: false};
+    var point = d3.mouse(this), node = {id: ++lastNodeId, reflexive: false};
     node.x = point[0];
     node.y = point[1];
     nodes.push(node);
@@ -286,12 +313,16 @@ function mousedown() {
     restart();
 }
 
+/**
+ * 鼠标移动
+ */
 function mousemove() {
-    if (!mousedown_node) return;
+    if (!mousedown_node) {
+        return;
+    }
 
     // update drag line
     drag_line.attr('d', 'M' + mousedown_node.x + ',' + mousedown_node.y + 'L' + d3.mouse(this)[0] + ',' + d3.mouse(this)[1]);
-
     restart();
 }
 
@@ -325,7 +356,9 @@ var lastKeyDown = -1;
 function keydown() {
     d3.event.preventDefault();
 
-    if (lastKeyDown !== -1) return;
+    if (lastKeyDown !== -1) {
+        return;
+    }
     lastKeyDown = d3.event.keyCode;
 
     // ctrl
@@ -334,7 +367,11 @@ function keydown() {
         svg.classed('ctrl', true);
     }
 
-    if (!selected_node && !selected_link) return;
+    // 如果没有选中任何东西
+    if (!selected_node && !selected_link) {
+        return;
+    }
+
     switch (d3.event.keyCode) {
         case 8: // backspace
         case 46: // delete
@@ -380,6 +417,7 @@ function keydown() {
 
 function keyup() {
     lastKeyDown = -1;
+    console.log('keyup', d3.event.keyCode);
 
     // ctrl
     if (d3.event.keyCode === 17) {

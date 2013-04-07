@@ -8,13 +8,13 @@
     <file path="/collsion_mine.html" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1364723995166" ignored="false" />
     <file path="/test1.js" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1364720317419" ignored="false" />
     <file path="/Sankey Diagram.html" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1364734532817" ignored="false" />
-    <file path="/a.dummy" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1364972165449" ignored="false" />
+    <file path="/a.dummy" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1365321047684" ignored="false" />
     <file path="/class.js" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1364736510907" ignored="false" />
     <file path="/mean.js" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1364742231854" ignored="false" />
     <file path="/d3.js" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1364742848897" ignored="false" />
     <file path="/t_03.html" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1364906014332" ignored="false" />
     <file path="/index_mine.html" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1364914130326" ignored="false" />
-    <file path="/index.html" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1365060260724" ignored="false" />
+    <file path="/index.html" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1365332400776" ignored="false" />
     <file path="/a.html" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1365109541970" ignored="false" />
     <file path="/a.xml" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1365109507233" ignored="false" />
     <file path="/a.js" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1365109524446" ignored="false" />
@@ -28,6 +28,8 @@
     <file path="/figure02-32.svg" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1365142591942" ignored="false" />
     <file path="/svg_g.svg" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1365159197087" ignored="false" />
     <file path="/figure04-05.svg" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1365177988443" ignored="false" />
+    <file path="/app.js" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1365313342086" ignored="false" />
+    <file path="/widget.js" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1365320328588" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,64 +49,63 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="figure02-32.svg" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tools/svg/pictures-chapter02/figure02-32.svg">
+      <file leaf-file-name="index.html" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/tools/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="107" selection-start="64" selection-end="107" vertical-scroll-proportion="-0.0">
+            <state line="104" column="0" selection-start="3001" selection-end="3001" vertical-scroll-proportion="0.74285716">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="gradient.svg" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tools/svg_1_linecap/gradient.svg">
+      <file leaf-file-name="min.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tools/api/min.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="1" column="39" selection-start="59" selection-end="93" vertical-scroll-proportion="-0.3">
+            <state line="2758" column="42" selection-start="118137" selection-end="118138" vertical-scroll-proportion="-12.2">
+              <folding>
+                <marker date="1365326427309" expanded="true" signature="15738:15917" placeholder="..." />
+                <marker date="1365326427309" expanded="false" signature="15954:16036" placeholder="..." />
+                <marker date="1365326427309" expanded="false" signature="16082:16152" placeholder="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index_mine.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tools/example_clock/index_mine.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="155" column="50" selection-start="5533" selection-end="5533" vertical-scroll-proportion="2.173913">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="o.svg" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tools/svg_filler/o.svg">
+      <file leaf-file-name="app.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tools/example_9_link/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="24" column="33" selection-start="1223" selection-end="1223" vertical-scroll-proportion="-15.0">
+            <state line="421" column="42" selection-start="11872" selection-end="11872" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="svg_g.svg" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tools/svg_1_linecap/svg_g.svg">
+      <file leaf-file-name="dispatch.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/event/dispatch.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="3" column="110" selection-start="185" selection-end="263" vertical-scroll-proportion="-1.875">
+            <state line="86" column="20" selection-start="2081" selection-end="2089" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="figure04-05.svg" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tools/svg/pictures-chapter04/figure04-05.svg">
+      <file leaf-file-name="widget.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tools/api/widget.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="29" column="21" selection-start="1523" selection-end="1523" vertical-scroll-proportion="-14.0">
-              <folding />
+            <state line="15" column="24" selection-start="378" selection-end="386" vertical-scroll-proportion="0.0">
+              <folding>
+                <marker date="1365320329505" expanded="true" signature="1276:1482" placeholder="{...}" />
+              </folding>
             </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="sankey.html" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/tools/example_6_sankey/sankey.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="28" column="110" selection-start="454" selection-end="454" vertical-scroll-proportion="0.7106599">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="figure02-33.png" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tools/svg/pictures-chapter02/figure02-33.png">
-          <provider selected="true" editor-type-id="images">
-            <state />
           </provider>
         </entry>
       </file>
@@ -118,12 +119,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/tools/example_9_link/app.js" />
-        <option value="$PROJECT_DIR$/src/geo/stream.js" />
-        <option value="$PROJECT_DIR$/tools/svg_1_linecap/index.html" />
-        <option value="$PROJECT_DIR$/tools/svg_1_linecap/fill.svg" />
-        <option value="$PROJECT_DIR$/tools/svg_1_linecap/dash.svg" />
-        <option value="$PROJECT_DIR$/tools/svg_1_linecap/lines.svg" />
         <option value="$PROJECT_DIR$/tools/svg_1_linecap/circle.svg" />
         <option value="$PROJECT_DIR$/tools/svg_1_linecap/figure02-25.svg" />
         <option value="$PROJECT_DIR$/tools/svg/pictures-chapter02/figure02-27.svg" />
@@ -134,14 +129,20 @@
         <option value="$PROJECT_DIR$/tools/svg_filler/o.svg" />
         <option value="$PROJECT_DIR$/tools/svg_1_linecap/svg_g.svg" />
         <option value="$PROJECT_DIR$/tools/svg/pictures-chapter04/figure04-05.svg" />
+        <option value="$PROJECT_DIR$/tools/example_6_sankey/sankey.html" />
+        <option value="$PROJECT_DIR$/tools/example_9_link/app.js" />
+        <option value="$PROJECT_DIR$/tools/api/widget.js" />
+        <option value="$PROJECT_DIR$/tools/example_cpex_3_gears/index.html" />
+        <option value="$PROJECT_DIR$/tools/api/min.js" />
+        <option value="$PROJECT_DIR$/tools/index.html" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="72" />
-    <option name="y" value="22" />
-    <option name="width" value="1280" />
-    <option name="height" value="774" />
+    <option name="x" value="121" />
+    <option name="y" value="13" />
+    <option name="width" value="1580" />
+    <option name="height" value="1009" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -197,7 +198,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -230,8 +230,167 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="d3" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="d3" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tools" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="example_cpex_3_gears" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="d3" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="d3" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tools" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="example_cpex_2" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="d3" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="d3" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tools" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="example_clock" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="d3" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="d3" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tools" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="example_9_link" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="d3" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="d3" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tools" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="example_6_sankey" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="d3" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="d3" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tools" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="example_4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="d3" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="d3" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tools" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="api" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="d3" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="d3" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="d3" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="d3" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="event" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -241,14 +400,15 @@
     <property name="last_opened_file_path" value="$USER_HOME$/dev/d3-master/Makefile" />
     <property name="FullScreen" value="false" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="ReadonlyStatusHandler">
     <option name="SHOW_DIALOG" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\apache-tomcat-6.0.36\webapps\lucidchart\d3\tools\example_clock" />
       <recent name="$PROJECT_DIR$/tools/svg" />
       <recent name="$PROJECT_DIR$/tools/svg_1_linecap" />
       <recent name="D:\apache-tomcat-6.0.36\webapps\lucidchart\d3\tools\example_7_bubblechart" />
@@ -325,13 +485,14 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="72" y="22" width="1280" height="774" extended-state="0" />
-    <editor active="true" />
+    <frame x="121" y="13" width="1580" height="1009" extended-state="0" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3292683" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24900557" sideWeight="0.6737805" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24184567" sideWeight="0.6764706" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32352942" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24853991" sideWeight="0.6737805" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24140169" sideWeight="0.6764706" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32983023" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -340,7 +501,6 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32352942" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -405,114 +565,124 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="5" />
+      <option name="time" value="6" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/tools/svg/pictures-chapter02/figure02-29.svg">
+    <entry file="file://$PROJECT_DIR$/tools/api/arrays.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="24" column="13" selection-start="704" selection-end="704" vertical-scroll-proportion="-15.652174">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/lib/JavascriptLanguage.jar!/com/intellij/lang/javascript/index/predefined/EcmaScript.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="388" column="19" selection-start="6592" selection-end="6592" vertical-scroll-proportion="0.3329283">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools/example_clock/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="66" column="56" selection-start="1896" selection-end="1905" vertical-scroll-proportion="0.3545108">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools/test1.html">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tools/svg/pictures-chapter02/figure02-28.svg">
+    <entry file="file://$PROJECT_DIR$/tools/example_clock/index_new.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="22" column="37" selection-start="583" selection-end="583" vertical-scroll-proportion="44.130436">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools/example_clock/widget.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tools/svg/pictures-chapter02/figure02-25.svg">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="123" selection-start="691" selection-end="691" vertical-scroll-proportion="-10.625">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tools/svg/pictures-chapter02/figure02-26.svg">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="20" selection-start="20" selection-end="20" vertical-scroll-proportion="-0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tools/svg/pictures-chapter02/figure02-27.svg">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="16" selection-start="1367" selection-end="1372" vertical-scroll-proportion="-16.25">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tools/svg_1_linecap/lines.svg">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="52" selection-start="51" selection-end="86" vertical-scroll-proportion="-0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tools/svg/pictures-chapter02/figure02-31.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tools/svg/pictures-chapter02/figure02-30.svg">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="4" selection-start="79" selection-end="157" vertical-scroll-proportion="-0.37974682">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tools/svg/pictures-chapter02/figure02-31.svg">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="35" selection-start="215" selection-end="215" vertical-scroll-proportion="-1.875">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tools/svg_1_linecap/gradient.svg">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="39" selection-start="59" selection-end="93" vertical-scroll-proportion="-0.3">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tools/svg_filler/o.svg">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="33" selection-start="1223" selection-end="1223" vertical-scroll-proportion="-15.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tools/svg/pictures-chapter02/figure02-32.svg">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="107" selection-start="64" selection-end="107" vertical-scroll-proportion="-0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tools/svg/pictures-chapter02/figure02-33.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tools/svg_1_linecap/svg_g.svg">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="110" selection-start="185" selection-end="263" vertical-scroll-proportion="-1.875">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tools/svg/pictures-chapter04/figure04-05.svg">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="21" selection-start="1523" selection-end="1523" vertical-scroll-proportion="-14.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tools/example_6_sankey/sankey.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="110" selection-start="454" selection-end="454" vertical-scroll-proportion="0.7106599">
+        <state line="51" column="27" selection-start="1639" selection-end="1639" vertical-scroll-proportion="-0.65217394">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools/example_8_clickscale/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools/example_8_clickscale/readme.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools/example_cpex_3_gears/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="67" selection-start="388" selection-end="388" vertical-scroll-proportion="-10.434783">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools/api/widget.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="24" selection-start="378" selection-end="386" vertical-scroll-proportion="0.0">
+          <folding>
+            <marker date="1365320329505" expanded="true" signature="1276:1482" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/event/dispatch.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="86" column="20" selection-start="2081" selection-end="2089" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools/example_9_link/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="421" column="42" selection-start="11872" selection-end="11872" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools/api/min.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2758" column="42" selection-start="118137" selection-end="118138" vertical-scroll-proportion="-12.2">
+          <folding>
+            <marker date="1365326427309" expanded="true" signature="15738:15917" placeholder="..." />
+            <marker date="1365326427309" expanded="false" signature="15954:16036" placeholder="..." />
+            <marker date="1365326427309" expanded="false" signature="16082:16152" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools/example_clock/index_mine.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="155" column="50" selection-start="5533" selection-end="5533" vertical-scroll-proportion="2.173913">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="104" column="0" selection-start="3001" selection-end="3001" vertical-scroll-proportion="0.74285716">
           <folding />
         </state>
       </provider>
