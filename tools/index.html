@@ -10,11 +10,6 @@
     </style>
     <script type="text/javascript" src="../d3.js"></script>
     <script type="text/javascript" src="api/widget.js"></script>
-    <script type="text/ecmascript">
-        function repositionRects(evt) {
-        console.log('repositionRects(e)');
-        }
-    </script>
 </head>
 <body>
 <div class='chart'>
@@ -29,15 +24,63 @@
     Table.prototype = Object.create(Widget.prototype);
     Table.prototype.constructor = Table;
 
+    Table.prototype.prefer = {
+        width : 150,
+        header : 45,
+        fieldHeight : 20,
+        footer : 15
+    };
     Table.prototype.updateUI = function (g, d) {
         var sel = d3.select(g);
     }
+    Table.prototype.getSize = function (d) {
+        var fieldsHeight = d.fields.length * this.prefer.fieldHeight;
+        var height = this.prefer.header
+                + this.prefer.footer
+                + fieldsHeight;
+        return {
+            bg : {
+                width:this.prefer.width,
+                height:height,
+                color:'red'},
+            header : {
+                x:0,
+                y:0,
+                width:this.prefer.width,
+                height:this.prefer.header,
+                color:'yellow'},
+            fields : {
+                x:0,
+                y:this.prefer.header,
+                width:this.prefer.width,
+                height:fieldsHeight,
+                color:'blue'},
+            footer : {
+                x:0,
+                y:this.prefer.header + fieldsHeight,
+                width:this.prefer.width,
+                height:this.prefer.footer,
+                color:'yellow'}
+        }
+    }
+    Table.prototype.rect = function(sel, conf, claz) {
+        return sel.append('svg:rect')
+                .attr('x', conf.x ? conf.x : 0)
+                .attr('y', conf.y ? conf.y : 0)
+                .attr('width', conf.width)
+                .attr('height', conf.height)
+                .classed(claz, true)
+                .style('fill', conf.color);
+    }
     Table.prototype.enterUI = function (g, d) {
         var sel = d3.select(g);
-        sel.append('svg:rect').each(function () {
-            this.setAttribute('width', '100');
-            this.setAttribute('height', '100');
-        });
+        var fields = d.fields;
+
+        var size = this.getSize(d);
+        this.rect(sel, size.bg, 'bg');
+        this.rect(sel, size.header, 'header');
+        var fields = this.rect(sel, size.fields, 'fields');
+        this.rect(sel, size.footer, 'footer');
     }
 
     function Camera(svg) {
@@ -96,12 +139,29 @@
     tables.bind([
         {
             position: {x: 10, y: 10},
+            name:'first',
+            type:'map',
             fields : [
                 {name:'name', type:'s'},
                 {name:'width', type:'i'},
-                {name:'percent', type:'f'}
+                {name:'percent', type:'f'},
+                {name:'price', type:'f'}
             ],
-            links : [
+            refs : [
+                {type:'single',start:'price',end:'second.price'}
+            ]
+        },
+        {
+            position: {x: 300, y: 10},
+            name:'second',
+            type:'map',
+            fields : [
+                {name:'name', type:'s'},
+                {name:'width', type:'i'},
+                {name:'percent', type:'f'},
+                {name:'price', type:'f'}
+            ],
+            refs : [
             ]
         }
     ]);
