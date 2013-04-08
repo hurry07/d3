@@ -6,15 +6,26 @@ import "../event/touches";
 import "behavior";
 
 d3.behavior.drag = function () {
+    // 返回的 event 对象是一个含有自定义事件的 map,
+    // 同时它还具有 of 函数, 可以创建闭包的一个事件分发者, 能用指定的上下问来执行注册的监听者
+    // drag 对象作为 target
     var event = d3_eventDispatch(drag, "drag", "dragstart", "dragend"),
         origin = null;
 
+    /**
+     * 这个函数为什么作为 target?
+     * 这个函数将返回
+     */
     function drag() {
         this.on("mousedown.drag", mousedown)
             .on("touchstart.drag", mousedown);
     }
 
+    /**
+     * 注册内部函数接受鼠标事件, 然后再分析行为, 构造成自定义事件
+     */
     function mousedown() {
+        // this 对象是发出事件的 DOM
         var target = this,
             event_ = event.of(target, arguments),
             eventTarget = d3.event.target,
@@ -81,6 +92,12 @@ d3.behavior.drag = function () {
         }
     }
 
+    /**
+     * 对外提供的操作闭包参数 origin 的函数
+     *
+     * @param x
+     * @returns {*}
+     */
     drag.origin = function (x) {
         if (!arguments.length) {
             return origin;
@@ -89,5 +106,6 @@ d3.behavior.drag = function () {
         return drag;
     };
 
+    // rebind 把 event 的 on 函数用闭包的方式绑定到 drag 上, 使之具有可以注册监听者的能力
     return d3.rebind(drag, event, "on");
 };

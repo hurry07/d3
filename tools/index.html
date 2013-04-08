@@ -178,7 +178,7 @@
         this.height = svg.attr('height');
         this.x = 0;
         this.y = 0;
-        this.scale = 1;
+        this.scalef = 1;
 
         // touch start
         this.startx = 0;
@@ -196,30 +196,34 @@
         this.starty = y;
     }
     Camera.prototype.touchEnd = function(x, y) {
-        this.x -= (this.startx - x) / this.scale;
-        this.y -= (this.starty - y) / this.scale;
+        this.x -= (this.startx - x) / this.scalef;
+        this.y -= (this.starty - y) / this.scalef;
         this.apply();
     }
     Camera.prototype.touchMove = function(x, y) {
-        var x = this.x - (this.startx - x) / this.scale;
-        var y = this.y - (this.starty - y) / this.scale;
+        var x = this.x - (this.startx - x) / this.scalef;
+        var y = this.y - (this.starty - y) / this.scalef;
         this.apply(x, y);
     }
-    Camera.prototype.scale = function(scale, currentx, currenty) {
-        this.scale = scale;
+    Camera.prototype.scale = function(scalef, currentx, currenty) {
+        this.scalef = scalef;
         this.apply();
     }
     Camera.prototype.apply = function(endx, endy) {
         var portx = this.x;
         var porty = this.y;
-        var w = this.width = this.svg.attr('width');
-        var h = this.height = this.svg.attr('height');
-        this.svg.attr('viewBox', portx + ' ' + porty + ' ' + (w / this.scale) + ' ' + (h / this.scale));
+        var w = this.width = window.innerWidth;
+        var h = this.height = window.innerHeight;
+        var sw = w / this.scalef;
+        var sh = h / this.scalef;
+        this.svg.attr('viewBox', portx + ' ' + porty + ' ' + sw + ' ' + sh)
+                .attr('width', w)
+                .attr('height', h);
 
         this.rect.attr('x', portx)
                 .attr('y', porty)
-                .attr('width', w)
-                .attr('height', h);
+                .attr('width', sw)
+                .attr('height', sh);
     }
 
     // ======================
@@ -227,8 +231,8 @@
     // ======================
     var svg = d3.selectAll('.chart')
             .append("svg")
-            .attr('width', '100%')
-            .attr('height', '100%');
+            .attr('width', window.innerWidth)
+            .attr('height', window.innerHeight);
     svg.append('svg:defs')
             .append('svg:pattern')
             .attr('id', 'gridPattern')
@@ -248,6 +252,7 @@
     window.addEventListener('resize', function () {
         var width = window.innerWidth;
         var height = window.innerHeight;
+        //camera.scale(0.5, 0, 0);
         camera.apply();
     });
 
@@ -261,6 +266,32 @@
     d3.json("api/data.json", function(data) {
         tables.bind(data.entities);
     });
+
+    var onAdd = 'onAdd';
+    var onRemove = 'onRemove';
+    var d3_noop = 'd3_noop';
+    var removeAll = 'removeAll';
+    var listener = 'listener';
+    var i = 0;
+    var res1 = i ? listener ? onAdd : onRemove : listener ? d3_noop : removeAll;
+    var res2 = i ? (listener ? onAdd : onRemove) : (listener ? d3_noop : removeAll);
+    console.log(res1 + ', ' + res2);
+
+    i = 1;
+    res1 = i ? listener ? onAdd : onRemove : listener ? d3_noop : removeAll;
+    res2 = i ? (listener ? onAdd : onRemove) : (listener ? d3_noop : removeAll);
+    console.log(res1 + ', ' + res2);
+
+    i = -1;
+    res1 = i ? listener ? onAdd : onRemove : listener ? d3_noop : removeAll;
+    res2 = i ? (listener ? onAdd : onRemove) : (listener ? d3_noop : removeAll);
+    console.log(res1 + ', ' + res2);
+
+    if(i) {
+        console.log('if i');
+    } else {
+        console.log('else i');
+    }
 </script>
 </body>
 </html>

@@ -32,8 +32,10 @@ function d3_eventDispatch(target) {
         i = 0,
         n = arguments.length;
 
-    while (++i < n)
+    // 对每种事件都注册一个事件对象, 整个dispatch 对象就是一个 事件名字->事件监听者 的 map
+    while (++i < n) {
         dispatch[arguments[i]] = d3_dispatch_event(dispatch);
+    }
 
     // Creates a dispatch context for the specified `thiz` (typically, the target
     // DOM element that received the source event) and `argumentz` (typically, the
@@ -44,12 +46,14 @@ function d3_eventDispatch(target) {
     // constructor. This context will automatically populate the "sourceEvent" and
     // "target" attributes of the event, as well as setting the `d3.event` global
     // for the duration of the notification.
+    // 调用这个 of 方法将会返回一个包含固定上下文的对象, 事件发送的时候将使用这个上下文作为执行的上下文
     dispatch.of = function (thiz, argumentz) {
         return function (e1) {
             try {
                 var e0 = e1.sourceEvent = d3.event;
                 e1.target = target;
                 d3.event = e1;
+                // 调用对应的事件注册
                 dispatch[e1.type].apply(thiz, argumentz);
             } finally {
                 d3.event = e0;
