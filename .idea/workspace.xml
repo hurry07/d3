@@ -14,7 +14,7 @@
     <file path="/d3.js" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1364742848897" ignored="false" />
     <file path="/t_03.html" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1364906014332" ignored="false" />
     <file path="/index_mine.html" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1364914130326" ignored="false" />
-    <file path="/index.html" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1365346459000" ignored="false" />
+    <file path="/index.html" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1365419089794" ignored="false" />
     <file path="/a.html" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1365109541970" ignored="false" />
     <file path="/a.xml" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1365109507233" ignored="false" />
     <file path="/a.js" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1365109524446" ignored="false" />
@@ -30,6 +30,7 @@
     <file path="/figure04-05.svg" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1365177988443" ignored="false" />
     <file path="/app.js" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1365313342086" ignored="false" />
     <file path="/widget.js" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1365320328588" ignored="false" />
+    <file path="/tables.json" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1365403686982" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,19 +50,73 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="index.html" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tools/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="41" column="19" selection-start="1098" selection-end="1098" vertical-scroll-proportion="-3.6683674">
+            <state line="230" column="37" selection-start="6674" selection-end="6674" vertical-scroll-proportion="-103.82609">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="style.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/selection/style.js">
+      <file leaf-file-name="behavior.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/behavior/behavior.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="72" selection-start="548" selection-end="552" vertical-scroll-proportion="0.0">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="drag.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/behavior/drag.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="9" column="14" selection-start="262" selection-end="268" vertical-scroll-proportion="22.16">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tools/example_10_drag/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="110" column="53" selection-start="3877" selection-end="3877" vertical-scroll-proportion="-8.478261">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="d3.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/d3.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="994" column="17" selection-start="37606" selection-end="37606" vertical-scroll-proportion="0.46534654">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="touches.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/event/touches.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="6" column="27" selection-start="161" selection-end="161" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="rebind.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/core/rebind.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="17" column="29" selection-start="627" selection-end="627" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="event.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/event/event.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="26" column="33" selection-start="422" selection-end="438" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -77,14 +132,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/tools/svg_1_linecap/circle.svg" />
-        <option value="$PROJECT_DIR$/tools/svg_1_linecap/figure02-25.svg" />
-        <option value="$PROJECT_DIR$/tools/svg/pictures-chapter02/figure02-27.svg" />
-        <option value="$PROJECT_DIR$/tools/svg/pictures-chapter02/figure02-31.svg" />
-        <option value="$PROJECT_DIR$/tools/svg/pictures-chapter02/figure02-30.svg" />
-        <option value="$PROJECT_DIR$/tools/svg/pictures-chapter02/figure02-32.svg" />
-        <option value="$PROJECT_DIR$/tools/svg_1_linecap/gradient.svg" />
-        <option value="$PROJECT_DIR$/tools/svg_filler/o.svg" />
         <option value="$PROJECT_DIR$/tools/svg_1_linecap/svg_g.svg" />
         <option value="$PROJECT_DIR$/tools/svg/pictures-chapter04/figure04-05.svg" />
         <option value="$PROJECT_DIR$/tools/example_6_sankey/sankey.html" />
@@ -92,14 +139,23 @@
         <option value="$PROJECT_DIR$/tools/api/widget.js" />
         <option value="$PROJECT_DIR$/tools/example_cpex_3_gears/index.html" />
         <option value="$PROJECT_DIR$/tools/api/min.js" />
+        <option value="$PROJECT_DIR$/src/selection/sort.js" />
+        <option value="$PROJECT_DIR$/src/selection/order.js" />
+        <option value="$PROJECT_DIR$/tools/example_10_drag/style.css" />
+        <option value="$PROJECT_DIR$/tools/api/tables.json" />
         <option value="$PROJECT_DIR$/tools/index.html" />
+        <option value="$PROJECT_DIR$/src/behavior/drag.js" />
+        <option value="$PROJECT_DIR$/src/event/touches.js" />
+        <option value="$PROJECT_DIR$/tools/example_10_drag/index.html" />
+        <option value="$PROJECT_DIR$/d3.js" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="y" value="22" />
-    <option name="width" value="1280" />
-    <option name="height" value="774" />
+    <option name="x" value="195" />
+    <option name="y" value="52" />
+    <option name="width" value="1580" />
+    <option name="height" value="1009" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -155,6 +211,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -201,115 +258,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="example_cpex_3_gears" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="d3" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="d3" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tools" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="example_cpex_2" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="d3" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="d3" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tools" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="example_clock" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="d3" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="d3" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tools" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="example_9_link" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="d3" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="d3" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tools" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="example_6_sankey" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="d3" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="d3" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tools" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="example_4" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="d3" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="d3" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tools" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="api" />
+              <option name="myItemId" value="example_10_drag" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -341,43 +290,24 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="selection" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="d3" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="d3" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="event" />
+              <option name="myItemId" value="behavior" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="recentsLimit" value="5" />
     <property name="options.lastSelected" value="preferences.sourceCode.HTML" />
+    <property name="recentsLimit" value="5" />
     <property name="last_opened_file_path" value="$USER_HOME$/dev/d3-master/Makefile" />
     <property name="FullScreen" value="false" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="ReadonlyStatusHandler">
     <option name="SHOW_DIALOG" value="false" />
@@ -461,14 +391,14 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="22" width="1280" height="774" extended-state="0" />
-    <editor active="true" />
+    <frame x="195" y="52" width="1580" height="1009" extended-state="0" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3292683" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32317072" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24853991" sideWeight="0.6737805" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24105012" sideWeight="0.6768293" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32900944" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3231132" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24853991" sideWeight="0.6768868" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1615834" sideWeight="0.6709906" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32983023" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -545,84 +475,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/tools/api/arrays.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="13" selection-start="704" selection-end="704" vertical-scroll-proportion="-15.652174">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/lib/JavascriptLanguage.jar!/com/intellij/lang/javascript/index/predefined/EcmaScript.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="388" column="19" selection-start="6592" selection-end="6592" vertical-scroll-proportion="0.3329283">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tools/example_clock/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="66" column="56" selection-start="1896" selection-end="1905" vertical-scroll-proportion="0.3545108" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tools/test1.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tools/example_6_sankey/sankey.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="51" column="27" selection-start="1639" selection-end="1639" vertical-scroll-proportion="-0.65217394">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tools/example_8_clickscale/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tools/example_8_clickscale/readme.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tools/example_cpex_3_gears/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="67" selection-start="388" selection-end="388" vertical-scroll-proportion="-10.434783" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tools/example_9_link/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="438" column="0" selection-start="12243" selection-end="12243" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/event/dispatch.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="72" column="45" selection-start="1656" selection-end="1656" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tools/example_clock/index_mine.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="148" column="34" selection-start="5227" selection-end="5234" vertical-scroll-proportion="-29.375">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/selection/each.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="28" selection-start="83" selection-end="100" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/selection/style.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="13" column="72" selection-start="548" selection-end="552" vertical-scroll-proportion="0.0">
@@ -630,9 +482,107 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/selection/data.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/selection/sort.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="19" selection-start="266" selection-end="266" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/selection/order.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="52" selection-start="349" selection-end="349" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools/example_10_drag/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="11" selection-start="414" selection-end="421" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools/example_6_sankey/energy.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools/example_6_sankey/sankey.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="95" column="8" selection-start="4191" selection-end="4232" vertical-scroll-proportion="-12.086957">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools/api/data.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="28" column="13" selection-start="885" selection-end="885" vertical-scroll-proportion="-18.26087">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/behavior/behavior.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/event/touches.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="27" selection-start="161" selection-end="161" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/core/rebind.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="29" selection-start="627" selection-end="627" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/event/event.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="26" column="33" selection-start="422" selection-end="438" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/behavior/drag.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="14" selection-start="262" selection-end="268" vertical-scroll-proportion="22.16">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/tools/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="41" column="19" selection-start="1098" selection-end="1098" vertical-scroll-proportion="-3.6683674">
+        <state line="230" column="37" selection-start="6674" selection-end="6674" vertical-scroll-proportion="-103.82609">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools/example_10_drag/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="110" column="53" selection-start="3877" selection-end="3877" vertical-scroll-proportion="-8.478261">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/d3.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="994" column="17" selection-start="37606" selection-end="37606" vertical-scroll-proportion="0.46534654">
           <folding />
         </state>
       </provider>

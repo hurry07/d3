@@ -1,0 +1,45 @@
+{
+    "entities" : [
+        {
+            "position": {"x": 10, "y": 10},
+            "name":"First",
+            "type":"map",
+            "fields" : [
+                {"name":"name", "type":"s"},
+                {"name":"width", "type":"i"},
+                {"name":"percent", "type":"f"},
+                {"name":"price", "type":"f"},
+                {"name":"second", "type":"r"}
+            ],
+            "refs" : [
+                {"type":"single","start":"second1","end":"second"}
+            ]
+        }
+        ,{
+            "position": {"x": 300, "y": 10},
+            "name":"Second",
+            "type":"map",
+            "fields" : [
+                {"name":"name", "type":"s"},
+                {"name":"width", "type":"i"},
+                {"name":"percent", "type":"f"},
+                {"name":"price", "type":"f"}
+            ],
+            "refs" : [
+            ]
+        }
+        ,{
+            "position": {"x": 300, "y": 200},
+            "name":"Third",
+            "type":"view",
+            "fields" : [
+                {"name":"name", "type":"s"},
+                {"name":"width", "type":"i"},
+                {"name":"percent", "type":"f"},
+                {"name":"price", "type":"f"}
+            ],
+            "refs" : [
+            ]
+        }
+    ]
+}

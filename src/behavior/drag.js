@@ -82,7 +82,9 @@ d3.behavior.drag = function () {
     }
 
     drag.origin = function (x) {
-        if (!arguments.length) return origin;
+        if (!arguments.length) {
+            return origin;
+        }
         origin = x;
         return drag;
     };

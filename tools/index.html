@@ -4,8 +4,60 @@
     <title></title>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <style>
-        svg {
-            border: 1px solid #000;
+        body {
+            margin: 0px;
+            padding: 0px;
+            background:#404040;
+            font-weight: bold;
+            overflow:hidden;
+        }
+
+        .entity text {
+            font-family: Abel,"Helvetica Neue",Helvetica,Arial,sans-serif;
+        }
+        .entity .fields-light {
+            fill: #B1BBC4;
+        }
+        .entity .fields-dark {
+            fill: #A7B6C7;
+        }
+        .entity .fieldname {
+            fill: black;
+            text-anchor:start;
+            font-size: 17px;
+        }
+        .entity .bg {
+            fill: #959595;
+        }
+
+        .map .header {
+            fill: #5581A2;
+        }
+        .map .headername {
+            fill: black;
+            text-anchor:start;
+            font-size: 24px;
+        }
+        .map .footer {
+            fill: #5581A2;
+        }
+
+        .view .bg {
+            fill: #959595;
+        }
+        .view .header {
+            fill: #28643F;
+        }
+        .view .headername {
+            fill: white;
+            text-anchor:start;
+            font-size: 24px;
+        }
+        .view .fields {
+            fill: #B1BBC4;
+        }
+        .view .footer {
+            fill: #28643F;
         }
     </style>
     <script type="text/javascript" src="../d3.js"></script>
@@ -18,6 +70,13 @@
     var width = 400;
     height = 200;
 
+    var Fields = function (selector) {
+        Widget.apply(this, arguments);
+    }
+    Fields.prototype = Object.create(Widget.prototype);
+    Fields.prototype.constructor = Fields;
+
+    // ====================== table
     var Table = function (selector) {
         Widget.apply(this, arguments);
     }
@@ -25,64 +84,94 @@
     Table.prototype.constructor = Table;
 
     Table.prototype.prefer = {
-        width : 150,
-        header : 45,
-        fieldHeight : 20,
-        footer : 15
+        header : {
+            height : 45,
+            prefix : 8
+        },
+        field : {
+            height : 24,
+            prefix : 4
+        },
+        footer : {
+            height : 18
+        },
+        width : 150
     };
     Table.prototype.updateUI = function (g, d) {
         var sel = d3.select(g);
     }
-    Table.prototype.getSize = function (d) {
-        var fieldsHeight = d.fields.length * this.prefer.fieldHeight;
-        var height = this.prefer.header
-                + this.prefer.footer
-                + fieldsHeight;
-        return {
-            bg : {
-                width:this.prefer.width,
-                height:height,
-                color:'red'},
-            header : {
-                x:0,
-                y:0,
-                width:this.prefer.width,
-                height:this.prefer.header,
-                color:'yellow'},
-            fields : {
-                x:0,
-                y:this.prefer.header,
-                width:this.prefer.width,
-                height:fieldsHeight,
-                color:'blue'},
-            footer : {
-                x:0,
-                y:this.prefer.header + fieldsHeight,
-                width:this.prefer.width,
-                height:this.prefer.footer,
-                color:'yellow'}
+    Table.prototype.getHeight = function (d) {
+        var p = this.prefer;
+        return d.fields.length * p.field.height + p.header.height + p.footer.height;
+    }
+    Table.prototype.initHeader = function (g, d) {
+        var p = this.prefer.header;
+        g.append('svg:rect')
+                .attr('width', this.prefer.width)
+                .attr('height', p.height)
+                .classed('header', true);
+        g.append('svg:text')
+                .attr('x', p.prefix)
+                .attr('y', p.height / 2)
+                .attr('dy', 8)
+                .classed('headername', true)
+                .text(d.name);
+    }
+    Table.prototype.initFields = function (g, fields) {
+        var p = this.prefer.field;
+        var starty = 0;
+        for(var i= 0,size= fields.length;i<size;i++) {
+            var claz = (i & 1) == 0 ? 'fields-light' : 'fields-dark';
+            var field = g.append('svg:g')
+                    .attr("transform", 'translate(' + 0 + ',' + starty + ')');
+            field.append('svg:rect')
+                    .attr('width', this.prefer.width)
+                    .attr('height', p.height)
+                    .classed(claz, true);
+            field.append('svg:text')
+                    .classed('fieldname', true)
+                    .attr('x', p.prefix)
+                    .attr('y', p.height / 2)
+                    .attr('dy', 6)
+                    .text(fields[i].name);
+
+            starty += p.height;
         }
     }
-    Table.prototype.rect = function(sel, conf, claz) {
-        return sel.append('svg:rect')
-                .attr('x', conf.x ? conf.x : 0)
-                .attr('y', conf.y ? conf.y : 0)
-                .attr('width', conf.width)
-                .attr('height', conf.height)
-                .classed(claz, true)
-                .style('fill', conf.color);
-    }
     Table.prototype.enterUI = function (g, d) {
-        var sel = d3.select(g);
-        var fields = d.fields;
+        var p = this.prefer;
 
-        var size = this.getSize(d);
-        this.rect(sel, size.bg, 'bg');
-        this.rect(sel, size.header, 'header');
-        var fields = this.rect(sel, size.fields, 'fields');
-        this.rect(sel, size.footer, 'footer');
+        var sel = d3.select(g);
+        sel.classed(d.type, true);
+
+        var height = this.getHeight(d);
+        sel.append('svg:rect')
+                .attr('width', p.width)
+                .attr('height', height)
+                .classed('bg', true);
+
+        this.initHeader(
+                sel.append('svg:g')
+                        .attr("transform", 'translate(0,0)'),
+                        //.classed('header11', true),
+                d);
+
+        this.initFields(
+                sel.append('svg:g')
+                        .attr("transform", "translate(0," + p.header.height + ")")
+                        .classed('fields', true),
+                d.fields);
+
+        sel.append('svg:rect')
+                .attr('width', p.width)
+                .attr('height', p.footer.height)
+                .attr('y', height - p.footer.height)
+                .classed('footer', true);
     }
 
+    // ======================
+    // camera
+    // ======================
     function Camera(svg) {
         this.svg = svg;
         this.width = svg.attr('width');
@@ -94,6 +183,13 @@
         // touch start
         this.startx = 0;
         this.starty = 0;
+
+        this.rect = svg.append('svg:rect');
+        this.rect.attr('fill', 'url(#gridPattern)')
+                .attr('x', 0)
+                .attr('y', 0)
+                .attr('width', this.width)
+                .attr('height', this.height);
     }
     Camera.prototype.touchStart = function(x, y) {
         this.startx = x;
@@ -116,15 +212,37 @@
     Camera.prototype.apply = function(endx, endy) {
         var portx = this.x;
         var porty = this.y;
-        this.width = this.svg.attr('width');
-        this.height = this.svg.attr('height');
-        this.svg.attr('viewBox', portx + ' ' + porty + ' ' + (this.width / this.scale) + ' ' + (this.height / this.scale));
+        var w = this.width = this.svg.attr('width');
+        var h = this.height = this.svg.attr('height');
+        this.svg.attr('viewBox', portx + ' ' + porty + ' ' + (w / this.scale) + ' ' + (h / this.scale));
+
+        this.rect.attr('x', portx)
+                .attr('y', porty)
+                .attr('width', w)
+                .attr('height', h);
     }
 
+    // ======================
+    // global
+    // ======================
     var svg = d3.selectAll('.chart')
             .append("svg")
             .attr('width', '100%')
             .attr('height', '100%');
+    svg.append('svg:defs')
+            .append('svg:pattern')
+            .attr('id', 'gridPattern')
+            .attr('x', 0)
+            .attr('y', 0)
+            .attr('width', 15)
+            .attr('height', 15)
+            .attr('patternUnits', 'userSpaceOnUse')
+                    .append('svg:path')
+                    .attr('d', 'M 15 0 L 0 0 0 15')
+                    .attr('fill', 'none')
+                    .attr('stroke', '#6DA0A1')
+                    .attr('stroke-width', '0.25');
+
     var camera = new Camera(svg);
 
     window.addEventListener('resize', function () {
@@ -133,38 +251,16 @@
         camera.apply();
     });
 
-    var tables = new Table(new Selection(svg, 'clock', function (d) {
+    var tables = new Table(new Selection(svg, 'entity', function (d) {
         return d.name;
     }));
-    tables.bind([
-        {
-            position: {x: 10, y: 10},
-            name:'first',
-            type:'map',
-            fields : [
-                {name:'name', type:'s'},
-                {name:'width', type:'i'},
-                {name:'percent', type:'f'},
-                {name:'price', type:'f'}
-            ],
-            refs : [
-                {type:'single',start:'price',end:'second.price'}
-            ]
-        },
-        {
-            position: {x: 300, y: 10},
-            name:'second',
-            type:'map',
-            fields : [
-                {name:'name', type:'s'},
-                {name:'width', type:'i'},
-                {name:'percent', type:'f'},
-                {name:'price', type:'f'}
-            ],
-            refs : [
-            ]
-        }
-    ]);
+
+    // ======================
+    // binding data
+    // ======================
+    d3.json("api/data.json", function(data) {
+        tables.bind(data.entities);
+    });
 </script>
 </body>
 </html>

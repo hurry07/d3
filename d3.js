@@ -348,9 +348,14 @@ d3 = function() {
     d3.behavior = {};
     d3.rebind = function(target, source) {
         var i = 1, n = arguments.length, method;
-        while (++i < n) target[method = arguments[i]] = d3_rebind(target, source, source[method]);
+        while (++i < n) {
+            target[method = arguments[i]] = d3_rebind(target, source, source[method]);
+        }
         return target;
     };
+    /**
+     * 这里是为了重复调用
+     */
     function d3_rebind(target, source, method) {
         return function() {
             var value = method.apply(source, arguments);
@@ -378,12 +383,19 @@ d3 = function() {
         }
     };
     function d3_dispatch_event(dispatch) {
-        var listeners = [], listenerByName = new d3_Map();
+        var listeners = [],
+            listenerByName = new d3_Map();
+
+        // 对应每个事件, 调用对应的处理逻辑, 为什么要返回 dispatch?
         function event() {
             var z = listeners, i = -1, n = z.length, l;
-            while (++i < n) if (l = z[i].on) l.apply(this, arguments);
+            while (++i < n)
+                if (l = z[i].on)
+                    l.apply(this, arguments);
             return dispatch;
         }
+
+        // 注册或者是删除事件监听者
         event.on = function(name, listener) {
             var l = listenerByName.get(name), i;
             if (arguments.length < 2) return l && l.on;
@@ -409,15 +421,32 @@ d3 = function() {
         while (s = e.sourceEvent) e = s;
         return e;
     }
+    /**
+     * 传递一个 target 对象, 返回一个事件派发者
+     * @target 是事件源
+     * target 和 this 还不是一个东西
+     */
     function d3_eventDispatch(target) {
-        var dispatch = new d3_dispatch(), i = 0, n = arguments.length;
-        while (++i < n) dispatch[arguments[i]] = d3_dispatch_event(dispatch);
+        // 一个空白的占位符
+        var dispatch = new d3_dispatch(),
+            i = 0,
+            n = arguments.length;
+        // dispatch 每个事件名字绑定一个事件包装, 能注册监听者, 同时能执行事件
+        while (++i < n) {
+            dispatch[arguments[i]] = d3_dispatch_event(dispatch);
+        }
+
+        /**
+         * 用指定的 this 和 argument 来执行这个函数
+         * 返回事件分发的一个闭包
+         */
         dispatch.of = function(thiz, argumentz) {
             return function(e1) {
                 try {
                     var e0 = e1.sourceEvent = d3.event;
                     e1.target = target;
                     d3.event = e1;
+                    // 执行之前注册的事件对象
                     dispatch[e1.type].apply(thiz, argumentz);
                 } finally {
                     d3.event = e0;
@@ -481,12 +510,19 @@ d3 = function() {
         }) : [];
     };
     d3.behavior.drag = function() {
-        var event = d3_eventDispatch(drag, "drag", "dragstart", "dragend"), origin = null;
+        var event = d3_eventDispatch(drag, "drag", "dragstart", "dragend"),
+            origin = null;
         function drag() {
             this.on("mousedown.drag", mousedown).on("touchstart.drag", mousedown);
         }
         function mousedown() {
-            var target = this, event_ = event.of(target, arguments), eventTarget = d3.event.target, touchId = d3.event.touches ? d3.event.changedTouches[0].identifier : null, offset, origin_ = point(), moved = 0;
+            var target = this,
+                event_ = event.of(target, arguments),
+                eventTarget = d3.event.target,
+                touchId = d3.event.touches ? d3.event.changedTouches[0].identifier : null,
+                offset,
+                origin_ = point(),
+                moved = 0;
             var w = d3.select(d3_window).on(touchId != null ? "touchmove.drag-" + touchId : "mousemove.drag", dragmove).on(touchId != null ? "touchend.drag-" + touchId : "mouseup.drag", dragend, true);
             if (origin) {
                 offset = origin.apply(target, arguments);
@@ -534,7 +570,8 @@ d3 = function() {
             }
         }
         drag.origin = function(x) {
-            if (!arguments.length) return origin;
+            if (!arguments.length)
+                return origin;
             origin = x;
             return drag;
         };
@@ -954,6 +991,9 @@ d3 = function() {
         }
         return this.each(d3_selection_on(type, listener, capture));
     };
+    /**
+     * 添加和删除事件的实现
+     */
     function d3_selection_on(type, listener, capture) {
         var name = "__on" + type, i = type.indexOf("."), wrap = d3_selection_onListener;
         if (i > 0) type = type.substring(0, i);
