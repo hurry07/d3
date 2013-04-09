@@ -55,3 +55,6 @@ Widget.prototype.init = function(enter) {
             return "translate(" + d.position.x + "," + d.position.y + ")"
         })
 }
+
+function Node() {
+}

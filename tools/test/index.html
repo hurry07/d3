@@ -29,51 +29,220 @@
 </head>
 <body>
 <script type="text/javascript">
-    var res;
-    res = d3.extent([10, 1, 3, 5, 0]);
-    console.log(res);
-
-    res = d3.extent([
-        {name: 'jack', age: 23},
-        {name: 'frank', age: 27},
-        {name: 'wang', age: 20}
-    ], function () {
-        console.log(arguments);
-        return arguments[0].age;
-    });
-    console.log(res);
-    console.log(d3.map);
-    var map1 = new d3.map();
-    var map2 = new d3.map();
-    console.log(map1);
-    console.log(map2);
-    map1.set('a', '1');
-    map2.set('a', '1');
-    console.log(map1);
-    console.log(map2);
-    for (var i in map1) {
-        console.log(i);
+    function _extends(sub, super_, props) {
+        sub.prototype = Object.create(super_.prototype);
+        sub.prototype.constructor = sub;
+        if(props) {
+            for(var i in props) {
+                sub.prototype[i] = props[i];
+            }
+        };
     }
 
-    var mean = d3.mean([1, 2, 3], function (d, i) {
-        console.log(arguments);
-        return d + i;
-    });
-    console.log(mean);
-
-    var ziptest = d3.zip([1, 2, 3, 4, 5], [2, 4, 6, 8, 10]);
-    console.log(ziptest);
-
-    function testclocure() {
-        var temp = [];
-        console.log(temp);
-        function event() {
-            temp.push(1);
+    // ==========================================
+    // node is used as basic element of MVC
+    // ==========================================
+    /**
+     * Node is a controller
+     * Node.view is the ui selection
+     * Node.data is model
+     *
+     * @param parent
+     * @param identifier
+     * @constructor
+     */
+    function Node(parent, identifier) {
+        this.parentNode = parent;
+        this.identifier = identifier;
+        this.view = null;
+    }
+    Node.prototype.setData = function(data) {
+        this.data = data;
+        data.controller = this;
+    }
+    Node.prototype.bindUpdate = function(data) {
+        if(!this.view) {
+            if(data) {
+                this.setData(data);
+                this.setup();
+                this.enter();
+            }
+        } else if(data) {
+            var d = this.d;
+            this.setData(data);
+            this.update();
+        } else {
+            this.unbind();
         }
-        return new event();
     }
-    var e1 = testclocure();
-    var e2 = testclocure();
-    var e3 = testclocure();
+    Node.prototype.bind = function(data) {
+        // if this is the first time bind is called
+        if(!this.view) {
+            if(data) {
+                this.setData(data);
+                this.setup();
+                this.enter();
+            }
+        } else if(data) {
+            var d = this.d;
+            this.setData(data);
+
+            var id = this.identifier;
+            if(!id || (id(d) != id(data))) {
+                this.update();
+            }
+        } else {
+            this.unbind();
+        }
+    }
+    /**
+     * create root ui, this method must return a svg selection as the root of current node
+     */
+    Node.prototype.setup = function() {
+        // this.view = ...;
+        // this.parentView.append(this.view);
+    }
+    /**
+     * create customer ui
+     */
+    Node.prototype.enter = function() {
+    }
+    Node.prototype.update = function() {
+    }
+    /**
+     * release customer ui, or send release event if needed
+     */
+    Node.prototype.exit = function() {
+    }
+    /**
+     * remove current node from parent
+     */
+    Node.prototype.teardown = function() {
+        if(this.view) {
+            this.view.remove();
+            this.view = null;
+        }
+        this.data = null;
+    }
+    Node.prototype.unbind = function() {
+        this.exit();
+        this.teardown();
+    }
+    /**
+     * get parent view
+     * @returns {*}
+     */
+    Node.prototype.parentView = function() {
+        return this.parentNode.view;
+    }
+
+    // ==========================================
+    // CollectionNode
+    // ==========================================
+    /**
+     * @param parent
+     * @param identifier
+     * @param factory {
+     *     create : function(parent) {}
+     *     identifier : function(data) {return key}
+     * }
+     * @constructor
+     */
+    function CollectionNode(parent, identifier, factory) {
+        Node.call(this, parent, identifier);
+        this.factory = factory;
+        this.children = [];
+        this.param = {};
+    }
+    _extends(CollectionNode, Node);
+    CollectionNode.prototype.unbindChild = function(child, i) {
+        child.unbind();
+    }
+    CollectionNode.prototype.bindChild = function(d, i, arr) {
+        var child = this.factory(this);
+        child.bind(d);
+        child.__index__ = i;
+        this.children.push(child);
+    }
+    CollectionNode.prototype.enter = function() {
+        this.data.forEach(this.bindChild, this);
+    }
+    CollectionNode.prototype.update = function() {
+        var id = this.factory.identifier;
+        var data = this.data;
+
+        var m = this.children.length;
+        var n = this.data.length;
+        var min = Math.min(m,n);
+        var children = this.children;
+
+        if(id) {
+            var carr = children.splice(0, m);
+            var s = 0;// search index
+            var cm = new d3_Map();
+            var child;
+
+            this.children = [];
+            for(var i=0,size=n;i<size;i++) {
+                var key = id(data[i]);
+
+                // try to find reusable child
+                child = null;
+                if(cm.has(key)) {
+                    child = cm.get(key);
+                    cm.remove(key);
+                } else {
+                    while(s < m) {
+                        var ck = id(carr[s]);
+                        if(key == ck) {
+                            child = carr[s];
+                            s++;
+                            break;
+                        } else {
+                            cm.set(ck, carr[s]);
+                        }
+                        s++;
+                    }
+                }
+
+                // if find, update it, create new element
+                if(child) {
+                    child.bindUpdate(data[i]);
+                    child.__index__ = i;
+                    this.children.push(child);
+                } else {
+                    this.bindChild(data[i], i, data);
+                }
+            }
+
+            // remove useless elements if any
+            cm.values().forEach(this.unbindChild, this);
+        } else {
+            for(var i=0,size=min;i<size;i++) {
+                children[i].bind(data[i]);
+            }
+            // if there is more children than data
+            for(var i=min;i<m;i++) {
+                this.unbindChild(children[i], i);
+            }
+            // if there is more data than children
+            for(var i=min;i<n;i++) {
+                this.bindChild(data[i], i, data);
+            }
+
+            this.children = (m < n) ? children : children.slice(0, n);
+        }
+    }
+    CollectionNode.prototype.exit = function() {
+        this.children.forEach(this.unbindChild, this);
+        this.children = [];
+    }
+    CollectionNode.factory = function(type, key) {
+        var fac = function(parent) {
+            return new type(parent, key);
+        }
+        fac.identifier = key;
+        return fac;
+    }
 </script>
 </body>
