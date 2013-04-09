@@ -33,7 +33,7 @@
             "name":"Third",
             "type":"view",
             "fields" : [
-                {"name":"name", "type":"s"},
+                {"name":"aaaaaaaaaafffffffffff", "type":"s"},
                 {"name":"width", "type":"i"},
                 {"name":"percent", "type":"f"},
                 {"name":"price", "type":"f"}

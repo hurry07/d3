@@ -1,0 +1,98 @@
+body {
+    margin: 0px;
+    padding: 0px;
+    background: #404040;
+    overflow: hidden;
+}
+
+.entity text {
+    font-family: Abel, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.fieldinput {
+    font-family: Abel, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 17px;
+    height: 100%;
+    width: 100%;
+    text-indent: 4px;
+}
+
+.entity .fields-light {
+    fill: #B1BBC4;
+}
+
+.entity .fields-dark {
+    fill: #A7B6C7;
+}
+
+.entity .fieldname {
+    fill: black;
+    text-anchor: start;
+    font-size: 17px;
+}
+
+.entity .bg {
+    fill: #959595;
+}
+
+.map .header {
+    fill: #5581A2;
+}
+
+.map .headername {
+    fill: black;
+    text-anchor: start;
+    font-size: 24px;
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.map .footer {
+    fill: #5581A2;
+}
+
+.view .bg {
+    fill: #959595;
+}
+
+.view .header {
+    fill: #28643F;
+}
+
+.view .headername {
+    fill: white;
+    text-anchor: start;
+    font-size: 24px;
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.view .fields {
+    fill: #B1BBC4;
+}
+
+.view .footer {
+    fill: #28643F;
+}
+
+.floating {
+    position: fixed;
+    z-index: 99;
+    cursor: pointer;
+    border: 0px;
+    visibility: visible;
+    overflow: hidden;
+    display: block;
+    padding: 0px;
+}
+
+.floating input {
+    background-color: transparent;
+    border: none;
+    padding: 0px;
+    outline-width: 0px;
+}
