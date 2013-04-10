@@ -12,7 +12,7 @@
 <div class='chart'>
 </div>
 <div id='input' class="floating">
-    <input class="fieldinput">
+    <input type="text" class="fieldinput">
 </div>
 <script type="text/javascript">
 // ======================
@@ -29,15 +29,15 @@ var Field = _extends(function (p) {
         var i = ListNode.prototype.getChildIndex(this);
         var d = this.data;
 
-        this.view = this.parentView().append('svg:g');
+        var bgstyle = (i & 1) == 0 ? 'fields-light' : 'fields-dark';
+        this.view = this.parentView().append('svg:g')
+                .classed(bgstyle, true);
 
         var ui = this.view;
-        var claz = (i & 1) == 0 ? 'fields-light' : 'fields-dark';
         ui.attr("transform", 'translate(' + 0 + ',' + (fh * i) + ')');
         ui.append('svg:rect')
                 .attr('width', fw)
                 .attr('height', fh)
-                .classed(claz, true)
                 .on('click', this.editListener)
                 .datum(d);
 
@@ -51,10 +51,10 @@ var Field = _extends(function (p) {
                 .datum(d);
     },
     update: function (dold, dnew) {
-        var ui = this.view;
         var d = dnew;
+        var ui = this.view;
         ui.select('text')
-                .attr('text', d.name);
+                .text(d.name);
     },
     exit: function () {
         this.deleteView(this.view);
@@ -68,12 +68,14 @@ var Field = _extends(function (p) {
     },
 
     // interact with text input.
-    setText: function (id, name) {
-        this.data.name = name;
-        this.refresh();
+    beginInput: function (id, text) {
+        text.value = this.data.name;
+        this.view.classed('edit', true);
     },
-    getText: function (id) {
-        return this.data.name;
+    endInput: function (id, text) {
+        this.data.name = text.value;
+        this.refresh();
+        this.view.classed('edit', false);
     },
     getSize: function (id) {
         var p = Table.prototype.prefer;
@@ -83,8 +85,6 @@ var Field = _extends(function (p) {
     },
     getNode: function () {
         return this.view.node();
-    },
-    initInput: function (id, input) {
     }
 });
 
@@ -188,6 +188,9 @@ function Camera(svg) {
             .attr('fill', 'url(#gridPattern)');
     this.apply();
 }
+Camera.prototype.getScale = function() {
+    return this.scalef;
+}
 Camera.prototype.touchStart = function (x, y) {
     this.startx = x;
     this.starty = y;
@@ -258,17 +261,30 @@ Camera.prototype.transform = function (g, size) {
 // ======================
 // UI Manager
 // ======================
-function TextInput(dom) {
-    this.input = dom;
+function TextInput(input) {
+    this.input = input;
+    this.text = input.getElementsByTagName('input')[0];
+    var current = this;
+    var listener = function () {
+        current.submit();
+    }
+    this.text.onchange = listener;
+    this.text.onblur = listener;
 }
-TextInput.prototype.bind = function (node, id) {
-    this.node = node;
-    this.id = id;
+TextInput.prototype.submit = function () {
+    if (this.node) {
+        this.node.endInput(this.id, this.text);
+    }
+    d3.select(this.input).style('visibility', 'none');
 }
 TextInput.prototype.show = function (param) {
+    this.submit();
+
     var id = param.id;
     var target = param.target;
-    this.bind(target, id);
+
+    this.node = target;
+    this.id = id;
 
     var size = camera.transform(target.getNode(id), target.getSize(id));
 
@@ -278,10 +294,15 @@ TextInput.prototype.show = function (param) {
     input.style('width', size[2] + 'px');
     input.style('height', size[3] + 'px');
 
+    this.node.beginInput(this.id, this.text);
+    d3.select(this.text)
+            .style('font-size', Math.round(17 * camera.getScale()) + 'px')
+            .style('text-indent', Math.round(4 * camera.getScale()) + 'px');
     input.style('visibility', 'visible');
 }
 function UIManager() {
-    this.input = new TextInput(document.getElementById('input'));
+    var input = document.getElementById('input');
+    this.input = new TextInput(input);
 }
 UIManager.prototype.handle = function (id, param) {
     switch (id) {
@@ -315,9 +336,6 @@ svg.append('svg:defs')
 var global = {
     root: document.getElementById('svg')
 }
-svg.append('svg:g')
-        .attr('transform', 'translate(200,300) scale(0.5,0.5)')
-        .attr('id', 'test1');
 
 var camera = new Camera(svg);
 var uiMgr = new UIManager();

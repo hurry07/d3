@@ -9,6 +9,10 @@ body {
     font-family: Abel, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
+.entity text.input {
+    fill: transparent
+}
+
 .fieldinput {
     font-family: Abel, "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 17px;
@@ -17,12 +21,24 @@ body {
     text-indent: 4px;
 }
 
-.entity .fields-light {
+.entity g.fields-light rect {
     fill: #B1BBC4;
 }
-
-.entity .fields-dark {
+.entity g.fields-dark rect {
     fill: #A7B6C7;
+}
+
+.entity g.fields-light.edit rect {
+    fill: #809bc8;
+}
+.entity g.fields-dark.edit rect {
+    fill: #809bc8;
+}
+.entity g.edit text {
+    fill: transparent;
+}
+.entity g.edit text {
+    fill: transparent;
 }
 
 .entity .fieldname {
