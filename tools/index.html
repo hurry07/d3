@@ -121,15 +121,20 @@ var Table = _extends(function (p) {
                 .attr('width', this.prefer.width)
                 .attr('height', p.height)
                 .classed('header', true)
-                .on('mousedown', function () {
-                    console.log(this);
-                });
+                .on('mousedown', this.headerDown)
+                .on('mousemove', this.headerDown)
+                .on('mouseup', this.headerDown)
+                .datum(d);
         this.title = this.view.append('svg:text')
                 .attr('x', p.prefix)
                 .attr('y', p.height / 2)
                 .attr('dy', 8)
                 .classed('headername', true)
-                .text(d.name);
+                .text(d.name)
+                .on('mousedown', this.headerDown)
+                .on('mousemove', this.headerDown)
+                .on('mouseup', this.headerDown)
+                .datum(d);
 
         var fieldsG = this.view.append('svg:g')
                 .attr("transform", 'translate(0,' + p.height + ')')
@@ -163,6 +168,10 @@ var Table = _extends(function (p) {
         var d = this.data;
         var p = this.prefer;
         return d.fields.length * p.field.height + p.header.height + p.footer.height;
+    },
+    headerDown : function(d) {
+        console.log(this, arguments);
+        var node = Node.getNode(d);
     }
 });
 
@@ -261,23 +270,26 @@ Camera.prototype.transform = function (g, size) {
 // ======================
 // UI Manager
 // ======================
-function TextInput(input) {
-    this.input = input;
-    this.text = input.getElementsByTagName('input')[0];
+function TextInput(div) {
+    this.div = div;
+    this.input = div.getElementsByTagName('input')[0];
     var current = this;
     var listener = function () {
         current.submit();
     }
-    this.text.onchange = listener;
-    this.text.onblur = listener;
+    this.input.onchange = listener;
+    this.input.onblur = listener;
+    this.input.ondblclick = listener;
+    this.input.onselect = listener;
 }
 TextInput.prototype.submit = function () {
-    if (this.node) {
-        this.node.endInput(this.id, this.text);
+    var n = this.node;
+    if (n) {
+        n.endInput(this.id, this.input);
     }
-    d3.select(this.input).style('visibility', 'none');
+    d3.select(this.div).style('visibility', 'none');
 }
-TextInput.prototype.show = function (param) {
+TextInput.prototype.handle = function (param) {
     this.submit();
 
     var id = param.id;
@@ -288,26 +300,48 @@ TextInput.prototype.show = function (param) {
 
     var size = camera.transform(target.getNode(id), target.getSize(id));
 
-    var input = d3.select(this.input);
-    input.style('left', size[0] + 'px');
-    input.style('top', size[1] + 'px');
-    input.style('width', size[2] + 'px');
-    input.style('height', size[3] + 'px');
+    var div = d3.select(this.div);
+    div.style('left', size[0] + 'px');
+    div.style('top', size[1] + 'px');
+    div.style('width', size[2] + 'px');
+    div.style('height', size[3] + 'px');
 
-    this.node.beginInput(this.id, this.text);
-    d3.select(this.text)
+    this.node.beginInput(this.id, this.input);
+    d3.select(this.input)
             .style('font-size', Math.round(17 * camera.getScale()) + 'px')
             .style('text-indent', Math.round(4 * camera.getScale()) + 'px');
-    input.style('visibility', 'visible');
+    div.style('visibility', 'visible');
 }
+
+function DragControl() {
+    this.selected = null;
+}
+DragControl.prototype.handle = function(param) {
+    console.log('DragControl:', param);
+    switch(param.event) {
+        case 'down':
+            break;
+        case 'move':
+            break;
+        case 'up':
+            break;
+    }
+}
+
 function UIManager() {
     var input = document.getElementById('input');
     this.input = new TextInput(input);
+    this.drag = new DragControl();
 }
 UIManager.prototype.handle = function (id, param) {
     switch (id) {
+        /**{'target': controller, 'id': 'fieldid'}*/
         case 'showInput':
-            this.input.show(param);
+            this.input.handle(param);
+            break;
+        /**{'target': controller, 'event': [down|move|up]}*/
+        case 'drag':
+            this.drag.handle(param);
             break;
     }
 }
