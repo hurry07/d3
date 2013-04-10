@@ -4,6 +4,7 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <title>Animated Bézier Curves - Jason Davies</title>
     <script src="../../d3.js"></script>
+    <script src="../api/node.js"></script>
     <meta name="author" content="Jason Davies">
     <style>
         .curve, .line {
@@ -29,256 +30,6 @@
 </head>
 <body>
 <script type="text/javascript">
-function _extends(sub, super_, props) {
-    sub.prototype = Object.create(super_.prototype);
-    sub.prototype.constructor = sub;
-    if (props) {
-        for (var i in props) {
-            sub.prototype[i] = props[i];
-        }
-    }
-    ;
-    return sub;
-}
-
-// ==========================================
-// node is used as basic element of MVC
-// ==========================================
-/**
- * Node is a controller
- * Node.view is the ui selection
- * Node.data is model
- *
- * @param parent
- * @constructor
- */
-function Node(parent) {
-    this.parentNode = parent;
-}
-// implement this method to get a id of data
-//Node.prototype.identifier = function(data) {
-//    return '';
-//}
-Node.prototype.setData = function (data) {
-    this.data = data;
-    data.controller = this;
-}
-/**
- * current data was replacing by data that has the same id.
- * this method will be call only as you supply an identifier.
- *
- * see also Node.prototype.identifier
- *
- * @param dnew
- * @param dold
- */
-Node.prototype.bindUpdate = function (dold, dnew) {
-}
-Node.prototype.bind = function (data) {
-    // if this is the first time bind is called
-    if (!this.view) {
-        if (data) {
-            this.setData(data);
-            this.setup();
-            this.enter();
-        }
-    } else if (data) {
-        var dold = this.data;
-        this.setData(data);
-
-        var id = this.identifier;
-        if(id && (id(dold) != id(data))) {
-            this.bindUpdate(dold, data);
-        } else {
-            this.update(dold, data);
-        }
-    } else {
-        this.unbind();
-    }
-}
-/**
- * create root ui, this method must return a svg selection as the root of current node
- */
-Node.prototype.setup = function () {
-    // this.view = ...;
-    // this.parentView.append(this.view);
-}
-/**
- * create customer ui
- */
-Node.prototype.enter = function () {
-}
-/**
- * data object was replaced, this.data is already equal to dnew
- *
- * @param dold
- * @param dnew
- */
-Node.prototype.update = function (dold, dnew) {
-}
-/**
- * release customer ui, or send release event if needed
- */
-Node.prototype.exit = function () {
-}
-/**
- * remove current node from parent
- */
-Node.prototype.teardown = function () {
-    if (this.view) {
-        this.view.remove();
-        this.view = null;
-    }
-    this.data = null;
-}
-Node.prototype.unbind = function () {
-    this.exit();
-    this.teardown();
-}
-/**
- * get parent view
- * @returns {*}
- */
-Node.prototype.parentView = function () {
-    return this.parentNode.view;
-}
-/**
- * create a empty node
- *
- * @param sel
- * @returns {Node}
- */
-Node.wrap = function (sel) {
-    var n = new Node(null);
-    n.view = sel;
-    return n;
-}
-
-// ==========================================
-// CollectionNode
-// ==========================================
-
-function ListNode(parent) {
-    Node.call(this, parent);
-    this.children = [];
-    this.param = {};
-}
-_extends(ListNode, Node);
-/**
- * sub class should overwrite this
- * @returns {Node}
- */
-ListNode.prototype.createChild = function() {
-    return new Node(this);
-}
-/**
- * sub class should give a specific type, this is like ArrayList<T>
- * @returns {*}
- */
-ListNode.prototype.childClass = function() {
-    return Node;
-}
-ListNode.prototype.unbindChild = function (child, i) {
-    child.unbind();
-}
-ListNode.prototype.bindChild = function (child, d, i) {
-    child.bind(d);
-    child.__index__ = i;
-}
-ListNode.prototype.enter = function () {
-    this.data.forEach(function(d, i) {
-        var child = this.createChild();
-        this.bindChild(child, d, i);
-        this.children.push(child);
-    }, this);
-}
-/**
- * render order is changed
- */
-ListNode.prototype.sortView = function () {
-}
-ListNode.prototype.update = function (dold, dnew) {
-    var id = this.childClass().prototype.identifier;
-    var data = dnew;
-
-    var m = this.children.length;
-    var n = data.length;
-    var children = this.children;
-
-    if (id) {
-        var carr = children.splice(0, m);// remove all element from current children
-        var s = 0;// search index
-        var cm = new d3.map();
-
-        var sort = false;
-        var child;// temp child element
-        for (var i = 0, size = n; i < size; i++) {
-            var key = id(data[i]);
-
-            // try to find reusable child
-            child = null;
-            if (cm.has(key)) {
-                child = cm.get(key);
-                cm.remove(key);
-            } else {
-                while (s < m) {
-                    var ck = id(carr[s].data);
-                    if (key == ck) {
-                        child = carr[s];
-                        s++;
-                        break;
-                    } else {
-                        cm.set(ck, carr[s]);
-                    }
-                    s++;
-                }
-            }
-
-            // if find, update it, create new element
-            if (child) {
-                var cold = child.data;// get data with current reusable child
-                child.setData(data[i]);
-                if(!sort && child.__index__ != i) {
-                    sort = true;
-                }
-                child.__index__ = i;
-                child.bindUpdate(cold, data[i]);
-            } else {
-                child = this.createChild();
-                this.bindChild(child, data[i], i);
-            }
-            this.children.push(child);
-        }
-
-        // remove useless elements if any
-        cm.values().forEach(this.unbindChild, this);
-        if(sort) {
-            this.sortView();
-        }
-    } else {
-        var min = Math.min(m, n);
-        for (var i = 0, size = min; i < size; i++) {
-            children[i].bind(data[i]);
-        }
-        // if there is more children than data
-        for (var i = min; i < m; i++) {
-            this.unbindChild(children[i], i);
-        }
-        // if there is more data than children
-        for (var i = min; i < n; i++) {
-            var child = this.createChild();
-            this.bindChild(child, data[i], i);
-            this.children.push(child);
-        }
-
-        this.children = (m < n) ? children : children.slice(0, n);
-    }
-}
-ListNode.prototype.exit = function () {
-    this.children.forEach(this.unbindChild, this);
-    this.children = [];
-}
-
 // ============================================
 // mock code for test
 // ============================================
@@ -331,7 +82,15 @@ View.prototype.toString = function() {
         })
         str += prefix;
     } else {
-        str += this.content;
+        var local = this.data.name;
+        var global = Node.getNode(this.data).data.name;
+        var parent = Node.getNode(this.data).parentNode.data.length;
+        if(local != global) {
+            console('MVC bind error ============================================');
+            console('MVC bind error ============================================');
+            console('MVC bind error ============================================');
+        }
+        str += local + ',' + global + ',' + parent;
     }
     str += '</view>\n';
     return str;
@@ -345,13 +104,13 @@ var Field = _extends(function (parent) {
 }, Node, {
     setup: function () {
         this.view = new View(this.parentNode.view);
-        this.view.content = this.data.name;
+        this.view.data = this.data;
     },
     enter : function() {
         console.log('field.enter:' + this.data.name);
     },
     update : function(dold, dnew) {
-        this.view.content = dnew.name;
+        this.view.data = this.data;
         console.log('field.update:' + dold.name + ', ' + dnew.name);
     },
     bindUpdate : function(dold, dnew) {

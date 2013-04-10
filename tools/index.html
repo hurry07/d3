@@ -5,7 +5,7 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <link type="text/css" rel="stylesheet" href="css/theme.css"/>
     <script type="text/javascript" src="../d3.js"></script>
-    <script type="text/javascript" src="api/widget.js"></script>
+    <script type="text/javascript" src="api/node.js"></script>
     <script type="text/javascript" src="api/gl-matrix.js"></script>
 </head>
 <body>
@@ -15,164 +15,159 @@
     <input class="fieldinput">
 </div>
 <script type="text/javascript">
-var width = 400;
-height = 200;
-
 // ======================
-// field
+// Field
 // ======================
-var Field = function(context, data, i) {
-    this.context = context;
-    this.data = data;
-    this.id = i;
-    this.old = data.name;
-}
-Field.prototype.getAttribute = function() {
-    return this.data.name;
-};
-Field.prototype.setAttribute = function(value) {
-    this.data.name = value;
-    var success = this.context.notifyUpdate('field', this.id);
-    if(!success) {
-        this.data.name = this.old;
-    }
-}
+var Field = _extends(function (p) {
+    Node.call(this, p);
+}, Node, {
+    enter: function () {
+        var p = Table.prototype.prefer;
+        var fw = p.width;
+        var fh = p.field.height;
+        var fp = p.field.prefix;
+        var i = ListNode.prototype.getChildIndex(this);
+        var d = this.data;
 
-// ====================== table
-var Table = function (selector) {
-    Widget.apply(this, arguments);
-}
-Table.prototype = Object.create(Widget.prototype);
-Table.prototype.constructor = Table;
+        this.view = this.parentView().append('svg:g');
 
-Table.prototype.prefer = {
-    header: {
-        height: 45,
-        prefix: 8
-    },
-    field: {
-        height: 24,
-        prefix: 4
-    },
-    footer: {
-        height: 18
-    },
-    width: 150
-};
-Table.prototype.notifyUpdate = function (name, id) {
-    console.log(arguments);
-}
-Table.prototype.updateUI = function (g, d) {
-    var sel = d3.select(g);
-}
-Table.prototype.getHeight = function (d) {
-    var p = this.prefer;
-    return d.fields.length * p.field.height + p.header.height + p.footer.height;
-}
-Table.prototype.initHeader = function (g, d) {
-    var p = this.prefer.header;
-    var head = g.append('svg:rect')
-            .attr('width', this.prefer.width)
-            .attr('height', p.height)
-            .classed('header', true);
-    head.on('mousedown', this.dragstart);
-    g.append('svg:text')
-            .attr('x', p.prefix)
-            .attr('y', p.height / 2)
-            .attr('dy', 8)
-            .classed('headername', true)
-            .text(d.name);
-}
-Table.prototype.initFields = function (g, fields) {
-    var p = this.prefer.field;
-    var starty = 0;
-    var table = this;
-
-    var listener = function(d, i) {
-        table.editField(this, d, i);
-    }
-
-    for (var i = 0, size = fields.length; i < size; i++) {
+        var ui = this.view;
         var claz = (i & 1) == 0 ? 'fields-light' : 'fields-dark';
-        var field = g.append('svg:g')
-                .attr("transform", 'translate(' + 0 + ',' + starty + ')');
-        field.append('svg:rect')
+        ui.attr("transform", 'translate(' + 0 + ',' + (fh * i) + ')');
+        ui.append('svg:rect')
+                .attr('width', fw)
+                .attr('height', fh)
+                .classed(claz, true)
+                .on('click', this.editListener)
+                .datum(d);
+
+        ui.append('svg:text')
+                .classed('fieldname', true)
+                .attr('x', fp)
+                .attr('y', fh / 2)
+                .attr('dy', 6)
+                .text(d.name)
+                .on('click', this.editListener)
+                .datum(d);
+    },
+    update: function (dold, dnew) {
+        var ui = this.view;
+        var d = dnew;
+        ui.select('text')
+                .attr('text', d.name);
+    },
+    exit: function () {
+        this.deleteView(this.view);
+    },
+    editListener: function (d) {
+        var node = Node.getNode(d);
+        uiMgr.handle('showInput', {'target': node, 'id': 'name'});
+    },
+    identifier: function (d) {
+        return d.type + d.name;
+    },
+
+    // interact with text input.
+    setText: function (id, name) {
+        this.data.name = name;
+        this.refresh();
+    },
+    getText: function (id) {
+        return this.data.name;
+    },
+    getSize: function (id) {
+        var p = Table.prototype.prefer;
+        var fw = p.width;
+        var fh = p.field.height;
+        return [0, 0, fw, fh];
+    },
+    getNode: function () {
+        return this.view.node();
+    },
+    initInput: function (id, input) {
+    }
+});
+
+// ======================
+// Table
+// ======================
+var Table = _extends(function (p) {
+    Node.call(this, p);
+}, Node, {
+    prefer: {
+        header: {
+            height: 45,
+            prefix: 8
+        },
+        field: {
+            height: 24,
+            prefix: 4
+        },
+        footer: {
+            height: 18
+        },
+        width: 150
+    },
+    enter: function () {
+        var d = this.data;
+        this.view = this.parentView().append('svg:g')
+                .attr('transform', 'translate(' + d.position.x + ',' + d.position.y + ')')
+                .classed('entity', true)
+                .classed(d.type, true);
+
+        var p = this.prefer.header;
+        var w = this.prefer.width;
+        var header = this.view.append('svg:rect')
                 .attr('width', this.prefer.width)
                 .attr('height', p.height)
-                .classed(claz, true)
-                .on('click', listener);
-
-        field.append('svg:text')
-                .classed('fieldname', true)
+                .classed('header', true)
+                .on('mousedown', function () {
+                    console.log(this);
+                });
+        this.title = this.view.append('svg:text')
                 .attr('x', p.prefix)
                 .attr('y', p.height / 2)
-                .attr('dy', 6)
-                .text(fields[i].name)
-                .on('click', listener);
+                .attr('dy', 8)
+                .classed('headername', true)
+                .text(d.name);
 
-        starty += p.height;
+        var fieldsG = this.view.append('svg:g')
+                .attr("transform", 'translate(0,' + p.height + ')')
+                .classed('fields', true);
+        this.fields = new Fields(this, fieldsG);
+        this.fields.bind(d.fields);
+
+        p = this.prefer.footer;
+        this.footer = this.view.append('svg:rect')
+                .attr('width', w)
+                .attr('height', p.height)
+                .attr('y', this.getHeight() - p.height)
+                .classed('footer', true);
+    },
+    update: function (dold, dnew) {
+        var d = dnew;
+
+        this.title.text(d.name);
+
+        this.fields.bind(dnew.fields);
+
+        var p = this.footer;
+        this.footer
+                .attr('y', this.getHeight() - p.height)
+                .classed('footer', true);
+    },
+    exit: function () {
+        this.deleteView(this.view);
+    },
+    getHeight: function () {
+        var d = this.data;
+        var p = this.prefer;
+        return d.fields.length * p.field.height + p.header.height + p.footer.height;
     }
-}
-Table.prototype.enterUI = function (g, d) {
-    var p = this.prefer;
+});
 
-    var sel = d3.select(g);
-    sel.classed(d.type, true);
-
-    var height = this.getHeight(d);
-    sel.append('svg:rect')
-            .attr('width', p.width)
-            .attr('height', height)
-            .classed('bg', true);
-
-    this.initHeader(
-            sel.append('svg:g')
-                    .attr("transform", 'translate(0,0)'),
-            //.classed('header11', true),
-            d);
-
-    this.initFields(
-            sel.append('svg:g')
-                    .attr("transform", "translate(0," + p.header.height + ")")
-                    .classed('fields', true),
-            d.fields);
-
-    sel.append('svg:rect')
-            .attr('width', p.width)
-            .attr('height', p.footer.height)
-            .attr('y', height - p.footer.height)
-            .classed('footer', true);
-}
-Table.prototype.editField = function (tag, d, i) {
-    var rect = tag;
-    var text = tag;
-    if(tag.nodeName == 'text') {
-        rect = tag.parentNode.firstChild;
-    } else {
-        text = rect.parentNode.childNodes[1];
-    }
-
-    uiMgr.handle('showInput', {
-        'size' : [0,0,this.prefer.width,this.prefer.field.height],
-        'text' : text,
-        'container' : rect.parentNode,
-        'target' : new Field(this, d, i)
-    });
-}
-Table.prototype.wrapField = function(index) {
-    var table = this;
-    return {
-        getText : function() {
-            return table.
-        }
-        , setTest : function(text) {
-
-        }
-    }
-}
-Table.prototype.dragstart = function() {
-    console.log(arguments);
-}
+var Fields = Node.createContainer(Field);
+var TableSchema = Node.createContainer(Table);
 
 // ======================
 // camera
@@ -238,13 +233,13 @@ Camera.prototype.apply = function (endx, endy) {
             .attr('width', sw)
             .attr('height', sh);
 }
-Camera.prototype.transform = function(g, size) {
+Camera.prototype.transform = function (g, size) {
     var svgM = g.getTransformToElement(global.root);
 
     var matrix = mat2d.create();
 
     // apply child transform
-    mat2d.multiply(matrix, matrix, mat2d.clone([svgM.a,svgM.b,svgM.c,svgM.d,svgM.e,svgM.f]));
+    mat2d.multiply(matrix, matrix, mat2d.clone([svgM.a, svgM.b, svgM.c, svgM.d, svgM.e, svgM.f]));
     // apply camera transform
     mat2d.translate(matrix, matrix, vec2.clone([-this.x, -this.y]));
     mat2d.scale(matrix, matrix, vec2.clone([this.scalef, this.scalef]));
@@ -258,7 +253,7 @@ Camera.prototype.transform = function(g, size) {
     vec2.set(world, size[0] + size[2], size[1] + size[3]);
     vec2.transformMat2d(world, world, matrix);
 
-    return [x,y,world[0] - x,world[1] - y];
+    return [x, y, world[0] - x, world[1] - y];
 }
 // ======================
 // UI Manager
@@ -266,20 +261,29 @@ Camera.prototype.transform = function(g, size) {
 function TextInput(dom) {
     this.input = dom;
 }
-TextInput.prototype.show = function(param) {
-    var input = d3.select(this.input);
+TextInput.prototype.bind = function (node, id) {
+    this.node = node;
+    this.id = id;
+}
+TextInput.prototype.show = function (param) {
+    var id = param.id;
+    var target = param.target;
+    this.bind(target, id);
 
-    var size = camera.transform(param.container, param.size);
+    var size = camera.transform(target.getNode(id), target.getSize(id));
+
+    var input = d3.select(this.input);
     input.style('left', size[0] + 'px');
     input.style('top', size[1] + 'px');
     input.style('width', size[2] + 'px');
     input.style('height', size[3] + 'px');
+
     input.style('visibility', 'visible');
 }
 function UIManager() {
     this.input = new TextInput(document.getElementById('input'));
 }
-UIManager.prototype.handle = function(id, param) {
+UIManager.prototype.handle = function (id, param) {
     switch (id) {
         case 'showInput':
             this.input.show(param);
@@ -309,28 +313,11 @@ svg.append('svg:defs')
         .attr('stroke-width', '0.25');
 
 var global = {
-    root : document.getElementById('svg')
+    root: document.getElementById('svg')
 }
 svg.append('svg:g')
-        .attr("transform", 'translate(200,300) scale(0.5,0.5)')
+        .attr('transform', 'translate(200,300) scale(0.5,0.5)')
         .attr('id', 'test1');
-
-var from = document.getElementById('svg');
-var to = document.getElementById('test1');
-console.log(from.getTransformToElement(to));
-console.log(to.getTransformToElement(from));
-var matrix = to.getTransformToElement(from);
-var m2 = mat2d.clone([matrix.a,matrix.b,matrix.c,matrix.d,matrix.e,matrix.f]);
-console.log(mat2d.str(m2));
-
-var res = vec2.create();
-vec2.transformMat2d(res, vec2.create(), m2);
-console.log(vec2.str(res));
-
-(function(f, t) {
-    console.log(f);
-    console.log(t);
-})(from, to);
 
 var camera = new Camera(svg);
 var uiMgr = new UIManager();
@@ -338,14 +325,12 @@ var uiMgr = new UIManager();
 window.addEventListener('resize', function () {
     var width = window.innerWidth;
     var height = window.innerHeight;
-    camera.setStart(-100, 50);
-    camera.scale(1.2, 0, 0);
+//    camera.setStart(-100, 50);
+//    camera.scale(1.2, 0, 0);
     camera.apply();
 });
 
-var tables = new Table(new Selection(svg, 'entity', function (d) {
-    return d.name;
-}));
+var tables = new TableSchema(null, svg);
 
 // ======================
 // binding data
