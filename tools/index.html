@@ -42,7 +42,9 @@ var Field = _extends(function (p) {
         ui.attr("transform", 'translate(' + 0 + ',' + (fh * i) + ')');
         ui.append('svg:rect')
                 .attr('width', fw)
-                .attr('height', fh);
+                .attr('height', fh)
+                .on('mousedown', this.linkBegin)
+                .on('mouseover', this.linkEnd);
 
         ui.append('svg:text')
                 .classed('fieldname', true)
@@ -64,6 +66,12 @@ var Field = _extends(function (p) {
     },
     handleEdit: function (d) {
         uiMgr.handle(UIManager.INPUT, {'target': Node.getNode(d), 'id': 'name'});
+    },
+    linkBegin: function (d) {
+        uiMgr.handle(UIManager.LINK_START_FIELD, {'target': Node.getNode(d)});
+    },
+    linkEnd: function (d) {
+        uiMgr.handle(UIManager.LINK_END_FIELD, {'target': Node.getNode(d)});
     },
     identifier: function (d) {
         return d.type + d.name;
@@ -126,7 +134,10 @@ var Table = _extends(function (p) {
         // header
         this.header = this.view
                 .append('svg:g')
-                .datum(d);
+                .datum(d)
+                .on('mousedown', this.linkBegin)
+                .on('mouseover', this.linkEnd);
+
         this.header.append('svg:rect')
                 .attr('width', this.prefer.width)
                 .attr('height', p.height)
@@ -142,7 +153,11 @@ var Table = _extends(function (p) {
         // fields
         var fieldsG = this.view.append('svg:g')
                 .attr("transform", 'translate(0,' + p.height + ')')
-                .classed('fields', true);
+                .classed('fields', true)
+                .datum(d)
+                .on('mousedown', this.linkBegin)
+                .on('mouseover', this.linkEnd);
+
         this.fields = new Fields(this, fieldsG);
         this.fields.bind(d.fields);
 
@@ -179,6 +194,16 @@ var Table = _extends(function (p) {
         node.view.classed('focus', true);
         uiMgr.handle(UIManager.DRAG, {'target': node});
     },
+    types: ['view', 'map', 'table'],
+    isTable: function (t) {
+        return this.types.indexOf(t) != -1;
+    },
+    linkBegin : function(d) {
+
+    },
+    linkEnd : function(d) {
+
+    },
     // -------------------- interactive with drag manager
     startDrag: function () {
     },
@@ -193,7 +218,30 @@ var Table = _extends(function (p) {
 });
 
 var Fields = Node.createContainer(Field);
-var TableSchema = Node.createContainer(Table);
+var TableSchema = Node.createContainer(Table, {
+    order: function () {
+        var t = this.view.selectAll('g.table');
+        var fs = ListNode.prototype.setChildIndex;
+        var fg = ListNode.prototype.getChildIndex;
+        t.sort(function (a, b) {
+            var na = Node.getNode(a);
+            var nb = Node.getNode(b);
+            if (na.view.classed('focus')) {
+                return 1;
+            }
+            if (nb.view.classed('focus')) {
+                return -1;
+            }
+            na = fg(na);
+            nb = fg(nb);
+            return na == nb ? 0 : na > nb ? 1 : -1;
+        });
+        t.order();
+        t.each(function (d, i) {
+            fs(Node.getNode(d), i);
+        });
+    }
+});
 
 // ======================
 // camera
@@ -383,10 +431,49 @@ DragControl.prototype.handle = function (param) {
     }
 }
 
+function LinkControl() {
+    this.cleanup();
+}
+LinkControl.FIELD = 'field';
+/**
+ * set up link from multip field
+ */
+LinkControl.MUL_FIELD = 'mulField';
+LinkControl.prototype.setStartTable = function (table) {
+    this.startTable = table;
+}
+LinkControl.prototype.setStartField = function (field) {
+    this.startField = field;
+}
+/**
+ * try to setup link or clean up
+ */
+LinkControl.prototype.endLink = function () {
+    this.cleanup();
+}
+LinkControl.prototype.cleanup = function () {
+    this.startTable = null;
+    this.startField = null;
+    this.endField = null;
+    this.endTable = null;
+    this.type = LinkControl.FIELD;
+    this.begin = false;
+}
+LinkControl.prototype.setEndTable = function (table) {
+    this.endTable = table;
+}
+LinkControl.prototype.setEndField = function (field) {
+    this.endField = field;
+}
+LinkControl.prototype.setLinkType = function (t) {
+    this.type = t;
+}
+
 function UIManager() {
     var input = document.getElementById('input');
     this.input = new TextInput(input);
     this.drag = new DragControl();
+    this.link = new LinkControl();
 }
 UIManager.INPUT = 'showInput';
 UIManager.CLOSE_INPUT = 'closeInput';
@@ -396,10 +483,14 @@ UIManager.CTRL_KEY_UP = 'ctrlKeyUp';
 UIManager.ON_FOCUS = 'onFocus';
 UIManager.LOSE_FOCUS = 'loseFocus';
 
+// link
+UIManager.LINK_START_FIELD = 'linkStartField';
+UIManager.LINK_START_TABLE = 'linkStartTable';
+UIManager.LINK_END_FIELD = 'linkEndField';
+UIManager.LINK_END_TABLE = 'linkEndTable';
+
 UIManager.prototype.alwaysAction = [UIManager.CLOSE_INPUT, UIManager.CTRL_KEY_UP, UIManager.LOSE_FOCUS];
 UIManager.prototype.ctrlActions = [UIManager.DRAG, UIManager.BG_DRAG, UIManager.ON_FOCUS];
-
-UIManager.prototype.tableTypes = ['view', 'map', 'table'];
 
 UIManager.prototype.isActionEnable = function (actions, isdown, id) {
     if (actions.indexOf(id) == -1) {
@@ -439,27 +530,8 @@ UIManager.prototype.actionFail = function (actions) {
 UIManager.prototype.onFocus = function (param) {
     this.input.close();
     var d = param.target.data;
-    if(this.tableTypes.indexOf(d.type) != -1) {
-        var t = tables.view.selectAll('g.table');
-        var fs = ListNode.prototype.setChildIndex;
-        var fg = ListNode.prototype.getChildIndex;
-        t.sort(function(a, b) {
-            var na = Node.getNode(a);
-            var nb = Node.getNode(b);
-            if(na.view.classed('focus')) {
-                return 1;
-            }
-            if(nb.view.classed('focus')) {
-                return -1;
-            }
-            na = fg(na);
-            nb = fg(nb);
-            return na == nb ? 0 : na > nb ? 1 : -1;
-        });
-        t.order();
-        t.each(function(d, i) {
-            fs(Node.getNode(d), i);
-        });
+    if (Table.prototype.isTable(d.type) != -1) {
+        tables.order();
     }
 }
 UIManager.prototype.handle = function (id, param) {
@@ -487,6 +559,13 @@ UIManager.prototype.handle = function (id, param) {
             break;
         case UIManager.LOSE_FOCUS:
             this.loseFocus();
+            break;
+
+        // ------------------ link
+        case UIManager.LINK_START_FIELD:
+        case UIManager.LINK_START_TABLE:
+        case UIManager.LINK_END_FIELD:
+        case UIManager.LINK_END_TABLE:
             break;
     }
 }

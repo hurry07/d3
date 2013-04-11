@@ -36,14 +36,8 @@ body {
     fill: #A7B6C7;
 }
 
-.entity g.fields-light.edit rect {
+.entity g.edit rect {
     fill: #809bc8;
-}
-.entity g.fields-dark.edit rect {
-    fill: #809bc8;
-}
-.entity g.edit text {
-    fill: transparent;
 }
 .entity g.edit text {
     fill: transparent;

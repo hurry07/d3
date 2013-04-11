@@ -151,19 +151,24 @@ Node.getNode = function(data) {
  * @param type
  * @returns {*}
  */
-Node.createContainer = function(type) {
+Node.createContainer = function(type, prop) {
+    if(!prop) {
+        prop = {};
+    }
+    if(!prop.createChild) {
+        prop.createChild = function() {
+            return new type(this);
+        }
+    }
+    if(!prop.childClass) {
+        prop.childClass = function() {
+            return type;
+        }
+    }
     return _extends(function(p, view) {
         ListNode.call(this, p);
         this.view = view;
-        this.childType = type;
-    }, ListNode, {
-        createChild : function() {
-            return new this.childType(this);
-        },
-        childClass : function() {
-            return this.childType;
-        }
-    });
+    }, ListNode, prop);
 }
 
 // ==========================================
