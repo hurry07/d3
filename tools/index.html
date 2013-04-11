@@ -14,7 +14,7 @@
 <div id='input' class="floating">
     <input type="text" class="fieldinput">
 </div>
-<img src="test.png" />
+<!--<img src="test.png" />-->
 <script type="text/javascript">
 //chrome.exe -allow-fi le-access-from-files
 // ======================
@@ -118,7 +118,7 @@ var Table = _extends(function (p) {
         // view
         this.view = this.parentView().append('svg:g')
                 .attr('transform', 'translate(' + d.position.x + ',' + d.position.y + ')')
-                .classed('entity', true)
+                .classed('table', true)
                 .classed(d.type, true)
                 .on('mousedown', this.handleDrag)
                 .datum(d);
@@ -175,7 +175,9 @@ var Table = _extends(function (p) {
         return d.fields.length * p.field.height + p.header.height + p.footer.height;
     },
     handleDrag: function (d) {
-        uiMgr.handle(UIManager.DRAG, {'target': Node.getNode(d)});
+        var node = Node.getNode(d);
+        node.view.classed('focus', true);
+        uiMgr.handle(UIManager.DRAG, {'target': node});
     },
     // -------------------- interactive with drag manager
     startDrag: function () {
@@ -248,7 +250,7 @@ Camera.prototype.apply = function (endx, endy) {
     var portx = this.x;
     var porty = this.y;
     var w = this.width = window.innerWidth;
-    var h = this.height = window.innerHeight - 300;
+    var h = this.height = window.innerHeight;
     var sw = w / this.scalef;
     var sh = h / this.scalef;
     this.svg.attr('viewBox', portx + ' ' + porty + ' ' + sw + ' ' + sh)
@@ -344,9 +346,8 @@ DragControl.prototype.handleBg = function (param) {
             this.node = null;
             this.downx = d3.event.x;
             this.downy = d3.event.y;
-
-            uiMgr.handle(UIManager.CLOSE_INPUT);
             break;
+
         case 'mousemove':
             if (this.isdown) {
                 var n = this.node;
@@ -360,6 +361,7 @@ DragControl.prototype.handleBg = function (param) {
                 }
             }
             break;
+
         case 'mouseup':
             this.end();
             break;
@@ -368,6 +370,7 @@ DragControl.prototype.handleBg = function (param) {
 DragControl.prototype.end = function () {
     this.isdown = false;
     this.node = null;
+    uiMgr.handle(UIManager.LOSE_FOCUS);
 }
 DragControl.prototype.handle = function (param) {
     switch (d3.event.type) {
@@ -375,7 +378,7 @@ DragControl.prototype.handle = function (param) {
             this.isdown = true;
             this.node = param.target;
 
-            uiMgr.handle(UIManager.CLOSE_INPUT);
+            uiMgr.handle(UIManager.ON_FOCUS, {target: param.target});
             break;
     }
 }
@@ -390,9 +393,14 @@ UIManager.CLOSE_INPUT = 'closeInput';
 UIManager.DRAG = 'drag';
 UIManager.BG_DRAG = 'backgroundDrag';
 UIManager.CTRL_KEY_UP = 'ctrlKeyUp';
+UIManager.ON_FOCUS = 'onFocus';
+UIManager.LOSE_FOCUS = 'loseFocus';
 
-UIManager.prototype.alwaysAction = [UIManager.CLOSE_INPUT, UIManager.CTRL_KEY_UP];
-UIManager.prototype.ctrlActions = [UIManager.DRAG, UIManager.BG_DRAG];
+UIManager.prototype.alwaysAction = [UIManager.CLOSE_INPUT, UIManager.CTRL_KEY_UP, UIManager.LOSE_FOCUS];
+UIManager.prototype.ctrlActions = [UIManager.DRAG, UIManager.BG_DRAG, UIManager.ON_FOCUS];
+
+UIManager.prototype.tableTypes = ['view', 'map', 'table'];
+
 UIManager.prototype.isActionEnable = function (actions, isdown, id) {
     if (actions.indexOf(id) == -1) {
         if (!isdown) {
@@ -403,12 +411,19 @@ UIManager.prototype.isActionEnable = function (actions, isdown, id) {
     }
     return false;
 }
+UIManager.prototype.ctrlKey = function () {
+    return d3.event.metaKey || d3.event.ctrlKey;
+}
+UIManager.prototype.loseFocus = function () {
+    d3.selectAll('.focus')
+            .classed('focus', false);
+}
 UIManager.prototype.isEnable = function (id) {
     if (this.alwaysAction.indexOf(id) != -1) {
         return true;
     }
     var ctrl = this.ctrlActions;
-    if (!this.isActionEnable(ctrl, d3.event.ctrlKey, id)) {
+    if (!this.isActionEnable(ctrl, this.ctrlKey(), id)) {
         this.actionFail(ctrl);
         return false;
     }
@@ -419,6 +434,32 @@ UIManager.prototype.actionFail = function (actions) {
         case this.ctrlActions:
             this.drag.end();
             break;
+    }
+}
+UIManager.prototype.onFocus = function (param) {
+    this.input.close();
+    var d = param.target.data;
+    if(this.tableTypes.indexOf(d.type) != -1) {
+        var t = tables.view.selectAll('g.table');
+        var fs = ListNode.prototype.setChildIndex;
+        var fg = ListNode.prototype.getChildIndex;
+        t.sort(function(a, b) {
+            var na = Node.getNode(a);
+            var nb = Node.getNode(b);
+            if(na.view.classed('focus')) {
+                return 1;
+            }
+            if(nb.view.classed('focus')) {
+                return -1;
+            }
+            na = fg(na);
+            nb = fg(nb);
+            return na == nb ? 0 : na > nb ? 1 : -1;
+        });
+        t.order();
+        t.each(function(d, i) {
+            fs(Node.getNode(d), i);
+        });
     }
 }
 UIManager.prototype.handle = function (id, param) {
@@ -440,6 +481,12 @@ UIManager.prototype.handle = function (id, param) {
         // {'target': controller}
         case UIManager.BG_DRAG:
             this.drag.handleBg(param);
+            break;
+        case UIManager.ON_FOCUS:
+            this.onFocus(param);
+            break;
+        case UIManager.LOSE_FOCUS:
+            this.loseFocus();
             break;
     }
 }
@@ -464,7 +511,7 @@ var svg = d3.selectAll('.chart')
         .on('mousemove', uiMgr.backgroundDrag, true)
         .on('mouseup', uiMgr.backgroundDrag, true)
         .on('keydown', uiMgr.globalKey);
-document.onkeydown = function() {
+document.onkeydown = function () {
     console.log('document.onkeydown');
 };
 svg.append('svg:defs')
@@ -495,7 +542,7 @@ window.addEventListener('resize', function () {
     camera.apply();
 });
 
-var tables = new TableSchema(null, svg);
+var tables = new TableSchema(null, svg.append('g').classed('entity', true));
 
 // ======================
 // binding data
