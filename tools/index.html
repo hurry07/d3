@@ -14,7 +14,9 @@
 <div id='input' class="floating">
     <input type="text" class="fieldinput">
 </div>
+<img src="test.png" />
 <script type="text/javascript">
+//chrome.exe -allow-fi le-access-from-files
 // ======================
 // Field
 // ======================
@@ -30,16 +32,17 @@ var Field = _extends(function (p) {
         var d = this.data;
 
         var bgstyle = (i & 1) == 0 ? 'fields-light' : 'fields-dark';
+
         this.view = this.parentView().append('svg:g')
-                .classed(bgstyle, true);
+                .classed(bgstyle, true)
+                .on('click', this.handleEdit)
+                .datum(d);
 
         var ui = this.view;
         ui.attr("transform", 'translate(' + 0 + ',' + (fh * i) + ')');
         ui.append('svg:rect')
                 .attr('width', fw)
-                .attr('height', fh)
-                .on('click', this.editListener)
-                .datum(d);
+                .attr('height', fh);
 
         ui.append('svg:text')
                 .classed('fieldname', true)
@@ -47,7 +50,7 @@ var Field = _extends(function (p) {
                 .attr('y', fh / 2)
                 .attr('dy', 6)
                 .text(d.name)
-                .on('click', this.editListener)
+                .on('click', this.handleEdit)
                 .datum(d);
     },
     update: function (dold, dnew) {
@@ -59,9 +62,8 @@ var Field = _extends(function (p) {
     exit: function () {
         this.deleteView(this.view);
     },
-    editListener: function (d) {
-        var node = Node.getNode(d);
-        uiMgr.handle('showInput', {'target': node, 'id': 'name'});
+    handleEdit: function (d) {
+        uiMgr.handle(UIManager.INPUT, {'target': Node.getNode(d), 'id': 'name'});
     },
     identifier: function (d) {
         return d.type + d.name;
@@ -110,38 +112,41 @@ var Table = _extends(function (p) {
     },
     enter: function () {
         var d = this.data;
+        var p = this.prefer.header;
+        var w = this.prefer.width;
+
+        // view
         this.view = this.parentView().append('svg:g')
                 .attr('transform', 'translate(' + d.position.x + ',' + d.position.y + ')')
                 .classed('entity', true)
-                .classed(d.type, true);
+                .classed(d.type, true)
+                .on('mousedown', this.handleDrag)
+                .datum(d);
 
-        var p = this.prefer.header;
-        var w = this.prefer.width;
-        var header = this.view.append('svg:rect')
+        // header
+        this.header = this.view
+                .append('svg:g')
+                .datum(d);
+        this.header.append('svg:rect')
                 .attr('width', this.prefer.width)
                 .attr('height', p.height)
-                .classed('header', true)
-                .on('mousedown', this.headerDown)
-                .on('mousemove', this.headerDown)
-                .on('mouseup', this.headerDown)
-                .datum(d);
-        this.title = this.view.append('svg:text')
+                .classed('header', true);
+        this.title = this.header.append('svg:text')
                 .attr('x', p.prefix)
                 .attr('y', p.height / 2)
                 .attr('dy', 8)
                 .classed('headername', true)
                 .text(d.name)
-                .on('mousedown', this.headerDown)
-                .on('mousemove', this.headerDown)
-                .on('mouseup', this.headerDown)
                 .datum(d);
 
+        // fields
         var fieldsG = this.view.append('svg:g')
                 .attr("transform", 'translate(0,' + p.height + ')')
                 .classed('fields', true);
         this.fields = new Fields(this, fieldsG);
         this.fields.bind(d.fields);
 
+        // footer
         p = this.prefer.footer;
         this.footer = this.view.append('svg:rect')
                 .attr('width', w)
@@ -169,9 +174,19 @@ var Table = _extends(function (p) {
         var p = this.prefer;
         return d.fields.length * p.field.height + p.header.height + p.footer.height;
     },
-    headerDown : function(d) {
-        console.log(this, arguments);
-        var node = Node.getNode(d);
+    handleDrag: function (d) {
+        uiMgr.handle(UIManager.DRAG, {'target': Node.getNode(d)});
+    },
+    // -------------------- interactive with drag manager
+    startDrag: function () {
+    },
+    stopDrag: function () {
+    },
+    dragOffset: function (dx, dy) {
+        var p = this.data.position;
+        p.x += dx;
+        p.y += dy;
+        this.view.attr('transform', 'translate(' + p.x + ',' + p.y + ')')
     }
 });
 
@@ -197,7 +212,7 @@ function Camera(svg) {
             .attr('fill', 'url(#gridPattern)');
     this.apply();
 }
-Camera.prototype.getScale = function() {
+Camera.prototype.getScale = function () {
     return this.scalef;
 }
 Camera.prototype.touchStart = function (x, y) {
@@ -233,7 +248,7 @@ Camera.prototype.apply = function (endx, endy) {
     var portx = this.x;
     var porty = this.y;
     var w = this.width = window.innerWidth;
-    var h = this.height = window.innerHeight;
+    var h = this.height = window.innerHeight - 300;
     var sw = w / this.scalef;
     var sh = h / this.scalef;
     this.svg.attr('viewBox', portx + ' ' + porty + ' ' + sw + ' ' + sh)
@@ -287,7 +302,10 @@ TextInput.prototype.submit = function () {
     if (n) {
         n.endInput(this.id, this.input);
     }
-    d3.select(this.div).style('visibility', 'none');
+    d3.select(this.div).style('visibility', 'hidden');
+}
+TextInput.prototype.close = function () {
+    this.submit();
 }
 TextInput.prototype.handle = function (param) {
     this.submit();
@@ -314,16 +332,50 @@ TextInput.prototype.handle = function (param) {
 }
 
 function DragControl() {
-    this.selected = null;
+    this.node = null;
+    this.isdown = false;
+    this.downx = 0;
+    this.downy = 0;
 }
-DragControl.prototype.handle = function(param) {
-    console.log('DragControl:', param);
-    switch(param.event) {
-        case 'down':
+DragControl.prototype.handleBg = function (param) {
+    switch (d3.event.type) {
+        case 'mousedown':
+            this.isdown = true;
+            this.node = null;
+            this.downx = d3.event.x;
+            this.downy = d3.event.y;
+
+            uiMgr.handle(UIManager.CLOSE_INPUT);
             break;
-        case 'move':
+        case 'mousemove':
+            if (this.isdown) {
+                var n = this.node;
+                if (n) {
+                    var cx, cy;
+                    this.downx += (cx = d3.event.x - this.downx);
+                    this.downy += (cy = d3.event.y - this.downy);
+                    n.dragOffset(cx, cy);
+                } else {
+                    // TODO drag camera
+                }
+            }
             break;
-        case 'up':
+        case 'mouseup':
+            this.end();
+            break;
+    }
+}
+DragControl.prototype.end = function () {
+    this.isdown = false;
+    this.node = null;
+}
+DragControl.prototype.handle = function (param) {
+    switch (d3.event.type) {
+        case 'mousedown':
+            this.isdown = true;
+            this.node = param.target;
+
+            uiMgr.handle(UIManager.CLOSE_INPUT);
             break;
     }
 }
@@ -333,26 +385,88 @@ function UIManager() {
     this.input = new TextInput(input);
     this.drag = new DragControl();
 }
-UIManager.prototype.handle = function (id, param) {
-    switch (id) {
-        /**{'target': controller, 'id': 'fieldid'}*/
-        case 'showInput':
-            this.input.handle(param);
-            break;
-        /**{'target': controller, 'event': [down|move|up]}*/
-        case 'drag':
-            this.drag.handle(param);
+UIManager.INPUT = 'showInput';
+UIManager.CLOSE_INPUT = 'closeInput';
+UIManager.DRAG = 'drag';
+UIManager.BG_DRAG = 'backgroundDrag';
+UIManager.CTRL_KEY_UP = 'ctrlKeyUp';
+
+UIManager.prototype.alwaysAction = [UIManager.CLOSE_INPUT, UIManager.CTRL_KEY_UP];
+UIManager.prototype.ctrlActions = [UIManager.DRAG, UIManager.BG_DRAG];
+UIManager.prototype.isActionEnable = function (actions, isdown, id) {
+    if (actions.indexOf(id) == -1) {
+        if (!isdown) {
+            return true;
+        }
+    } else if (isdown) {
+        return true;
+    }
+    return false;
+}
+UIManager.prototype.isEnable = function (id) {
+    if (this.alwaysAction.indexOf(id) != -1) {
+        return true;
+    }
+    var ctrl = this.ctrlActions;
+    if (!this.isActionEnable(ctrl, d3.event.ctrlKey, id)) {
+        this.actionFail(ctrl);
+        return false;
+    }
+    return true;
+}
+UIManager.prototype.actionFail = function (actions) {
+    switch (actions) {
+        case this.ctrlActions:
+            this.drag.end();
             break;
     }
 }
+UIManager.prototype.handle = function (id, param) {
+    if (!this.isEnable(id)) {
+        return;
+    }
+    switch (id) {
+        // {'target': controller, 'id': 'fieldid'}
+        case UIManager.INPUT:
+            this.input.handle(param);
+            break;
+        case UIManager.CLOSE_INPUT:
+            this.input.close();
+            break;
+        // {'target': controller}
+        case UIManager.DRAG:
+            this.drag.handle(param);
+            break;
+        // {'target': controller}
+        case UIManager.BG_DRAG:
+            this.drag.handleBg(param);
+            break;
+    }
+}
+UIManager.prototype.backgroundDrag = function () {
+    uiMgr.handle(UIManager.BG_DRAG);
+}
+UIManager.prototype.globalKey = function () {
+    console.log(d3.event);
+}
+
 // ======================
 // global
 // ======================
+var uiMgr = new UIManager();
+
 var svg = d3.selectAll('.chart')
         .append("svg")
         .attr('width', window.innerWidth)
         .attr('height', window.innerHeight)
-        .attr('id', 'svg');
+        .attr('id', 'svg')
+        .on('mousedown', uiMgr.backgroundDrag, true)
+        .on('mousemove', uiMgr.backgroundDrag, true)
+        .on('mouseup', uiMgr.backgroundDrag, true)
+        .on('keydown', uiMgr.globalKey);
+document.onkeydown = function() {
+    console.log('document.onkeydown');
+};
 svg.append('svg:defs')
         .append('svg:pattern')
         .attr('id', 'gridPattern')
@@ -372,7 +486,6 @@ var global = {
 }
 
 var camera = new Camera(svg);
-var uiMgr = new UIManager();
 
 window.addEventListener('resize', function () {
     var width = window.innerWidth;
