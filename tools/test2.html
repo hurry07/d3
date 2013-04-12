@@ -1,47 +1,10 @@
-<!DOCTYPE html>
-<meta charset="utf-8">
-<style>
+<svg>
+    <path  xmlns="http://www.w3.org/2000/svg"
+            d="M 149.71428571428572,325.9706466326542 C344.28571428571433,325.9706466326542 344.28571428571433,242.47919083690337 538.8571428571429,242.47919083690337"
+            stroke="blue" stroke-width="5"     > </path>
+    <path
+            d="M200, 200 L300,400"
+            style="stroke-width: 6.3892px;"><title></title></path>
+    <path xmlns="http://www.w3.org/2000/svg" d="M 100 350 q 150 -300 300 0" stroke="blue" stroke-width="5" fill="none"/>
+</svg>
 
-    text {
-        font: bold 48px monospace;
-    }
-
-    .enter {
-        fill: green;
-    }
-
-    .update {
-        fill: #333;
-    }
-
-    div.bar {
-        display: inline-block;
-        width: 20px;
-        height: 75px;	/* Gets overriden by D3-assigned height below */
-        margin-right: 2px;
-        background-color: teal;
-    }
-</style>
-<body>
-<script src="../d3.js"></script>
-<script>
-
-
-    var dataset = [ 5, 10, 15, 20, 25 ];
-
-    d3.select("body").selectAll("div")
-            .data(dataset)
-            .enter()
-            .append("div")
-            .attr("class", "bar")
-            .style("height", function(d) {
-                var barHeight = d * 5;
-                return barHeight + "px";
-            });
-
-    var s = d3.scale.linear().domain([100, 500]).range([10, 350]);
-    console.log(s);
-    console.log(s(100));
-    console.log(s(300));
-    console.log(s(500));
-</script>

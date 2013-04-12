@@ -6,6 +6,7 @@
     <link type="text/css" rel="stylesheet" href="css/theme.css"/>
     <script type="text/javascript" src="../d3.js"></script>
     <script type="text/javascript" src="api/node.js"></script>
+    <script type="text/javascript" src="api/operation.js"></script>
     <script type="text/javascript" src="api/gl-matrix.js"></script>
 </head>
 <body>
@@ -16,6 +17,10 @@
 </div>
 <!--<img src="test.png" />-->
 <script type="text/javascript">
+var log = function () {
+    console.log(arguments);
+}
+
 //chrome.exe -allow-fi le-access-from-files
 // ======================
 // Field
@@ -43,8 +48,8 @@ var Field = _extends(function (p) {
         ui.append('svg:rect')
                 .attr('width', fw)
                 .attr('height', fh)
-                .on('mousedown', this.linkBegin)
-                .on('mouseover', this.linkEnd);
+//                .on('mousedown', this.handleDown)
+//                .on('mouseover', this.handleOver);
 
         ui.append('svg:text')
                 .classed('fieldname', true)
@@ -52,7 +57,7 @@ var Field = _extends(function (p) {
                 .attr('y', fh / 2)
                 .attr('dy', 6)
                 .text(d.name)
-                .on('click', this.handleEdit)
+                .on('click', this.handleClick)
                 .datum(d);
     },
     update: function (dold, dnew) {
@@ -64,14 +69,23 @@ var Field = _extends(function (p) {
     exit: function () {
         this.deleteView(this.view);
     },
-    handleEdit: function (d) {
-        uiMgr.handle(UIManager.INPUT, {'target': Node.getNode(d), 'id': 'name'});
+    handleClick: function (d) {
+        if(!UIManager.isSelfEvent(this)) {
+            return;
+        }
+        uiMgr.handle(UIManager.FIELD_CLICK, {type: UIManager.TYPE_FIELD, 'target': Node.getNode(d), 'id': 'name'});
     },
-    linkBegin: function (d) {
-        uiMgr.handle(UIManager.LINK_START_FIELD, {'target': Node.getNode(d)});
+    handleDown: function (d) {
+        if(!UIManager.isSelfEvent(this)) {
+            return;
+        }
+        uiMgr.handle(UIManager.FIELD_DOWN, {type: UIManager.TYPE_FIELD, 'target': Node.getNode(d)});
     },
-    linkEnd: function (d) {
-        uiMgr.handle(UIManager.LINK_END_FIELD, {'target': Node.getNode(d)});
+    handleOver: function (d) {
+        if(!UIManager.isSelfEvent(this)) {
+            return;
+        }
+        uiMgr.handle(UIManager.FIELD_OVER, {type: UIManager.TYPE_FIELD, 'target': Node.getNode(d)});
     },
     identifier: function (d) {
         return d.type + d.name;
@@ -99,11 +113,67 @@ var Field = _extends(function (p) {
 });
 
 // ======================
+// Link
+// ======================
+var Link = _extends(function (p) {
+    Node.call(this, p);
+}, Node);
+/**
+ * this.data {
+ *     start(x,y),
+ *     end(x,y)
+ * }
+ */
+Link.prototype.enter = function () {
+    var d = this.data;
+
+    // root
+    this.view = this.parentView().append('svg:g')
+            .classed('link', true);
+
+    // curve
+    this.curve = this.view.append('svg:path')
+            .attr('d', this.path(d));
+
+    // ends
+    this.start = this.view.append('svg:circle')
+            .classed('start', true)
+            .attr('r', 9)
+            .attr('cx', d.start.x)
+            .attr('cy', d.start.y);
+    this.end = this.view.append('svg:circle')
+            .classed('end', true)
+            .attr('r', 9)
+            .attr('cx', d.end.x)
+            .attr('cy', d.end.y);
+}
+Link.prototype.update = function (d) {
+}
+Link.prototype.exit = function (d) {
+}
+Link.prototype.path = function (d) {
+    var x1 = d.start.x;
+    var y1 = d.start.y;
+    var x2 = d.end.x;
+    var y2 = d.end.y;
+    var c1x = x1 + 200;
+    var c1y = y1;
+    var c2x = x2 - 100;
+    var c2y = y2;
+
+    return 'M' + x1 + ',' + y1//
+            + 'C' + c1x + ',' + c1y //
+            + ' ' + c2x + ',' + c2y //
+            + ' ' + x2 + ',' + y2;//
+}
+
+// ======================
 // Table
 // ======================
 var Table = _extends(function (p) {
     Node.call(this, p);
 }, Node, {
+    types: ['view', 'map', 'table'],
     prefer: {
         header: {
             height: 45,
@@ -128,16 +198,16 @@ var Table = _extends(function (p) {
                 .attr('transform', 'translate(' + d.position.x + ',' + d.position.y + ')')
                 .classed('table', true)
                 .classed(d.type, true)
-                .on('mousedown', this.handleDrag)
+                .on('mousedown', this.handleDown)
                 .datum(d);
 
         // header
         this.header = this.view
                 .append('svg:g')
                 .datum(d)
-                .on('mousedown', this.linkBegin)
-                .on('mouseover', this.linkEnd);
-
+                .on('mousedown', this.handleDown)
+                .on('mouseover', this.handleOver, true)
+                .on('mouseout', this.handleOut, true);
         this.header.append('svg:rect')
                 .attr('width', this.prefer.width)
                 .attr('height', p.height)
@@ -151,14 +221,15 @@ var Table = _extends(function (p) {
                 .datum(d);
 
         // fields
-        var fieldsG = this.view.append('svg:g')
+        var fieldsBg = this.view.append('svg:g')
                 .attr("transform", 'translate(0,' + p.height + ')')
                 .classed('fields', true)
                 .datum(d)
-                .on('mousedown', this.linkBegin)
-                .on('mouseover', this.linkEnd);
+                .on('mousedown', this.handleDown)
+                .on('mouseover', this.handleOver, true)
+                .on('mouseout', this.handleOut, true);
 
-        this.fields = new Fields(this, fieldsG);
+        this.fields = new Fields(this, fieldsBg);
         this.fields.bind(d.fields);
 
         // footer
@@ -189,20 +260,41 @@ var Table = _extends(function (p) {
         var p = this.prefer;
         return d.fields.length * p.field.height + p.header.height + p.footer.height;
     },
-    handleDrag: function (d) {
+    handleDown: function (d) {
+        if(!UIManager.isSelfEvent(this)) {
+            return;
+        }
         var node = Node.getNode(d);
-        node.view.classed('focus', true);
-        uiMgr.handle(UIManager.DRAG, {'target': node});
+        uiMgr.handle(UIManager.TABLE_DOWN, {type: UIManager.TYPE_TABLE, 'target': node});
     },
-    types: ['view', 'map', 'table'],
+    handleOver: function (d) {
+        if(!UIManager.isSelfEvent(this)) {
+            return;
+        }
+        var node = Node.getNode(d);
+        uiMgr.handle(UIManager.TABLE_OVER, {type: UIManager.TYPE_TABLE, 'target': node});
+    },
+    handleOut: function (d) {
+        console.log(d3.event);
+        if(!UIManager.isSelfEvent(this)) {
+            return;
+        }
+        var node = Node.getNode(d);
+        uiMgr.handle(UIManager.TABLE_OUT, {type: UIManager.TYPE_TABLE, 'target': node});
+    },
     isTable: function (t) {
         return this.types.indexOf(t) != -1;
     },
-    linkBegin : function(d) {
-
-    },
-    linkEnd : function(d) {
-
+    hasField: function (f) {
+        if (!f) {
+            return false;
+        }
+        for (var i = 0, fs = this.data.fields, l = fs.length; i < l; i++) {
+            if (fs[i] === f.data) {
+                return true;
+            }
+        }
+        return false;
     },
     // -------------------- interactive with drag manager
     startDrag: function () {
@@ -335,6 +427,161 @@ Camera.prototype.transform = function (g, size) {
 // ======================
 // UI Manager
 // ======================
+function UIManager() {
+    var input = document.getElementById('input');
+    this.input = new TextInput(input);
+
+    this.drag = new DragControl();
+    this.link = new LinkControl();
+
+    // sessions that will start by mouse event
+    this.mouseActions = new ActionGroup(this.drag, this.link);
+
+    // ui drawing layers
+    this.layers = {
+        assistant: Node.wrap(svg.append('svg:g').classed('pAssistant', true)),
+        dialog: Node.wrap(svg.append('svg:g').classed('pDialog', true))
+    };
+
+    var link = new Link(this.layers.assistant);
+    link.bind({start: {x: 100, y: 100}, end: {x: 500, y: 250}});
+}
+
+// ui element types
+UIManager.TYPE_TABLE = 'TABLE';
+UIManager.TYPE_FIELD = 'FIELD';
+UIManager.TYPE_LINK = 'LINK';
+UIManager.TYPE_DIALOG = 'DIALOG';
+
+// table & fields mouse event
+UIManager.FIELD_OVER = 'fieldOver';
+UIManager.FIELD_DOWN = 'fieldDown';
+UIManager.FIELD_CLICK = 'fieldClick';
+UIManager.TABLE_DOWN = 'tableDown';
+UIManager.TABLE_OVER = 'tableOver';
+UIManager.TABLE_OUT = 'tableOut';
+
+// global mouse event
+UIManager.SVG_DOWN_BEGIN = 'svgDownB';
+UIManager.SVG_DOWN_END = 'svgDownE';
+UIManager.SVG_UP_BEGIN = 'svgUpB';
+UIManager.SVG_UP_END = 'svgUpE';
+UIManager.SVG_MOVE = 'svgMove';
+
+// link
+UIManager.LINK_START_FIELD = 'linkStartField';
+UIManager.LINK_START_TABLE = 'linkStartTable';
+UIManager.LINK_END_FIELD = 'linkEndField';
+UIManager.LINK_END_TABLE = 'linkEndTable';
+
+UIManager.prototype.isSelfEvent = function (element) {
+    var target = (d3.event.target || d3.event.srcElement);
+    return  element === (d3.event.target || d3.event.srcElement);
+}
+UIManager.isSelfEvent = UIManager.prototype.isSelfEvent;
+UIManager.prototype.ctrlKey = function () {
+    return d3.event.metaKey || d3.event.ctrlKey;
+}
+UIManager.prototype.loseFocus = function () {
+    d3.selectAll('.focus')
+            .classed('focus', false);
+}
+UIManager.prototype.onFocus = function (param) {
+//    this.input.close();
+//    var d = param.target.data;
+//    if (Table.prototype.isTable(d.type) != -1) {
+//        tables.order();
+//    }
+}
+/**
+ * handle event on svg root element
+ * @param id
+ */
+UIManager.prototype.handleGlobal = function (id) {
+    switch (id) {
+        case UIManager.SVG_DOWN_BEGIN:
+            log('UIManager.SVG_DOWN_BEGIN');
+            this.mouseActions.prepare();
+            break;
+        case UIManager.SVG_DOWN_END:
+            log('UIManager.SVG_DOWN_END');
+            this.mouseActions.start();
+            break;
+        case UIManager.SVG_MOVE:
+            //log('UIManager.SVG_MOVE');
+            this.mouseActions.handleEvent();
+            break;
+        case UIManager.SVG_UP_BEGIN:
+            log('UIManager.SVG_UP_BEGIN');
+            break;
+        case UIManager.SVG_UP_END:
+            log('UIManager.SVG_UP_END');
+            this.mouseActions.stop();
+            break;
+    }
+}
+UIManager.prototype.handle = function (id, param) {
+    switch (id) {
+//        // {'target': controller, 'id': 'fieldid'}
+//        case UIManager.INPUT:
+//            this.input.handle(param);
+//            break;
+//        case UIManager.CLOSE_INPUT:
+//            this.input.close();
+//            break;
+
+        // param: {target: node, type:'field'}
+        case UIManager.FIELD_DOWN:
+            log('UIManager.FIELD_DOWN', param);
+            this.link.setStartField(param.target);
+            break;
+        case UIManager.FIELD_OVER:
+            log('UIManager.FIELD_OVER', param);
+            this.link.setEndField(param.target);
+            break;
+        case UIManager.FIELD_CLICK:
+            log('UIManager.FIELD_CLICK', param);
+            // TODO input
+            break;
+
+        // param: {target: node, type:'table'}
+        case UIManager.TABLE_DOWN:
+            log('UIManager.TABLE_DOWN', param);
+            this.drag.bindTarget(param.target);
+            this.link.setStartTable(param.target);
+            this.onFocus(param);
+            break;
+        case UIManager.TABLE_OVER:
+            log('UIManager.TABLE_OVER', param);
+            //this.link.setEndTable(param.target);
+            break;
+        case UIManager.TABLE_OUT:
+            log('UIManager.TABLE_OUT', param);
+            //this.link.setEndTable(param.target);
+            break;
+
+//        // {'target': controller}
+//        case UIManager.BG_DRAG:
+//            this.drag.handleBg(param);
+//            break;
+//        case UIManager.ON_FOCUS:
+//            this.onFocus(param);
+//            break;
+//        case UIManager.LOSE_FOCUS:
+//            this.loseFocus();
+//            break;
+
+        // ------------------ link
+        case UIManager.LINK_START_FIELD:
+        case UIManager.LINK_START_TABLE:
+        case UIManager.LINK_END_FIELD:
+        case UIManager.LINK_END_TABLE:
+            break;
+    }
+}
+UIManager.prototype.globalKey = function () {
+    console.log(d3.event);
+}
 function TextInput(div) {
     this.div = div;
     this.input = div.getElementsByTagName('input')[0];
@@ -381,218 +628,142 @@ TextInput.prototype.handle = function (param) {
     div.style('visibility', 'visible');
 }
 
+// ==========================
+// DragControl
+// ==========================
 function DragControl() {
-    this.node = null;
-    this.isdown = false;
     this.downx = 0;
     this.downy = 0;
 }
-DragControl.prototype.handleBg = function (param) {
+_extends(DragControl, Action);
+DragControl.prototype.prepare = function () {
+    this.active = false;
+    this.downx = d3.event.x;
+    this.downy = d3.event.y;
+    this.node = null;
+}
+DragControl.prototype.start = function (param) {
+    // check if drag target exist
+    if (!UIManager.prototype.ctrlKey() || !this.node) {
+        this.stop();
+    }
+    this.active = true;
+}
+DragControl.prototype.handleEvent = function (param) {
     switch (d3.event.type) {
-        case 'mousedown':
-            this.isdown = true;
-            this.node = null;
-            this.downx = d3.event.x;
-            this.downy = d3.event.y;
-            break;
-
         case 'mousemove':
-            if (this.isdown) {
-                var n = this.node;
-                if (n) {
-                    var cx, cy;
-                    this.downx += (cx = d3.event.x - this.downx);
-                    this.downy += (cy = d3.event.y - this.downy);
-                    n.dragOffset(cx, cy);
-                } else {
-                    // TODO drag camera
-                }
+            // if user release the ctrl key, stop dragging
+            if (!UIManager.prototype.ctrlKey()) {
+                this.stop();
+                break;
+            }
+
+            var n = this.node;
+            if (n) {
+                var cx, cy;
+                this.downx += (cx = d3.event.x - this.downx);
+                this.downy += (cy = d3.event.y - this.downy);
+                n.dragOffset(cx, cy);
+            } else {
+                // TODO drag camera
             }
             break;
-
-        case 'mouseup':
-            this.end();
-            break;
     }
 }
-DragControl.prototype.end = function () {
-    this.isdown = false;
+DragControl.prototype.stop = function () {
+    if (this.active) {
+        uiMgr.handle(UIManager.LOSE_FOCUS);
+    }
+    this.active = false;
     this.node = null;
-    uiMgr.handle(UIManager.LOSE_FOCUS);
 }
-DragControl.prototype.handle = function (param) {
-    switch (d3.event.type) {
-        case 'mousedown':
-            this.isdown = true;
-            this.node = param.target;
-
-            uiMgr.handle(UIManager.ON_FOCUS, {target: param.target});
-            break;
-    }
+DragControl.prototype.bindTarget = function (target) {
+    this.node = target;
+//    uiMgr.handle(UIManager.ON_FOCUS, {target: param.target}); TODO
 }
 
+// ==========================
+// LinkControl
+// ==========================
 function LinkControl() {
-    this.cleanup();
+    this.prepare();
 }
+_extends(LinkControl, Action);
+
 LinkControl.FIELD = 'field';
-/**
- * set up link from multip field
- */
 LinkControl.MUL_FIELD = 'mulField';
+
 LinkControl.prototype.setStartTable = function (table) {
-    this.startTable = table;
+    var t = this.data.start;
+    t.table = table;
 }
 LinkControl.prototype.setStartField = function (field) {
-    this.startField = field;
-}
-/**
- * try to setup link or clean up
- */
-LinkControl.prototype.endLink = function () {
-    this.cleanup();
-}
-LinkControl.prototype.cleanup = function () {
-    this.startTable = null;
-    this.startField = null;
-    this.endField = null;
-    this.endTable = null;
-    this.type = LinkControl.FIELD;
-    this.begin = false;
+    var t = this.data.start;
+    t.field = field;
 }
 LinkControl.prototype.setEndTable = function (table) {
-    this.endTable = table;
+    var t = this.data.end;
+    t.table = table;
 }
 LinkControl.prototype.setEndField = function (field) {
-    this.endField = field;
+    var t = this.data.end;
+    t.field = field;
 }
 LinkControl.prototype.setLinkType = function (t) {
     this.type = t;
 }
-
-function UIManager() {
-    var input = document.getElementById('input');
-    this.input = new TextInput(input);
-    this.drag = new DragControl();
-    this.link = new LinkControl();
+LinkControl.prototype.updateCurve = function (x, y) {
+    var d = this.data;
+    if (!d.end.table) {
+        //d.start.table.drawLink(x, y);
+    }
 }
-UIManager.INPUT = 'showInput';
-UIManager.CLOSE_INPUT = 'closeInput';
-UIManager.DRAG = 'drag';
-UIManager.BG_DRAG = 'backgroundDrag';
-UIManager.CTRL_KEY_UP = 'ctrlKeyUp';
-UIManager.ON_FOCUS = 'onFocus';
-UIManager.LOSE_FOCUS = 'loseFocus';
-
-// link
-UIManager.LINK_START_FIELD = 'linkStartField';
-UIManager.LINK_START_TABLE = 'linkStartTable';
-UIManager.LINK_END_FIELD = 'linkEndField';
-UIManager.LINK_END_TABLE = 'linkEndTable';
-
-UIManager.prototype.alwaysAction = [UIManager.CLOSE_INPUT, UIManager.CTRL_KEY_UP, UIManager.LOSE_FOCUS];
-UIManager.prototype.ctrlActions = [UIManager.DRAG, UIManager.BG_DRAG, UIManager.ON_FOCUS];
-
-UIManager.prototype.isActionEnable = function (actions, isdown, id) {
-    if (actions.indexOf(id) == -1) {
-        if (!isdown) {
-            return true;
+LinkControl.prototype.prepare = function () {
+    this.data = {start: {}, end: {}};
+    this.type = LinkControl.FIELD;
+    this.active = false;
+}
+LinkControl.prototype.validate = function (link) {
+    if (link.table) {
+        if (!link.table.hasField(link.field)) {
+            delete link.field;
         }
-    } else if (isdown) {
-        return true;
-    }
-    return false;
-}
-UIManager.prototype.ctrlKey = function () {
-    return d3.event.metaKey || d3.event.ctrlKey;
-}
-UIManager.prototype.loseFocus = function () {
-    d3.selectAll('.focus')
-            .classed('focus', false);
-}
-UIManager.prototype.isEnable = function (id) {
-    if (this.alwaysAction.indexOf(id) != -1) {
-        return true;
-    }
-    var ctrl = this.ctrlActions;
-    if (!this.isActionEnable(ctrl, this.ctrlKey(), id)) {
-        this.actionFail(ctrl);
-        return false;
-    }
-    return true;
-}
-UIManager.prototype.actionFail = function (actions) {
-    switch (actions) {
-        case this.ctrlActions:
-            this.drag.end();
-            break;
     }
 }
-UIManager.prototype.onFocus = function (param) {
-    this.input.close();
-    var d = param.target.data;
-    if (Table.prototype.isTable(d.type) != -1) {
-        tables.order();
-    }
-}
-UIManager.prototype.handle = function (id, param) {
-    if (!this.isEnable(id)) {
+LinkControl.prototype.start = function () {
+    var d = this.data
+    if (UIManager.prototype.ctrlKey() || !d.start.table) {
+        this.stop();
         return;
     }
-    switch (id) {
-        // {'target': controller, 'id': 'fieldid'}
-        case UIManager.INPUT:
-            this.input.handle(param);
-            break;
-        case UIManager.CLOSE_INPUT:
-            this.input.close();
-            break;
-        // {'target': controller}
-        case UIManager.DRAG:
-            this.drag.handle(param);
-            break;
-        // {'target': controller}
-        case UIManager.BG_DRAG:
-            this.drag.handleBg(param);
-            break;
-        case UIManager.ON_FOCUS:
-            this.onFocus(param);
-            break;
-        case UIManager.LOSE_FOCUS:
-            this.loseFocus();
-            break;
-
-        // ------------------ link
-        case UIManager.LINK_START_FIELD:
-        case UIManager.LINK_START_TABLE:
-        case UIManager.LINK_END_FIELD:
-        case UIManager.LINK_END_TABLE:
+    this.validate(d.start);
+    this.active = true;
+}
+LinkControl.prototype.handleEvent = function () {
+    switch (d3.event.type) {
+        case 'mousemove':
+            // if user release the ctrl key, stop dragging
+            if (UIManager.prototype.ctrlKey()) {
+                this.stop();
+                break;
+            }
+            this.updateCurve(d3.event.x, d3.event.y);
             break;
     }
 }
-UIManager.prototype.backgroundDrag = function () {
-    uiMgr.handle(UIManager.BG_DRAG);
-}
-UIManager.prototype.globalKey = function () {
-    console.log(d3.event);
+LinkControl.prototype.stop = function () {
+    this.prepare();
 }
 
 // ======================
 // global
 // ======================
-var uiMgr = new UIManager();
-
 var svg = d3.selectAll('.chart')
         .append("svg")
         .attr('width', window.innerWidth)
         .attr('height', window.innerHeight)
-        .attr('id', 'svg')
-        .on('mousedown', uiMgr.backgroundDrag, true)
-        .on('mousemove', uiMgr.backgroundDrag, true)
-        .on('mouseup', uiMgr.backgroundDrag, true)
-        .on('keydown', uiMgr.globalKey);
-document.onkeydown = function () {
-    console.log('document.onkeydown');
-};
+        .attr('id', 'svg');
+
 svg.append('svg:defs')
         .append('svg:pattern')
         .attr('id', 'gridPattern')
@@ -612,7 +783,10 @@ var global = {
 }
 
 var camera = new Camera(svg);
+var tables = new TableSchema(null, svg.append('svg:g').classed('entity', true));
+var uiMgr = new UIManager();
 
+// global listeners register
 window.addEventListener('resize', function () {
     var width = window.innerWidth;
     var height = window.innerHeight;
@@ -621,7 +795,21 @@ window.addEventListener('resize', function () {
     camera.apply();
 });
 
-var tables = new TableSchema(null, svg.append('g').classed('entity', true));
+function listenSvg(id) {
+    return function () {
+        uiMgr.handleGlobal(id);
+    }
+}
+svg.on('mousedown.start', listenSvg(UIManager.SVG_DOWN_BEGIN), true)
+        .on('mousedown.end', listenSvg(UIManager.SVG_DOWN_END))
+        .on('mousemove', listenSvg(UIManager.SVG_MOVE), true)
+        .on('mouseup.start', listenSvg(UIManager.SVG_UP_BEGIN), true)
+        .on('mouseup.end', listenSvg(UIManager.SVG_UP_END))
+//        .on('keydown', uiMgr.globalKey);
+
+document.onkeydown = function () {
+    console.log('document.onkeydown');
+};
 
 // ======================
 // binding data
