@@ -5,6 +5,8 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <link type="text/css" rel="stylesheet" href="css/theme.css"/>
     <script type="text/javascript" src="../d3.js"></script>
+    <script type="text/javascript" src="api/mootools-core-1.4.5.js"></script>
+    <script type="text/javascript" src="api/utils.js"></script>
     <script type="text/javascript" src="api/node.js"></script>
     <script type="text/javascript" src="api/operation.js"></script>
     <script type="text/javascript" src="api/gl-matrix.js"></script>
@@ -17,17 +19,62 @@
 </div>
 <!--<img src="test.png" />-->
 <script type="text/javascript">
-var log = function () {
-    console.log(arguments);
+// ui element types
+var Target = {
+    TABLE: 'table',
+    FIELD: 'field',
+    LINK: 'link',
+    DIALOG: 'dialog'
+}
+var ActionTypes = {
+    MOUSE_OVER: 'mouseover',
+    MOUSE_OUT: 'mouseout',
+    MOUSE_DOWN: 'mousedown',
+    MOUSE_UP: 'mouseup',
+    MOUSE_MOVE: 'mousemove',
+    MOUSE_CLICK: 'click',
+
+    KEY_DOWN: 'keydown',
+    KEY_UP: 'keyup'
+}
+// global mouse event
+var ControlType = {
+    SVG_DOWN_BEGIN: 'svgDownB',
+    SVG_DOWN_END: 'svgDownE',
+    SVG_UP_BEGIN: 'svgUpB',
+    SVG_UP_END: 'svgUpE',
+    SVG_MOVE: 'svgMove',
+    SVG_OVER_BEGIN: 'svgOverB',
+    SVG_OVER_END: 'svgOverE',
+    SVG_BG_OUT: 'bgOut',
+    SVG_BG_OVER: 'bgOver'
 }
 
+// ==========================
+// function
+// ==========================
+function listenSvg(id) {
+    return function () {
+        uiMgr.handleControl({'id': id});
+    }
+}
+function listenEvent(event) {
+    return function (d) {
+        uiMgr.handle({id: event, target: Node.getNode(d)});
+    }
+}
+function join() {
+    return Array.prototype.slice.call(arguments, 0).join('.');
+}
 //chrome.exe -allow-fi le-access-from-files
-// ======================
+// ==========================
 // Field
-// ======================
-var Field = _extends(function (p) {
+// ==========================
+function Field(p) {
     Node.call(this, p);
-}, Node, {
+}
+_extends(Field, Node, {
+    targetType: Target.FIELD,
     enter: function () {
         var p = Table.prototype.prefer;
         var fw = p.width;
@@ -40,16 +87,16 @@ var Field = _extends(function (p) {
 
         this.view = this.parentView().append('svg:g')
                 .classed(bgstyle, true)
-                .on('click', this.handleEdit)
-                .datum(d);
+                .datum(d)
+//                .on('click', this.handleEdit)
+                .on('mousedown', this.handleDown)
+                .on('mouseover', this.handleOver);
 
         var ui = this.view;
         ui.attr("transform", 'translate(' + 0 + ',' + (fh * i) + ')');
         ui.append('svg:rect')
                 .attr('width', fw)
-                .attr('height', fh)
-//                .on('mousedown', this.handleDown)
-//                .on('mouseover', this.handleOver);
+                .attr('height', fh);
 
         ui.append('svg:text')
                 .classed('fieldname', true)
@@ -57,7 +104,7 @@ var Field = _extends(function (p) {
                 .attr('y', fh / 2)
                 .attr('dy', 6)
                 .text(d.name)
-                .on('click', this.handleClick)
+//                .on('click', this.handleClick)
                 .datum(d);
     },
     update: function (dold, dnew) {
@@ -70,23 +117,10 @@ var Field = _extends(function (p) {
         this.deleteView(this.view);
     },
     handleClick: function (d) {
-        if(!UIManager.isSelfEvent(this)) {
-            return;
-        }
-        uiMgr.handle(UIManager.FIELD_CLICK, {type: UIManager.TYPE_FIELD, 'target': Node.getNode(d), 'id': 'name'});
+        uiMgr.handle({id: ActionTypes.MOUSE_CLICK, 'target': Node.getNode(d), 'id': 'name'});
     },
-    handleDown: function (d) {
-        if(!UIManager.isSelfEvent(this)) {
-            return;
-        }
-        uiMgr.handle(UIManager.FIELD_DOWN, {type: UIManager.TYPE_FIELD, 'target': Node.getNode(d)});
-    },
-    handleOver: function (d) {
-        if(!UIManager.isSelfEvent(this)) {
-            return;
-        }
-        uiMgr.handle(UIManager.FIELD_OVER, {type: UIManager.TYPE_FIELD, 'target': Node.getNode(d)});
-    },
+    handleDown: listenEvent(ActionTypes.MOUSE_DOWN),
+    handleOver: listenEvent(ActionTypes.MOUSE_OVER),
     identifier: function (d) {
         return d.type + d.name;
     },
@@ -115,9 +149,11 @@ var Field = _extends(function (p) {
 // ======================
 // Link
 // ======================
-var Link = _extends(function (p) {
+function Link(p) {
     Node.call(this, p);
-}, Node);
+}
+_extends(Link, Node);
+Link.prototype.targetType = Target.LINK;
 /**
  * this.data {
  *     start(x,y),
@@ -170,9 +206,11 @@ Link.prototype.path = function (d) {
 // ======================
 // Table
 // ======================
-var Table = _extends(function (p) {
+function Table(p) {
     Node.call(this, p);
-}, Node, {
+}
+_extends(Table, Node, {
+    targetType: Target.TABLE,
     types: ['view', 'map', 'table'],
     prefer: {
         header: {
@@ -206,8 +244,7 @@ var Table = _extends(function (p) {
                 .append('svg:g')
                 .datum(d)
                 .on('mousedown', this.handleDown)
-                .on('mouseover', this.handleOver, true)
-                .on('mouseout', this.handleOut, true);
+                .on('mouseover', this.handleOver, true);// call before mouse over field
         this.header.append('svg:rect')
                 .attr('width', this.prefer.width)
                 .attr('height', p.height)
@@ -226,8 +263,7 @@ var Table = _extends(function (p) {
                 .classed('fields', true)
                 .datum(d)
                 .on('mousedown', this.handleDown)
-                .on('mouseover', this.handleOver, true)
-                .on('mouseout', this.handleOut, true);
+                .on('mouseover', this.handleOver, true);
 
         this.fields = new Fields(this, fieldsBg);
         this.fields.bind(d.fields);
@@ -260,28 +296,8 @@ var Table = _extends(function (p) {
         var p = this.prefer;
         return d.fields.length * p.field.height + p.header.height + p.footer.height;
     },
-    handleDown: function (d) {
-        if(!UIManager.isSelfEvent(this)) {
-            return;
-        }
-        var node = Node.getNode(d);
-        uiMgr.handle(UIManager.TABLE_DOWN, {type: UIManager.TYPE_TABLE, 'target': node});
-    },
-    handleOver: function (d) {
-        if(!UIManager.isSelfEvent(this)) {
-            return;
-        }
-        var node = Node.getNode(d);
-        uiMgr.handle(UIManager.TABLE_OVER, {type: UIManager.TYPE_TABLE, 'target': node});
-    },
-    handleOut: function (d) {
-        console.log(d3.event);
-        if(!UIManager.isSelfEvent(this)) {
-            return;
-        }
-        var node = Node.getNode(d);
-        uiMgr.handle(UIManager.TABLE_OUT, {type: UIManager.TYPE_TABLE, 'target': node});
-    },
+    handleDown: listenEvent(ActionTypes.MOUSE_DOWN),
+    handleOver: listenEvent(ActionTypes.MOUSE_OVER),
     isTable: function (t) {
         return this.types.indexOf(t) != -1;
     },
@@ -351,7 +367,9 @@ function Camera(svg) {
     this.starty = 0;
 
     this.rect = svg.append('svg:rect')
-            .attr('fill', 'url(#gridPattern)');
+            .attr('fill', 'url(#gridPattern)')
+            .on('mouseout', this.handleOut)
+            .on('mouseover', this.handleOver);
     this.apply();
 }
 Camera.prototype.getScale = function () {
@@ -374,6 +392,18 @@ Camera.prototype.touchMove = function (x, y) {
 Camera.prototype.setStart = function (x, y) {
     this.x = x;
     this.y = y;
+}
+/**
+ * 离开背景图片, 进入到各种 UI 界面
+ */
+Camera.prototype.handleOut = function () {
+    uiMgr.handleBg({id: ControlType.SVG_BG_OUT})
+}
+/**
+ * 鼠标从一个 UI 控件上离开
+ */
+Camera.prototype.handleOver = function () {
+    uiMgr.handleBg({id: ControlType.SVG_BG_OVER})
 }
 /**
  * 对屏幕上指定的点缩放
@@ -428,14 +458,23 @@ Camera.prototype.transform = function (g, size) {
 // UI Manager
 // ======================
 function UIManager() {
+    // init action map
+    this.triggers = new DataMap();
+    for (var i in ControlType) {
+        this.triggers.value(ControlType[i], {});
+    }
+    // init record
+    this.eventRecord = new DataMap();
+    for (var action in ActionTypes) {
+        this.eventRecord.value(ActionTypes[action], {});
+    }
+
+    // actions
     var input = document.getElementById('input');
     this.input = new TextInput(input);
-
     this.drag = new DragControl();
     this.link = new LinkControl();
-
-    // sessions that will start by mouse event
-    this.mouseActions = new ActionGroup(this.drag, this.link);
+    this.actions = [this.drag, this.link];
 
     // ui drawing layers
     this.layers = {
@@ -446,39 +485,6 @@ function UIManager() {
     var link = new Link(this.layers.assistant);
     link.bind({start: {x: 100, y: 100}, end: {x: 500, y: 250}});
 }
-
-// ui element types
-UIManager.TYPE_TABLE = 'TABLE';
-UIManager.TYPE_FIELD = 'FIELD';
-UIManager.TYPE_LINK = 'LINK';
-UIManager.TYPE_DIALOG = 'DIALOG';
-
-// table & fields mouse event
-UIManager.FIELD_OVER = 'fieldOver';
-UIManager.FIELD_DOWN = 'fieldDown';
-UIManager.FIELD_CLICK = 'fieldClick';
-UIManager.TABLE_DOWN = 'tableDown';
-UIManager.TABLE_OVER = 'tableOver';
-UIManager.TABLE_OUT = 'tableOut';
-
-// global mouse event
-UIManager.SVG_DOWN_BEGIN = 'svgDownB';
-UIManager.SVG_DOWN_END = 'svgDownE';
-UIManager.SVG_UP_BEGIN = 'svgUpB';
-UIManager.SVG_UP_END = 'svgUpE';
-UIManager.SVG_MOVE = 'svgMove';
-
-// link
-UIManager.LINK_START_FIELD = 'linkStartField';
-UIManager.LINK_START_TABLE = 'linkStartTable';
-UIManager.LINK_END_FIELD = 'linkEndField';
-UIManager.LINK_END_TABLE = 'linkEndTable';
-
-UIManager.prototype.isSelfEvent = function (element) {
-    var target = (d3.event.target || d3.event.srcElement);
-    return  element === (d3.event.target || d3.event.srcElement);
-}
-UIManager.isSelfEvent = UIManager.prototype.isSelfEvent;
 UIManager.prototype.ctrlKey = function () {
     return d3.event.metaKey || d3.event.ctrlKey;
 }
@@ -495,93 +501,169 @@ UIManager.prototype.onFocus = function (param) {
 }
 /**
  * handle event on svg root element
- * @param id
+ * @param p
  */
-UIManager.prototype.handleGlobal = function (id) {
-    switch (id) {
-        case UIManager.SVG_DOWN_BEGIN:
-            log('UIManager.SVG_DOWN_BEGIN');
-            this.mouseActions.prepare();
+UIManager.prototype.handleControl = function (p) {
+    switch (p.id) {
+        case ControlType.SVG_DOWN_BEGIN:
+//            this.eventRecord.clean('mousedown')
+//            this.mouseActions.prepare();
             break;
-        case UIManager.SVG_DOWN_END:
-            log('UIManager.SVG_DOWN_END');
-            this.mouseActions.start();
+        case ControlType.SVG_DOWN_END:
+//            this.mouseActions.start();
             break;
-        case UIManager.SVG_MOVE:
-            //log('UIManager.SVG_MOVE');
-            this.mouseActions.handleEvent();
+        case ControlType.SVG_MOVE:
+//            this.mouseActions.handleEvent(p);
             break;
-        case UIManager.SVG_UP_BEGIN:
-            log('UIManager.SVG_UP_BEGIN');
+        case ControlType.SVG_UP_BEGIN:
+//            this.eventRecord.clean('mouseup')
             break;
-        case UIManager.SVG_UP_END:
-            log('UIManager.SVG_UP_END');
-            this.mouseActions.stop();
+        case ControlType.SVG_UP_END:
+//            this.mouseActions.stop();
             break;
+    }
+    if (p.id != ControlType.SVG_MOVE) {
+        console.log(p.id, p);
     }
 }
-UIManager.prototype.handle = function (id, param) {
-    switch (id) {
-//        // {'target': controller, 'id': 'fieldid'}
-//        case UIManager.INPUT:
-//            this.input.handle(param);
-//            break;
-//        case UIManager.CLOSE_INPUT:
-//            this.input.close();
-//            break;
-
-        // param: {target: node, type:'field'}
-        case UIManager.FIELD_DOWN:
-            log('UIManager.FIELD_DOWN', param);
-            this.link.setStartField(param.target);
+UIManager.prototype.prepareActions = function () {
+    for (var i = 0, actions = this.actions, size = actions.length; i < size; i++) {
+        actions[i].prepare();
+    }
+}
+UIManager.prototype.startActions = function () {
+    for (var i = 0, actions = this.actions, size = actions.length; i < size; i++) {
+        actions[i].start();
+        if (actions[i].isActive()) {
+            this.active = actions[i];
             break;
-        case UIManager.FIELD_OVER:
-            log('UIManager.FIELD_OVER', param);
-            this.link.setEndField(param.target);
-            break;
-        case UIManager.FIELD_CLICK:
-            log('UIManager.FIELD_CLICK', param);
-            // TODO input
-            break;
-
-        // param: {target: node, type:'table'}
-        case UIManager.TABLE_DOWN:
-            log('UIManager.TABLE_DOWN', param);
-            this.drag.bindTarget(param.target);
-            this.link.setStartTable(param.target);
-            this.onFocus(param);
-            break;
-        case UIManager.TABLE_OVER:
-            log('UIManager.TABLE_OVER', param);
-            //this.link.setEndTable(param.target);
-            break;
-        case UIManager.TABLE_OUT:
-            log('UIManager.TABLE_OUT', param);
-            //this.link.setEndTable(param.target);
-            break;
-
-//        // {'target': controller}
-//        case UIManager.BG_DRAG:
-//            this.drag.handleBg(param);
-//            break;
-//        case UIManager.ON_FOCUS:
-//            this.onFocus(param);
-//            break;
-//        case UIManager.LOSE_FOCUS:
-//            this.loseFocus();
-//            break;
-
-        // ------------------ link
-        case UIManager.LINK_START_FIELD:
-        case UIManager.LINK_START_TABLE:
-        case UIManager.LINK_END_FIELD:
-        case UIManager.LINK_END_TABLE:
+        }
+    }
+}
+UIManager.prototype.stopActions = function () {
+    for (var i = 0, actions = this.actions, size = actions.length; i < size; i++) {
+        actions[i].stop();
+    }
+    this.active = null;
+}
+/**
+ * handle bg event
+ * @param p
+ */
+UIManager.prototype.handleBg = function (p) {
+    switch (p.id) {
+        case ControlType.SVG_BG_OUT:
+        case ControlType.SVG_BG_OVER:
+            this.eventRecord.clean(ActionTypes.MOUSE_OVER);
             break;
     }
+    var val = this.eventRecord.value(ActionTypes.MOUSE_OVER);
+    console.log(p.id + ' -------');
+    console.log(this.eventRecord.value(ActionTypes.MOUSE_OVER));
+
+//    this.mouseActions.handleEvent(p);
+}
+UIManager.prototype.targetDown = function (param) {
+//    switch (param.type) {
+//        case UIManager.TYPE_TABLE:
+//            this.eventRecord.value('mousedown.table', param.target);
+//            break;
+//    }
+}
+UIManager.prototype.handleSpecial = {
+    // if table change clean field
+    'mouseover.table': function (p) {
+        var d = this.eventRecord;
+        if (p.target !== d.value('mouseover.table')) {
+            d.value('mouseover.table', p.target);
+            d.del('mouseover.field');
+        }
+    }
+}
+UIManager.prototype.handle = function (param) {
+    var t = param.target;
+    var d = this.eventRecord;
+
+    var speId = join(param.id, t.targetType);
+    if (f = this.handleSpecial[speId]) {
+        f.call(this, param);
+    } else {
+        d.value(speId, t);
+    }
+    console.log(speId);
+    console.log(d.value(param.id));
+
+//    if (!param) {
+//        console.log();
+//    }
+//    switch (param.id) {
+////        // {'target': controller, 'id': 'fieldid'}
+////        case UIManager.INPUT:
+////            this.input.handle(param);
+////            break;
+////        case UIManager.CLOSE_INPUT:
+////            this.input.close();
+////            break;
+//        case UIManager.TARGET_DOWN:
+//            this.eventRecord.value('mousedown.' + param.type, param.target);
+//            break;
+//        case UIManager.TARGET_OVER:
+//            this.eventRecord.value('mouseover.' + param.type, param.target);
+//            break;
+//        case UIManager.TARGET_CLICK:
+//            this.eventRecord.value('mouseclick.' + param.type, param.target);
+//            break;
+//        case UIManager.TARGET_UP:
+//            this.eventRecord.value('mouseup.' + param.type, param.target);
+//            break;
+//
+//        // param: {target: node, type:'field'}
+//        case UIManager.FIELD_DOWN:
+//            log('UIManager.FIELD_DOWN', param);
+//            this.link.setStartField(param.target);
+//            break;
+//        case UIManager.FIELD_OVER:
+//            log('UIManager.FIELD_OVER', param);
+//            this.link.setEndField(param.target);
+//            break;
+//        case UIManager.FIELD_CLICK:
+//            log('UIManager.FIELD_CLICK', param);
+//            // TODO input
+//            break;
+//
+//        // param: {target: node, type:'table'}
+//        case UIManager.TABLE_DOWN:
+//            this.drag.bindTarget(param.target);
+//            this.link.setStartTable(param.target);
+//            this.onFocus(param);
+//            break;
+//        case UIManager.TABLE_OVER:
+//            this.eventRecord.value('')
+//            //this.link.setEndTable(param.target);
+//            break;
+//
+////        // {'target': controller}
+////        case UIManager.BG_DRAG:
+////            this.drag.handleBg(param);
+////            break;
+////        case UIManager.ON_FOCUS:
+////            this.onFocus(param);
+////            break;
+////        case UIManager.LOSE_FOCUS:
+////            this.loseFocus();
+////            break;
+//    }
 }
 UIManager.prototype.globalKey = function () {
     console.log(d3.event);
 }
+UIManager.prototype.createLink = function () {
+    return new Link(this.layers.assistant);
+}
+
+// ==========================
+// TextInput
+// ==========================
 function TextInput(div) {
     this.div = div;
     this.input = div.getElementsByTagName('input')[0];
@@ -632,6 +714,7 @@ TextInput.prototype.handle = function (param) {
 // DragControl
 // ==========================
 function DragControl() {
+    Action.call(this);
     this.downx = 0;
     this.downy = 0;
 }
@@ -672,7 +755,7 @@ DragControl.prototype.handleEvent = function (param) {
 }
 DragControl.prototype.stop = function () {
     if (this.active) {
-        uiMgr.handle(UIManager.LOSE_FOCUS);
+//        uiMgr.handle(UIManager.LOSE_FOCUS);
     }
     this.active = false;
     this.node = null;
@@ -686,6 +769,7 @@ DragControl.prototype.bindTarget = function (target) {
 // LinkControl
 // ==========================
 function LinkControl() {
+    Action.call(this);
     this.prepare();
 }
 _extends(LinkControl, Action);
@@ -739,20 +823,34 @@ LinkControl.prototype.start = function () {
     this.validate(d.start);
     this.active = true;
 }
-LinkControl.prototype.handleEvent = function () {
-    switch (d3.event.type) {
-        case 'mousemove':
-            // if user release the ctrl key, stop dragging
-            if (UIManager.prototype.ctrlKey()) {
-                this.stop();
-                break;
-            }
-            this.updateCurve(d3.event.x, d3.event.y);
+LinkControl.prototype.handleEvent = function (p) {
+    switch (p.id) {
+        case UIManager.SVG_MOVE:
+            this.handleMove();
+            break;
+        case UIManager.BG_OUT:
+            this.showCurve();
+            break;
+        case UIManager.BG_OVER:
+            this.handleMove();
             break;
     }
 }
 LinkControl.prototype.stop = function () {
     this.prepare();
+}
+LinkControl.prototype.handleMove = function () {
+    // if user release the ctrl key, stop dragging
+    if (UIManager.prototype.ctrlKey()) {
+        this.stop();
+        return;
+    }
+    this.updateCurve(d3.event.x, d3.event.y);
+}
+LinkControl.prototype.showCurve = function () {
+    if (!this.active) {
+        return;
+    }
 }
 
 // ======================
@@ -795,16 +893,13 @@ window.addEventListener('resize', function () {
     camera.apply();
 });
 
-function listenSvg(id) {
-    return function () {
-        uiMgr.handleGlobal(id);
-    }
-}
-svg.on('mousedown.start', listenSvg(UIManager.SVG_DOWN_BEGIN), true)
-        .on('mousedown.end', listenSvg(UIManager.SVG_DOWN_END))
-        .on('mousemove', listenSvg(UIManager.SVG_MOVE), true)
-        .on('mouseup.start', listenSvg(UIManager.SVG_UP_BEGIN), true)
-        .on('mouseup.end', listenSvg(UIManager.SVG_UP_END))
+svg.on('mousedown.start', listenSvg(ControlType.SVG_DOWN_BEGIN), true);
+svg.on('mousedown.end', listenSvg(ControlType.SVG_DOWN_END));
+svg.on('mousemove', listenSvg(ControlType.SVG_MOVE), true);
+svg.on('mouseup.start', listenSvg(ControlType.SVG_UP_BEGIN), true);
+svg.on('mouseup.end', listenSvg(ControlType.SVG_UP_END));
+//        .on('mouseover.start', listenSvg(UIManager.SVG_OVER_BEGIN), true)
+//        .on('mouseover.end', listenSvg(UIManager.SVG_OVER_END))
 //        .on('keydown', uiMgr.globalKey);
 
 document.onkeydown = function () {
