@@ -131,7 +131,16 @@ _extends(Field, Node, {
     identifier: function (d) {
         return d.type + d.name;
     },
+    getLinkStart: function () {
+        var p = Table.prototype.prefer;
+        return [p.width, p.field.height / 2];
+    },
+    getLinkEnd: function () {
+        var p = Table.prototype.prefer;
+        return [0, p.field.height / 2];
+    },
 
+    // ----------------------
     // interact with text input.
     beginInput: function (id, text) {
         text.value = this.data.name;
@@ -190,9 +199,17 @@ Link.prototype.enter = function () {
             .attr('cx', d.end.x)
             .attr('cy', d.end.y);
 }
-Link.prototype.update = function (d) {
+Link.prototype.update = function (oldd, d) {
+    this.curve.attr('d', this.path(d));
+    this.start
+            .attr('cx', d.start.x)
+            .attr('cy', d.start.y);
+    this.end
+            .attr('cx', d.end.x)
+            .attr('cy', d.end.y);
 }
 Link.prototype.exit = function (d) {
+    this.view.remove();
 }
 Link.prototype.path = function (d) {
     var x1 = d.start.x;
@@ -208,6 +225,12 @@ Link.prototype.path = function (d) {
             + 'C' + c1x + ',' + c1y //
             + ' ' + c2x + ',' + c2y //
             + ' ' + x2 + ',' + y2;//
+}
+Link.prototype.hide = function () {
+    this.view.style('visibility', 'hidden');
+}
+Link.prototype.show = function () {
+    this.view.style('visibility', 'visible');
 }
 
 // ======================
@@ -318,6 +341,17 @@ _extends(Table, Node, {
             }
         }
         return false;
+    },
+    /**
+     * get relative start to this table
+     */
+    getLinkStart: function () {
+        var p = this.p;
+        return [p.width, p.header.height / 2];
+    },
+    getLinkEnd: function () {
+        var p = this.p;
+        return [0, p.header.height / 2];
     },
     // -------------------- interactive with drag manager
     startDrag: function () {
@@ -438,6 +472,22 @@ Camera.prototype.apply = function (endx, endy) {
             .attr('y', porty)
             .attr('width', sw)
             .attr('height', sh);
+}
+Camera.prototype.transformPoint = function (g, p) {
+    var svgM = g.getTransformToElement(global.root);
+
+    var matrix = mat2d.create();
+
+    // apply child transform
+    mat2d.multiply(matrix, matrix, mat2d.clone([svgM.a, svgM.b, svgM.c, svgM.d, svgM.e, svgM.f]));
+    // apply camera transform
+    mat2d.translate(matrix, matrix, vec2.clone([-this.x, -this.y]));
+    mat2d.scale(matrix, matrix, vec2.clone([this.scalef, this.scalef]));
+
+    // convert point on child to world
+    var world = vec2.clone(p);
+    vec2.transformMat2d(world, world, matrix);
+    return world;
 }
 Camera.prototype.transform = function (g, size) {
     var svgM = g.getTransformToElement(global.root);
@@ -671,6 +721,7 @@ DragControl.prototype.onRegister = function (manager) {
     this.on(ControlType.SVG_DOWN_END);
     this.on(ControlType.SVG_MOVE);
     this.on(ControlType.SVG_UP_END);
+    this.on('link.begin');
 }
 DragControl.prototype.inactive = function () {
     this.active = false;
@@ -690,7 +741,7 @@ DragControl.prototype.onEvent = function (event) {
                 break;
             }
 
-            var n = this.getValue(event, 'mousedown.table');
+            var n = this.getParam(event, 'mousedown.table');
             if (n) {
                 this.node = n;
                 this.downx = d3.event.x;
@@ -730,11 +781,12 @@ DragControl.prototype.onUserEvent = function (event) {
 // ==========================
 // LinkControl
 // ==========================
-function LinkAction() {
+function LinkAction(manager) {
     Action.call(this);
     this.prepare();
     this.data = new DataMap();
     this.initEvent = ControlType.SVG_DOWN_END;
+    this.link = manager.createLink();
 }
 _extends(LinkAction, Action);
 LinkAction.prototype.onRegister = function (manager) {
@@ -742,33 +794,27 @@ LinkAction.prototype.onRegister = function (manager) {
     this.on(ControlType.SVG_MOVE);
     this.on(ControlType.SVG_UP_END);
 }
+LinkAction.prototype.Types = {
+    TABLE: 'table',
+    FIELD: 'field'
+}
 LinkAction.prototype.inactive = function () {
 }
-DragControl.prototype.onEvent = function (event) {
+LinkAction.prototype.onEvent = function (event) {
     switch (event.id) {
         case ControlType.SVG_DOWN_END:
             this.inactive();
 
             // if user release the ctrl key, stop dragging
-            if (!UIManager.prototype.ctrlKey()) {
+            if (UIManager.prototype.ctrlKey()) {
                 break;
             }
 
-            var n = this.getValue(event, 'mousedown.table');
-            if (n) {
-                this.node = n;
-                this.downx = d3.event.x;
-                this.downy = d3.event.y;
-                this.active = true;
-                n.view.classed('focus', true);
-                this.fireEvent('drag.begin', this.node);
-            } else {
-                // TODO drag camera
-            }
+            this.initStart(event);
             break;
 
         case ControlType.SVG_MOVE:
-            if (!UIManager.prototype.ctrlKey()) {
+            if (UIManager.prototype.ctrlKey()) {
                 this.inactive();
                 break;
             }
@@ -783,29 +829,32 @@ DragControl.prototype.onEvent = function (event) {
             break;
     }
 }
+LinkAction.prototype.initStart = function (event) {
+    var table = this.getParam(event, 'mousedown.table');
+    if (!table) {
+        return;
+    }
+    this.table = table;
+    var field = this.getParam(event, 'mousedown.field');
+    if (field) {
+        this.field = field;
+        var point = camera.transformPoint(this.field, this.field.getLinkStart());
+        this.data.value('start.x', point[0]);
+        this.data.value('start.y', point[1]);
+        this.type = this.Types.FIELD;
+    } else {
+        var point = camera.transformPoint(this.table, this.table.getLinkStart());
+        this.data.value('start.x', point[0]);
+        this.data.value('start.y', point[1]);
+        this.type = this.Types.TABLE;
+    }
+    this.active = true;
+    this.fireEvent('link.begin', this.table);
+}
 
 LinkAction.FIELD = 'field';
 LinkAction.MUL_FIELD = 'mulField';
 
-LinkAction.prototype.setStartTable = function (table) {
-    var t = this.data.start;
-    t.table = table;
-}
-LinkAction.prototype.setStartField = function (field) {
-    var t = this.data.start;
-    t.field = field;
-}
-LinkAction.prototype.setEndTable = function (table) {
-    var t = this.data.end;
-    t.table = table;
-}
-LinkAction.prototype.setEndField = function (field) {
-    var t = this.data.end;
-    t.field = field;
-}
-LinkAction.prototype.setLinkType = function (t) {
-    this.type = t;
-}
 LinkAction.prototype.updateCurve = function (x, y) {
     var d = this.data;
     if (!d.end.table) {
@@ -912,7 +961,7 @@ TableAction.prototype.onUserEvent = function (event) {
 var uiMgr = new UIManager();
 uiMgr.addAction(new TableAction(tables));
 uiMgr.addAction(new DragControl());
-//uiMgr.addAction(new LinkControl());
+uiMgr.addAction(new LinkAction(uiMgr));
 
 // global listeners register
 window.addEventListener('resize', function () {

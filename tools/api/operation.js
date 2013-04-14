@@ -29,7 +29,7 @@ Action.prototype.on = function (id) {
 Action.prototype.off = function (id) {
     this.manager.off(id, this);
 }
-Action.prototype.getValue = function (p, id) {
+Action.prototype.getParam = function (p, id) {
     if (p.param.has(id)) {
         return p.param.value(id);
     }
