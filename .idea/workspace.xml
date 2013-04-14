@@ -14,7 +14,7 @@
     <file path="/d3.js" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1364742848897" ignored="false" />
     <file path="/t_03.html" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1364906014332" ignored="false" />
     <file path="/index_mine.html" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1364914130326" ignored="false" />
-    <file path="/index.html" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1365948945834" ignored="false" />
+    <file path="/index.html" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1365949522719" ignored="false" />
     <file path="/a.html" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1365816965499" ignored="false" />
     <file path="/a.xml" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1365109507233" ignored="false" />
     <file path="/a.js" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1365817738520" ignored="false" />
@@ -59,15 +59,15 @@
     <favorites_list name="d3" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.4671458">
+    <splitter split-orientation="horizontal" split-proportion="0.50410676">
       <split-first>
         <leaf>
           <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/tools/index.html">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="553" column="21" selection-start="15359" selection-end="15359" vertical-scroll-proportion="8.483926">
+                <state line="746" column="50" selection-start="20704" selection-end="20704" vertical-scroll-proportion="0.3147208">
                   <folding>
-                    <marker date="1365948947000" expanded="true" signature="23544:23749" placeholder="{...}" />
+                    <marker date="1365949540000" expanded="true" signature="24791:24996" placeholder="{...}" />
                   </folding>
                 </state>
               </provider>
@@ -98,7 +98,7 @@
           <file leaf-file-name="index.html" pinned="false" current="true" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/tools/index.html">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="702" column="25" selection-start="19581" selection-end="19581" vertical-scroll-proportion="0.92047375">
+                <state line="692" column="33" selection-start="19172" selection-end="19180" vertical-scroll-proportion="0.39086294">
                   <folding />
                 </state>
               </provider>
@@ -570,7 +570,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/tools/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="702" column="25" selection-start="19581" selection-end="19581" vertical-scroll-proportion="0.92047375">
+        <state line="692" column="33" selection-start="19172" selection-end="19180" vertical-scroll-proportion="0.39086294">
           <folding />
         </state>
       </provider>

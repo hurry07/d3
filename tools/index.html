@@ -667,17 +667,18 @@ function DragControl() {
     this.initEvent = ControlType.SVG_DOWN_END;
 }
 _extends(DragControl, Action);
-DragControl.prototype.start = function (param) {
-    // check if drag target exist
-    if (!UIManager.prototype.ctrlKey() || !this.node) {
-        this.stop();
-    }
-    this.active = true;
-}
 DragControl.prototype.onRegister = function (manager) {
     this.on(ControlType.SVG_DOWN_END);
     this.on(ControlType.SVG_MOVE);
     this.on(ControlType.SVG_UP_END);
+}
+DragControl.prototype.inactive = function () {
+    this.active = false;
+    var n = this.node;
+    if (n) {
+        n.view.classed('focus', false);
+        this.node = null;
+    }
 }
 DragControl.prototype.onEvent = function (event) {
     switch (event.id) {
@@ -718,18 +719,10 @@ DragControl.prototype.onEvent = function (event) {
             break;
     }
 }
-DragControl.prototype.inactive = function () {
-    this.active = false;
-    var n = this.node;
-    if (n) {
-        n.view.classed('focus', false);
-        this.node = null;
-    }
-}
 DragControl.prototype.onUserEvent = function (event) {
     switch (event.id) {
         case 'link.begin':
-            this.active = false;
+            this.inactive();
             break;
     }
 }
@@ -737,53 +730,101 @@ DragControl.prototype.onUserEvent = function (event) {
 // ==========================
 // LinkControl
 // ==========================
-function LinkControl() {
+function LinkAction() {
     Action.call(this);
     this.prepare();
+    this.data = new DataMap();
+    this.initEvent = ControlType.SVG_DOWN_END;
 }
-_extends(LinkControl, Action);
+_extends(LinkAction, Action);
+LinkAction.prototype.onRegister = function (manager) {
+    this.on(ControlType.SVG_DOWN_END);
+    this.on(ControlType.SVG_MOVE);
+    this.on(ControlType.SVG_UP_END);
+}
+LinkAction.prototype.inactive = function () {
+}
+DragControl.prototype.onEvent = function (event) {
+    switch (event.id) {
+        case ControlType.SVG_DOWN_END:
+            this.inactive();
 
-LinkControl.FIELD = 'field';
-LinkControl.MUL_FIELD = 'mulField';
+            // if user release the ctrl key, stop dragging
+            if (!UIManager.prototype.ctrlKey()) {
+                break;
+            }
 
-LinkControl.prototype.setStartTable = function (table) {
+            var n = this.getValue(event, 'mousedown.table');
+            if (n) {
+                this.node = n;
+                this.downx = d3.event.x;
+                this.downy = d3.event.y;
+                this.active = true;
+                n.view.classed('focus', true);
+                this.fireEvent('drag.begin', this.node);
+            } else {
+                // TODO drag camera
+            }
+            break;
+
+        case ControlType.SVG_MOVE:
+            if (!UIManager.prototype.ctrlKey()) {
+                this.inactive();
+                break;
+            }
+            var cx, cy;
+            this.downx += (cx = d3.event.x - this.downx);
+            this.downy += (cy = d3.event.y - this.downy);
+            this.node.dragOffset(cx, cy);
+            break;
+
+        case ControlType.SVG_UP_END:
+            this.inactive();
+            break;
+    }
+}
+
+LinkAction.FIELD = 'field';
+LinkAction.MUL_FIELD = 'mulField';
+
+LinkAction.prototype.setStartTable = function (table) {
     var t = this.data.start;
     t.table = table;
 }
-LinkControl.prototype.setStartField = function (field) {
+LinkAction.prototype.setStartField = function (field) {
     var t = this.data.start;
     t.field = field;
 }
-LinkControl.prototype.setEndTable = function (table) {
+LinkAction.prototype.setEndTable = function (table) {
     var t = this.data.end;
     t.table = table;
 }
-LinkControl.prototype.setEndField = function (field) {
+LinkAction.prototype.setEndField = function (field) {
     var t = this.data.end;
     t.field = field;
 }
-LinkControl.prototype.setLinkType = function (t) {
+LinkAction.prototype.setLinkType = function (t) {
     this.type = t;
 }
-LinkControl.prototype.updateCurve = function (x, y) {
+LinkAction.prototype.updateCurve = function (x, y) {
     var d = this.data;
     if (!d.end.table) {
         //d.start.table.drawLink(x, y);
     }
 }
-LinkControl.prototype.prepare = function () {
+LinkAction.prototype.prepare = function () {
     this.data = {start: {}, end: {}};
-    this.type = LinkControl.FIELD;
+    this.type = LinkAction.FIELD;
     this.active = false;
 }
-LinkControl.prototype.validate = function (link) {
+LinkAction.prototype.validate = function (link) {
     if (link.table) {
         if (!link.table.hasField(link.field)) {
             delete link.field;
         }
     }
 }
-LinkControl.prototype.start = function () {
+LinkAction.prototype.start = function () {
     var d = this.data
     if (UIManager.prototype.ctrlKey() || !d.start.table) {
         this.stop();
@@ -792,7 +833,7 @@ LinkControl.prototype.start = function () {
     this.validate(d.start);
     this.active = true;
 }
-LinkControl.prototype.handleEvent = function (p) {
+LinkAction.prototype.handleEvent = function (p) {
     switch (p.id) {
         case UIManager.SVG_MOVE:
             this.handleMove();
@@ -805,10 +846,10 @@ LinkControl.prototype.handleEvent = function (p) {
             break;
     }
 }
-LinkControl.prototype.stop = function () {
+LinkAction.prototype.stop = function () {
     this.prepare();
 }
-LinkControl.prototype.handleMove = function () {
+LinkAction.prototype.handleMove = function () {
     // if user release the ctrl key, stop dragging
     if (UIManager.prototype.ctrlKey()) {
         this.stop();
@@ -816,7 +857,7 @@ LinkControl.prototype.handleMove = function () {
     }
     this.updateCurve(d3.event.x, d3.event.y);
 }
-LinkControl.prototype.showCurve = function () {
+LinkAction.prototype.showCurve = function () {
     if (!this.active) {
         return;
     }
