@@ -7,19 +7,38 @@
  */
 function Action() {
     this.active = false;
-}
-Action.prototype.prepare = function () {
-    this.active = false;
+    this.events = [];
 }
 Action.prototype.isActive = function () {
     return this.active;
 }
-Action.prototype.start = function () {
+Action.prototype.onEvent = function () {
 }
-Action.prototype.handleEvent = function () {
+Action.prototype.onUserEvent = function () {
 }
-Action.prototype.stop = function () {
+Action.prototype.fireEvent = function (id, param) {
+    if (param) {
+        this.manager.handleUserEvent({id: id, param: param});
+    } else {
+        this.manager.handleUserEvent({id: id});
+    }
 }
-Action.prototype.getName = function () {
-    return this.name;
+Action.prototype.on = function (id) {
+    this.manager.on(id, this);
+}
+Action.prototype.off = function (id) {
+    this.manager.off(id, this);
+}
+Action.prototype.getValue = function (p, id) {
+    if (p.param.has(id)) {
+        return p.param.value(id);
+    }
+    return null;
+}
+Action.prototype.register = function (manager) {
+    this.manager = manager;
+    this.onRegister(manager);
+}
+Action.prototype.onRegister = function (manager) {
+
 }
