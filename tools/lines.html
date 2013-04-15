@@ -171,6 +171,42 @@
     line.appendPoints([0, 200, 100, 400, 200, 200, 300, 400, 400, 200]);
     line.appendPoints([0, 500, 100, 300, 200, 500, 300, 300, 400, 300]);
     line.appendPoints([300, 40, 400, 100, 500, 120, 600, 400, 700, 300, 800, 300]);
+
+    svg.on('mouseover.start', function () {
+                console.log('----------------------');
+                console.log('container.start');
+                console.log(this, arguments);
+                console.log(d3.event);
+                console.log(d3.event.eventPhase);
+            }, true)
+            .on('mouseover.end', function () {
+                console.log('container.end');
+                console.log(this, arguments);
+                console.log(d3.event);
+                console.log(d3.event.eventPhase);
+                console.log('----------------------');
+            })
+    svg.append('svg:rect')
+            .attr('width', 100)
+            .attr('height', 100)
+            .on('mouseover', function () {
+                console.log(this, arguments);
+                console.log(d3.event);
+                console.log(d3.event.eventPhase);
+            })
+
+    var evt = document.createEvent("MouseEvents");
+    evt.initMouseEvent("mouseover",
+            true,// canBubble
+            true,// cancelable
+            window,
+            0,// detail
+            50, 50, 50, 50, //
+            false, false, false, false, 0, null);
+    console.log(evt.hasOwnProperty('eventPhase'));
+    evt.eventPhase = 1;
+    evt.test = 1111;
+    this.svg.node().dispatchEvent(evt);
 </script>
 </body>
 </html>
