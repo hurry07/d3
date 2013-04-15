@@ -19,10 +19,12 @@ function _extends(sub, super_, props) {
 
 function _defineClass(super_, props) {
     var c = props._constructor;
+
     function sub() {
         super_.apply(this, arguments);
         c.apply(this, arguments);
     }
+
     sub.prototype = Object.create(super_.prototype);
     sub.prototype.constructor = sub;
     if (props) {
@@ -59,7 +61,7 @@ Node.prototype.setData = function (data) {
 /**
  * rebind data
  */
-Node.prototype.refresh = function() {
+Node.prototype.refresh = function () {
     this.bind(this.data);
 }
 /**
@@ -87,7 +89,7 @@ Node.prototype.bind = function (data) {
 
         this.setData(data);
         var id = this.identifier;
-        if(id && (id(dold) != id(data))) {
+        if (id && (id(dold) != id(data))) {
             this.bindUpdate(dold, data);
         } else {
             this.update(dold, data);
@@ -126,8 +128,8 @@ Node.prototype.unbind = function () {
 Node.prototype.parentView = function () {
     return this.parentNode ? this.parentNode.view : null;
 }
-Node.prototype.deleteView = function(view) {
-    if(view) {
+Node.prototype.deleteView = function (view) {
+    if (view) {
         view.remove();
     }
 }
@@ -142,33 +144,37 @@ Node.wrap = function (sel) {
     n.view = sel;
     return n;
 }
-Node.getNode = function(data) {
+Node.getNode = function (data) {
     return data.__controller__;
 }
 /**
  * create a Container function with a closure containing certain element type
  *
  * @param type
+ * @param prop
  * @returns {*}
  */
-Node.createContainer = function(type, prop) {
-    if(!prop) {
+Node.createContainer = function (type, prop) {
+    if (!prop) {
         prop = {};
     }
-    if(!prop.createChild) {
-        prop.createChild = function() {
+    if (!prop.createChild) {
+        prop.createChild = function () {
             return new type(this);
         }
     }
-    if(!prop.childClass) {
-        prop.childClass = function() {
+    if (!prop.childClass) {
+        prop.childClass = function () {
             return type;
         }
     }
-    return _extends(function(p, view) {
+    return _extends(function (p, view) {
         ListNode.call(this, p);
         this.view = view;
     }, ListNode, prop);
+}
+Node.prototype.getViewNode = function () {
+
 }
 
 // ==========================================
@@ -184,7 +190,7 @@ _extends(ListNode, Node);
  * sub class should overwrite this
  * @returns {Node}
  */
-ListNode.prototype.createChild = function() {
+ListNode.prototype.createChild = function () {
     return new Node(this);
 }
 /**
@@ -200,7 +206,7 @@ ListNode.prototype.releaseChild = function (child, i) {
  * sub class should give a specific type, this is like ArrayList<T>
  * @returns {*}
  */
-ListNode.prototype.childClass = function() {
+ListNode.prototype.childClass = function () {
     return Node;
 }
 ListNode.prototype.bindChild = function (child, d, i) {
@@ -214,7 +220,7 @@ ListNode.prototype.getChildIndex = function (child) {
     return child.__index__;
 }
 ListNode.prototype.enter = function () {
-    this.data.forEach(function(d, i) {
+    this.data.forEach(function (d, i) {
         var child = this.createChild();
         this.bindChild(child, d, i);
         this.children.push(child);
@@ -266,7 +272,7 @@ ListNode.prototype.update = function (dold, dnew) {
             if (child) {
                 var cold = child.data;// get data with current reusable child
                 child.setData(data[i]);
-                if(!sort && this.getChildIndex(child) != i) {
+                if (!sort && this.getChildIndex(child) != i) {
                     sort = true;
                 }
                 this.setChildIndex(child, i);
@@ -280,7 +286,7 @@ ListNode.prototype.update = function (dold, dnew) {
 
         // remove useless elements if any
         cm.values().forEach(this.releaseChild, this);
-        if(sort) {
+        if (sort) {
             this.sortView();
         }
     } else {

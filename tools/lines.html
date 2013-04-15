@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <link type="text/css" rel="stylesheet" href="css/theme.css"/>
+    <script type="text/javascript" src="../d3.js"></script>
+    <script type="text/javascript" src="api/mootools-core-1.4.5.js"></script>
+    <script type="text/javascript" src="api/utils.js"></script>
+    <script type="text/javascript" src="api/node.js"></script>
+    <script type="text/javascript" src="api/operation.js"></script>
+    <script type="text/javascript" src="api/gl-matrix.js"></script>
+</head>
+<body>
+<div class='chart'>
+</div>
+<div id='input' class="floating">
+    <input type="text" class="fieldinput">
+</div>
+<script type="text/javascript">
+    // ======================
+    // camera
+    // ======================
+    function Camera(svg) {
+        this.svg = svg;
+        this.width = svg.attr('width');
+        this.height = svg.attr('height');
+        this.x = 0;
+        this.y = 0;
+        this.scalef = 1;
+
+        // touch start
+        this.startx = 0;
+        this.starty = 0;
+
+        this.rect = svg.append('svg:rect')
+                .attr('fill', 'url(#gridPattern)')
+                .on('mouseout', this.handleOut)
+                .on('mouseover', this.handleOver);
+        this.apply();
+    }
+    Camera.prototype.getScale = function () {
+        return this.scalef;
+    }
+    Camera.prototype.setStart = function (x, y) {
+        this.x = x;
+        this.y = y;
+    }
+    /**
+     * 对屏幕上指定的点缩放
+     *
+     * @param scalef
+     * @param currentx
+     * @param currenty
+     */
+    Camera.prototype.scale = function (scalef, currentx, currenty) {
+        this.scalef = scalef;
+        this.apply();
+    }
+    Camera.prototype.apply = function (endx, endy) {
+        var portx = this.x;
+        var porty = this.y;
+        var w = this.width = window.innerWidth;
+        var h = this.height = window.innerHeight;
+        var sw = w / this.scalef;
+        var sh = h / this.scalef;
+        this.svg.attr('viewBox', portx + ' ' + porty + ' ' + sw + ' ' + sh)
+                .attr('width', w)
+                .attr('height', h);
+
+        this.rect.attr('x', portx)
+                .attr('y', porty)
+                .attr('width', sw)
+                .attr('height', sh);
+    }
+    // ======================
+    // global
+    // ======================
+    var svg = d3.selectAll('.chart')
+            .append("svg")
+            .attr('width', window.innerWidth)
+            .attr('height', window.innerHeight)
+            .attr('id', 'svg');
+
+    svg.append('svg:defs')
+            .append('svg:pattern')
+            .attr('id', 'gridPattern')
+            .attr('x', 0)
+            .attr('y', 0)
+            .attr('width', 15)
+            .attr('height', 15)
+            .attr('patternUnits', 'userSpaceOnUse')
+            .append('svg:path')
+            .attr('d', 'M 15 0 L 0 0 0 15')
+            .attr('fill', 'none')
+            .attr('stroke', '#6DA0A1')
+            .attr('stroke-width', '0.25');
+
+    var camera = new Camera(svg);
+
+    // global listeners register
+    window.addEventListener('resize', function () {
+        var width = window.innerWidth;
+        var height = window.innerHeight;
+//    camera.setStart(-100, 50);
+//    camera.scale(1.2, 0, 0);
+        camera.apply();
+    });
+
+    function todegree(r) {
+        return r / Math.PI * 180;
+    }
+    function Lines(width) {
+        this.path = '';
+        this.width = width;
+    }
+    /**
+     * @param points [xy...]
+     */
+    Lines.prototype.genPath = function (points) {
+        var half = Math.PI / 2;
+        var degrees = [];
+        for (var i = 0, l = points.length - 2 , gx, gy; i < l; i += 2) {
+            gx = points[i + 2] - points[i], gy = points[i + 3] - points[i + 1];
+            var dis = Math.sqrt(gx * gx + gy * gy);
+            degrees.push(Math.asin(gy / dis));// 对于 x2 > x1 已经足够
+        }
+
+        var outline = [];
+        this.appendArray(outline, points[0], points[1], 0, this.width / Math.cos(degrees[0]));// append start
+
+        var rightdegree, w, pindex = 0;
+        for (var i = 0, l = degrees.length - 1, d1, d2; i < l; i++) {
+            d1 = degrees[i], d2 = degrees[i + 1];
+            rightdegree = half + (d1 + d2) / 2;//
+            w = this.width / Math.sin(rightdegree - d2);
+            pindex += 2;
+            this.appendArray(outline, points[pindex], points[pindex + 1], w * Math.cos(rightdegree), w * Math.sin(rightdegree));
+        }
+
+        pindex += 2;
+        this.appendArray(outline, points[pindex], points[pindex + 1], 0, this.width / Math.cos(degrees[l]));// append stop
+
+        return outline;
+    }
+    Lines.prototype.appendArray = function (arr, x, y, ox, oy) {
+        arr.push(x - ox);
+        arr.push(y - oy);
+        arr.push(x + ox);
+        arr.push(y + oy);
+    }
+    Lines.prototype.appendPoints = function (points) {
+        var borders = this.genPath(points);
+        var p = 'M' + borders.slice(0, 2).join(',');
+        for (var i = 4, l = borders.length; i < l; i += 4) {
+            p += ' L' + borders.slice(i, i + 2).join(',');
+        }
+        for (var i = borders.length - 2; i > 0; i -= 4) {
+            p += ' L' + borders.slice(i, i + 2).join(',');
+        }
+        p += 'Z';
+        console.log(p);
+
+        svg.append('svg:path')
+                .attr('d', p)
+                .style('fill', 'lightblue');
+    }
+
+    var line = new Lines(10);
+    line.appendPoints([0, 10, 100, 10, 100, 110, 200, 110]);
+    line.appendPoints([0, 200, 100, 400, 200, 200, 300, 400, 400, 200]);
+    line.appendPoints([0, 500, 100, 300, 200, 500, 300, 300, 400, 300]);
+    line.appendPoints([300, 40, 400, 100, 500, 120, 600, 400, 700, 300, 800, 300]);
+</script>
+</body>
+</html>
