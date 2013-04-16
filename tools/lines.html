@@ -97,7 +97,7 @@ svg.append('svg:defs')
         .attr('stroke-width', '0.25');
 
 var group = svg.append('svg:g')
-        .attr('transform', 'translate(100, 100)');
+        .attr('transform', 'translate(100, 400) scale(1,-1)')
 
 var camera = new Camera(svg);
 
@@ -191,6 +191,8 @@ Lines.prototype.initSize = function (w, h, rows, cols, rectw, recth) {
 }
 Lines.prototype.reset = function () {
     this.cellcount = 0;
+    this.cells = [];
+    this.cellsflag = [];
 }
 Lines.prototype.setStart = function (offsetx, y) {
     this.start = {offset: offsetx, y: y};
@@ -205,116 +207,123 @@ Lines.prototype.addPoint = function (index, isrect) {
 }
 Lines.prototype.setup = function () {
     // ---------------------- split lines
-    var lines = [0];
-    if (this.isRect(0)) {
-        lines.push(0);
-    }
-    var count = this.cellcount - 1;
-    for (var i = 1; i < count; i++) {
+    var turns = [0];
+    var rectcount = this.isRect(0);
+    for (var i = 1, count = this.cellcount - 1; i < count; i++) {
         if (this.isRect(i)) {
-            lines.push(i);
-            lines.push(i);
+            turns.push(i);
+            rectcount++;
         } else if (this.getLean(i - 1) != this.getLean(i)) {
-            lines.push(i);
+            turns.push(i);
         }
     }
-    lines.push(count);
-    if (this.isRect(count)) {
-        lines.push(count);
-    }
+    turns.push(count);
 
-    console.log(lines.join(','));
+    console.log(turns.join(','));
     console.log('----------------------');
 
-    // ---------------------- setup line
     var points = [];
-    this.appendCellStart(points, this.getCell(0), -this.start.offset, this.start.y);
 
-    // ---------------------- link to first point
-    var lindex = 0;
-    var last = 0;// 0: point; 1: rect
-    var lean = 0;
-    for (; lindex < 2; lindex++) {
-        var cell = lines[lindex];
-        lean = this.getLean(cell);
+    // append start
+    this.appendStart(points, 0);
 
-        if (this.isRect(cell)) {
-            last = 1;
-            this.appendHeaderRect(points, this.getCell(cell), this.start.y);
-            this.flushPoints(points);
-            break;
-        } else {
-            if (lean != 1) {
-                this.appendCellEndLean(points, cell, this.start.y, lean);
-                break;
-            }
-        }
-    }
+    // append inner links
+    if (rectcount > 0 || turns.length > 2) {
+        var jumpstart = false;
+        var jumpend = false;
+        for (var i = 0, previous = -1, next = 1, count = turns.length; i < count; i++, previous++, next++) {
+            var cell = turns[i];
 
-    // ---------------------- link inner
-    var length = lines.length - 2;
-    for (; lindex < length; lindex++) {
-        if (lines[lindex] == lines[lindex + 1]) {
-            continue;
-        }
-        if (last == 1) {
-            this.appendRectPoint(points, lines[lindex], lean, false);
-        }
-        if (this.isRect(lines[lindex])) {
-            this.appendRectPoint(points, lines[lindex], lean, true);
-            this.flushPoints(points);
-            last = 1;
-        } else {
-            this.appendCellCenter(points, lines[lindex]);
-            last = 0;
-        }
-        lean = this.getLean(lines[lindex]);
-    }
+            // first points
+            if (previous == -1) {
+                var lean = this.getLean(cell);
+                if (this.isRect(cell)) {
+                    this.appendRectY(points, cell, true);
+                    this.flushPoints(points);
 
-    // ---------------------- link tail
-    if (length > 0) {
-        if (lines[length] == lines[length + 1]) {
-            this.appendRectPoint(points, lines[lindex], lean, false);
-            this.flushPoints(points);
+                    this.appendRectPoint(points, cell, lean, false);
+                } else {
+                    if (lean == 1) {
+                        jumpstart = true;
+                    } else {
+                        this.appendCellY(points, cell, lean, true);
+                    }
+                }
+            } else if (next == count) {
+                // last point
+                var lean = this.getLean(turns[i - 1]);
+                if (this.isRect(cell)) {
+                    this.appendRectPoint(points, cell, lean, true);
+                    this.flushPoints(points);
 
-            this.appendTailRect(points, this.getCell(lines[length]), this.end.y);
-        } else {
-            if (this.getLean(lines[length]) == 1) {
-                if (this.isRect(lines[length])) {
-                    this.appendTailRect(points, this.getCell(lines[length]), this.end.y);
+                    this.appendRectY(points, cell, false);
+                } else {
+                    if (jumpend) {
+                        var precell = turns[previous];
+                        if (this.isRect(precell)) {
+                            this.appendRectY(points, precell, false);
+                        } else {
+                            this.appendCellY(points, precell, this.getLean(turns[i - 2]), false);
+                        }
+                    } else {
+                        this.appendCellY(points, cell, lean, false);
+                    }
                 }
             } else {
-                if (this.isRect(lines[length])) {
-
-                } else {
-
+                // delay the next line begin
+                if (next == count - 1 && this.getLean(cell) == 1 && !this.isRect(turns[i + 1])) {
+                    jumpend = true;
                 }
+
+                if (this.isRect(cell)) {
+                    if (jumpstart) {
+                        this.appendRectY(points, 1, true);
+                    } else {
+                        this.appendRectPoint(points, cell, this.getLean(turns[i - 1]), true);
+                    }
+                    this.flushPoints(points);
+
+                    if (!jumpend) {
+                        this.appendRectPoint(points, cell, this.getLean(cell), false);
+                    }
+                } else {
+                    if (jumpstart) {
+                        this.appendCellY(points, cell, this.getLean(turns[i]), true);
+                    } else {
+                        if (!jumpend) {
+                            this.appendCellCenter(points, cell);
+                        }
+                    }
+                }
+                jumpstart = false;
             }
         }
     }
 
-    // ---------------------- finish
-    this.appendCellEnd(points, this.getCell(count), this.start.offset, this.start.y);
-    this.appendPoints(points);
+    // append end
+    this.appendEnd(points, this.cellcount - 1);
+    this.flushPoints(points);
 
-    // ---------------------- append rect
-    lindex = 0, length = lines.length;
-    for (; lindex < length; lindex++) {
-        if (this.isRect(lines[0])) {
+    // append rect
+    for (var i = 0, count = this.cellcount; i < count; i++) {
+        if (this.isRect(i)) {
             var rectpoints = [];
-            this.appendRect(rectpoints, this.getCell(lines[0]));
+            this.appendRect(rectpoints, i);
             this.appendPoints(rectpoints);
         }
     }
 }
-Lines.prototype.appendRectPoint = function (ps, index, lean, isBegin) {
+Lines.prototype.appendRectPoint = function (ps, index, lean, start) {
+    index = this.cells[index];
+
     var halfw = this.rectw / 2;
     var halfh = this.recth / 2;
     var col = index % this.colcount;
     var row = (index - col) / this.colcount;
     var cx = ( col + 0.5) / this.colcount * this.width;
     var cy = (row + 0.5) / this.rowcount * this.height;
-    var sign = isBegin ? 1 : -1;
+    var sign = start ? -1 : 1;
+
     if (lean == 1) {
         ps.push(cx + halfw * sign);
         ps.push(cy);
@@ -327,6 +336,8 @@ Lines.prototype.appendRectPoint = function (ps, index, lean, isBegin) {
     }
 }
 Lines.prototype.appendRect = function (ps, index) {
+    index = this.cells[index];
+
     var halfw = this.rectw / 2;
     var halfh = this.recth / 2;
     var col = index % this.colcount;
@@ -346,31 +357,8 @@ Lines.prototype.appendRect = function (ps, index) {
     ps.push(cx);
     ps.push(cy - halfh);
 }
-Lines.prototype.appendHeaderRect = function (ps, index, y) {
-    var col = index % this.colcount;
-    var row = (index - col) / this.colcount;
-    ps.push((col + 0.5) / this.colcount * this.width - this.rectw / 2);
-    ps.push(row / this.rowcount * this.height + y);
-}
-Lines.prototype.appendTailRect = function (ps, index, y) {
-    var col = index % this.colcount;
-    var row = (index - col) / this.colcount;
-    ps.push((col + 0.5) / this.colcount * this.width + this.rectw / 2);
-    ps.push(row / this.rowcount * this.height + y);
-}
-Lines.prototype.isRect = function (cindex) {
-    return this.cellsflag[cindex];
-}
-Lines.prototype.getCell = function (cindex) {
-    return this.cells[cindex];
-}
-Lines.prototype.getRect = function (line) {
-    for (var i = line[0], l = line[1] + 1; i < l; i++) {
-        if (this.cellsflag[i]) {
-            return i;
-        }
-    }
-    return -1;
+Lines.prototype.isRect = function (index) {
+    return this.cellsflag[index];
 }
 Lines.prototype.getLean = function (cindex) {
     return this.cells[cindex + 1] - this.cells[cindex];
@@ -413,31 +401,50 @@ Lines.prototype.getLeanTan = function (nextlean) {
     return disx / disy;
 }
 Lines.prototype.appendCellCenter = function (ps, index) {
+    index = this.cells[index];
     var col = index % this.colcount;
     var row = (index - col) / this.colcount;
     ps.push((col + 0.5) / this.colcount * this.width);
     ps.push((row + 0.5) / this.rowcount * this.height);
 }
-Lines.prototype.appendCellEndLean = function (ps, index, oy, lean) {
-    var gy = this.height / this.rowcount / 2 - oy;
-    this.appendCellStart(ps, index, this.width / this.colcount / 2 - gy * this.getLeanTan(lean), oy);
+Lines.prototype.getRectLeft = function (index) {
+    return (index % this.colcount + 0.5) / this.colcount * this.width - this.rectw / 2;
 }
-Lines.prototype.appendCellStartLean = function (ps, index, oy, lean) {
-    var gy = this.height / this.rowcount / 2 - oy;
-    this.appendCellStart(ps, index, this.width / this.colcount / 2 + gy * this.getLeanTan(lean), oy);
+Lines.prototype.getRectRight = function (index) {
+    return (index % this.colcount + 0.5) / this.colcount * this.width + this.rectw / 2;
 }
-Lines.prototype.appendCellStart = function (ps, index, ox, oy) {
+Lines.prototype.appendRectY = function (ps, index, start) {
+    index = this.cells[index];
     var col = index % this.colcount;
     var row = (index - col) / this.colcount;
-    ps.push(col / this.colcount * this.width + ox);
-    ps.push(row / this.rowcount * this.height + oy);
+    ps.push((col + 0.5) / this.colcount * this.width + (start ? -this.rectw / 2 : this.rectw / 2));
+    ps.push(row / this.rowcount * this.height + (start ? this.start.y : this.end.y));
 }
-Lines.prototype.appendCellEnd = function (ps, index, ox, oy) {
+Lines.prototype.appendCellY = function (ps, index, lean, start) {
+    index = this.cells[index];
+    var oy = start ? this.start.y : this.end.y;
+    var gy = this.height / this.rowcount / 2 - oy;
+    var col = index % this.colcount;
+    var row = (index - col) / this.colcount;
+    var cx = (col + 0.5) / this.colcount * this.width;
+    var cy = row / this.rowcount * this.height;
+    var tan = this.getLeanTan(lean);
+    ps.push(cx - gy * this.getLeanTan(lean), cy + oy);
+}
+Lines.prototype.appendStart = function (ps, index) {
+    index = this.cells[index];
+    var col = index % this.colcount;
+    var row = (index - col) / this.colcount;
+    ps.push(col / this.colcount * this.width - this.start.offset);
+    ps.push(row / this.rowcount * this.height + this.start.y);
+}
+Lines.prototype.appendEnd = function (ps, index) {
+    index = this.cells[index];
     var col = index % this.colcount;
     var row = (index - col) / this.colcount;
     col += 1;
-    ps.push(col / this.colcount * this.width + ox);
-    ps.push(row / this.rowcount * this.height + oy);
+    ps.push(col / this.colcount * this.width + this.end.offset);
+    ps.push(row / this.rowcount * this.height + this.end.y);
 }
 Lines.prototype.appendArray = function (arr, x, y, ox, oy) {
     arr.push(x - ox);
@@ -544,13 +551,24 @@ Lines.prototype.appendPoints = function (points) {
 
 var rline = new Lines(5);
 rline.setStart(20, 15);
-rline.setEnd(20, 15);
+rline.setEnd(20, 20);
+rline.frustumStart(true);
+rline.frustumEnd(true);
 rline.initSize(500, 300, 3, 5, 80, 80);
-rline.addPoint(5, true);
-rline.addPoint(6);
-rline.addPoint(7);
-rline.addPoint(8, true);
-rline.addPoint(9);
+
+//rline.addPoint(0);
+//rline.addPoint(11);
+//rline.addPoint(12);
+//rline.addPoint(3);
+//rline.addPoint(4);
+//rline.setup();
+//rline.reset();
+
+rline.addPoint(10);
+rline.addPoint(11, true);
+rline.addPoint(2);
+rline.addPoint(3);
+rline.addPoint(4, true);
 rline.setup();
 rline.reset();
 
