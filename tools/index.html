@@ -199,7 +199,8 @@ Link.prototype.enter = function () {
             .classed('end', true)
             .attr('r', 9)
             .attr('cx', d.end.x)
-            .attr('cy', d.end.y);
+            .attr('cy', d.end.y)
+            .attr('draggable', 'true');
 }
 Link.prototype.update = function (oldd, d) {
     this.curve.attr('d', this.path(d));
@@ -269,12 +270,21 @@ _extends(Table, Node, {
                 .classed('table', true)
                 .classed(d.type, true)
                 .on('mousedown', this.handleDown)
-                .on('mouseover', function() {
-                    console.log('testover 22');
+                .on('mouseover', function () {
+//                    console.log('testover 22');
                 })
-                .on('mouseover', function() {
-                    console.log('testover 33');
+                .on('mouseover', function () {
+//                    console.log('testover 33');
                 }, true)
+                .on('dragenter', function () {
+                    console.log('dragenter');
+                })
+                .on('dragover', function () {
+                    console.log('dragenter');
+                })
+                .on('dragout', function () {
+                    console.log('dragenter');
+                })
                 .datum(d);
 
         // header
@@ -302,7 +312,7 @@ _extends(Table, Node, {
                 .classed('fields', true)
                 .datum(d)
                 .on('mousedown', this.handleDown)
-                .on('mouseover', this.handleOver, true);
+                .on('mouseover', this.handleOver, true)
 
         this.fields = new Fields(this, fieldsBg);
         this.fields.bind(d.fields);
@@ -556,12 +566,12 @@ function UIManager() {
     };
 
     var r = this.layers.schema;
-    r.on('mouseover', function () {
-        console.log('direct over');
-    }, true);
-    r.on('mouseover', function () {
-        console.log('direct over11');
-    });
+//    r.on('mouseover', function () {
+//        console.log('direct over');
+//    }, true);
+//    r.on('mouseover', function () {
+//        console.log('direct over11');
+//    });
 
     // all tables
     this.tables = new TableSchema(null, this.layers.schema);
@@ -1029,9 +1039,9 @@ svg.on('mousedown.end', listenSvg(ControlType.SVG_DOWN_END));
 svg.on('mousemove', listenSvg(ControlType.SVG_MOVE), true);
 svg.on('mouseup.start', listenSvg(ControlType.SVG_UP_BEGIN), true);
 svg.on('mouseup.end', listenSvg(ControlType.SVG_UP_END));
-svg.on('mouseover', function() {
-    console.log('root over');
-});
+//svg.on('mouseover', function() {
+//    console.log('root over');
+//});
 
 document.onkeydown = function () {
     console.log('document.onkeydown');
