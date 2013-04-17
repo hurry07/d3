@@ -80,7 +80,7 @@ var svg = d3.selectAll('.chart')
         .append("svg")
         .attr('width', window.innerWidth)
         .attr('height', window.innerHeight)
-        .attr('id', 'svg');
+        .attr('id', 'svg')
 
 svg.append('svg:defs')
         .append('svg:pattern')
@@ -96,10 +96,51 @@ svg.append('svg:defs')
         .attr('stroke', '#6DA0A1')
         .attr('stroke-width', '0.25');
 
-var group = svg.append('svg:g')
-        .attr('transform', 'translate(100, 400) scale(1,-1)')
-
 var camera = new Camera(svg);
+
+var clickcells = [0, 1, 2, 3, 4];
+var clickflags = [0, 0, 0, 0, 0];
+function applyCells() {
+    linesBg.selectAll('.shape').remove();
+    rline.reset();
+    for (var i = 0; i < clickcells.length; i++) {
+        rline.addPoint(clickcells[i], clickflags[i]);
+    }
+    rline.setup();
+}
+function handleClick() {
+    var x = d3.event.x - 100;
+    var y = 400 - d3.event.y;
+    var col = Math.floor(x / 100);
+    var row = Math.floor(y / 100);
+    if (col < 0 || col > 4 || row < 0 || row > 2) {
+        return;
+    }
+    var cell = row * 5 + col;
+
+    if (clickcells[col] != cell) {
+        clickcells[col] = cell;
+        clickflags[col] = 0;
+    } else if (clickflags[col] == 0) {
+        clickflags[col] = 1;
+    } else {
+        clickflags[col] = 0;
+    }
+
+    applyCells();
+}
+
+var linesBg = svg.append('svg:g')
+        .attr('transform', 'translate(50, 450) scale(1,-1)')
+        .on('click', handleClick, true);
+linesBg.append('svg:rect')
+        .attr('width', 600)
+        .attr('height', 400)
+        .style('fill', '#C0C0C0')
+        .style('fill-opacity', '0.3')
+        .style('stroke', '#FC9C9C')
+var group = linesBg.append('svg:g')
+        .attr('transform', 'translate(50, 50)')
 
 // global listeners register
 window.addEventListener('resize', function () {
@@ -114,7 +155,6 @@ function todegree(r) {
     return r / Math.PI * 180;
 }
 function Lines(linewidth) {
-    this.path = '';
     this.linewidth = linewidth;
     this.color = 'lightblue';
 }
@@ -127,15 +167,14 @@ Lines.prototype.frustumEnd = function (b) {
 Lines.prototype.setColor = function (c) {
     this.color = c;
 }
-/**
- * @param points [xy...]
- */
-Lines.prototype.genPath = function (points) {
+Lines.prototype.calcLinePath = function (points, vectors, lenarr) {
     var half = Math.PI / 2;
     var degrees = [];
+    var total = 0;
     for (var i = 0, l = points.length - 2 , gx, gy; i < l; i += 2) {
         gx = points[i + 2] - points[i], gy = points[i + 3] - points[i + 1];
         var dis = Math.sqrt(gx * gx + gy * gy);
+        total += lenarr[i / 2] = dis;
         if (gy < 0) {
             degrees.push(-Math.acos(gx / dis));
         } else {
@@ -143,14 +182,13 @@ Lines.prototype.genPath = function (points) {
         }
     }
 
-    var outline = [];
     var rightdegree = degrees[0], w, pindex = 0;
 
     // append start
     if (this.fstart) {
-        this.appendArray(outline, points[0], points[1], -this.linewidth * Math.sin(rightdegree), this.linewidth * Math.cos(rightdegree));
+        this.appendLineSides(vectors, points[0], points[1], -this.linewidth * Math.sin(rightdegree), this.linewidth * Math.cos(rightdegree));
     } else {
-        this.appendArray(outline, points[0], points[1], 0, this.linewidth / Math.cos(rightdegree));// append start
+        this.appendLineSides(vectors, points[0], points[1], 0, this.linewidth / Math.cos(rightdegree));// append start
     }
 
     for (var i = 0, l = degrees.length - 1, d1, d2; i < l; i++) {
@@ -161,19 +199,19 @@ Lines.prototype.genPath = function (points) {
         rightdegree = half + (d1 + d2) / 2;
         w = this.linewidth / Math.sin(rightdegree - d2);
         pindex += 2;
-        this.appendArray(outline, points[pindex], points[pindex + 1], w * Math.cos(rightdegree), w * Math.sin(rightdegree));
+        this.appendLineSides(vectors, points[pindex], points[pindex + 1], w * Math.cos(rightdegree), w * Math.sin(rightdegree));
     }
 
     // append stop
     pindex += 2;
     rightdegree = degrees[l];
     if (this.fend) {
-        this.appendArray(outline, points[pindex], points[pindex + 1], -this.linewidth * Math.sin(rightdegree), this.linewidth * Math.cos(rightdegree));
+        this.appendLineSides(vectors, points[pindex], points[pindex + 1], -this.linewidth * Math.sin(rightdegree), this.linewidth * Math.cos(rightdegree));
     } else {
-        this.appendArray(outline, points[pindex], points[pindex + 1], 0, this.linewidth / Math.cos(degrees[l]));
+        this.appendLineSides(vectors, points[pindex], points[pindex + 1], 0, this.linewidth / Math.cos(degrees[l]));
     }
 
-    return outline;
+    return total;
 }
 Lines.prototype.initSize = function (w, h, rows, cols, rectw, recth) {
     this.width = w;
@@ -187,12 +225,17 @@ Lines.prototype.initSize = function (w, h, rows, cols, rectw, recth) {
     this.cellsflag = [];
     this.cellcount = 0;
 
+    this.initTexture(0, 100, 0, 2, 100, 4);
+
     this.drawBackground();
 }
 Lines.prototype.reset = function () {
     this.cellcount = 0;
     this.cells = [];
     this.cellsflag = [];
+}
+Lines.prototype.initTexture = function (x1, x2, y1, y2, width, height) {
+    this.texture = {x1: x1, y1: y1, x2: x2, y2: y2, width: width, height: height};
 }
 Lines.prototype.setStart = function (offsetx, y) {
     this.start = {offset: offsetx, y: y};
@@ -208,7 +251,7 @@ Lines.prototype.addPoint = function (index, isrect) {
 Lines.prototype.setup = function () {
     // ---------------------- split lines
     var turns = [0];
-    var rectcount = this.isRect(0);
+    var rectcount = this.isRect(0) ? 1 : 0;
     for (var i = 1, count = this.cellcount - 1; i < count; i++) {
         if (this.isRect(i)) {
             turns.push(i);
@@ -217,7 +260,10 @@ Lines.prototype.setup = function () {
             turns.push(i);
         }
     }
-    turns.push(count);
+    turns.push(this.cellcount - 1);
+    if (this.isRect(this.cellcount - 1)) {
+        rectcount++;
+    }
 
     console.log(turns.join(','));
     console.log('----------------------');
@@ -234,6 +280,11 @@ Lines.prototype.setup = function () {
         for (var i = 0, previous = -1, next = 1, count = turns.length; i < count; i++, previous++, next++) {
             var cell = turns[i];
 
+            // delay the next line begin
+            if (next == count - 1 && this.getLean(cell) == 1 && !this.isRect(turns[i + 1])) {
+                jumpend = true;
+            }
+
             // first points
             if (previous == -1) {
                 var lean = this.getLean(cell);
@@ -249,7 +300,36 @@ Lines.prototype.setup = function () {
                         this.appendCellY(points, cell, lean, true);
                     }
                 }
-            } else if (next == count) {
+                continue;
+            }
+
+            // is current is the 2th element or if current is not last element
+            if (next < count || jumpstart) {
+                if (this.isRect(cell)) {
+                    if (jumpstart) {
+                        this.appendRectY(points, cell, true);
+                    } else {
+                        this.appendRectPoint(points, cell, this.getLean(turns[i - 1]), true);
+                    }
+                    this.flushPoints(points);
+
+                    if (!jumpend && next < count) {
+                        this.appendRectPoint(points, cell, this.getLean(cell), false);
+                    }
+                } else {
+                    if (jumpstart) {
+                        this.appendCellY(points, cell, this.getLean(turns[i]), true);
+                    } else {
+                        if (!jumpend) {
+                            this.appendCellCenter(points, cell);
+                        }
+                    }
+                }
+                jumpstart = false;
+            }
+
+            // if the second is also the last element
+            if (next == count) {
                 // last point
                 var lean = this.getLean(turns[i - 1]);
                 if (this.isRect(cell)) {
@@ -269,33 +349,6 @@ Lines.prototype.setup = function () {
                         this.appendCellY(points, cell, lean, false);
                     }
                 }
-            } else {
-                // delay the next line begin
-                if (next == count - 1 && this.getLean(cell) == 1 && !this.isRect(turns[i + 1])) {
-                    jumpend = true;
-                }
-
-                if (this.isRect(cell)) {
-                    if (jumpstart) {
-                        this.appendRectY(points, 1, true);
-                    } else {
-                        this.appendRectPoint(points, cell, this.getLean(turns[i - 1]), true);
-                    }
-                    this.flushPoints(points);
-
-                    if (!jumpend) {
-                        this.appendRectPoint(points, cell, this.getLean(cell), false);
-                    }
-                } else {
-                    if (jumpstart) {
-                        this.appendCellY(points, cell, this.getLean(turns[i]), true);
-                    } else {
-                        if (!jumpend) {
-                            this.appendCellCenter(points, cell);
-                        }
-                    }
-                }
-                jumpstart = false;
             }
         }
     }
@@ -363,27 +416,6 @@ Lines.prototype.isRect = function (index) {
 Lines.prototype.getLean = function (cindex) {
     return this.cells[cindex + 1] - this.cells[cindex];
 }
-Lines.prototype.drawBackground = function () {
-    for (var i = 0; i < this.colcount; i++) {
-        var x = this.width / this.colcount * i;
-        group.append('svg:path')
-                .attr('d', 'M' + x + ',0 L' + x + ',' + this.height)
-                .style('fill', 'none')
-                .style('stroke', '#FC9C9C');
-    }
-    for (var i = 0; i < this.rowcount; i++) {
-        var h = this.height / this.rowcount * i;
-        group.append('svg:path')
-                .attr('d', 'M0,' + h + ' L' + this.width + ',' + h)
-                .style('fill', 'none')
-                .style('stroke', '#FC9C9C');
-    }
-    group.append('svg:rect')
-            .attr('width', this.width)
-            .attr('height', this.height)
-            .style('fill', 'none')
-            .style('stroke', '#FC9C9C');
-}
 Lines.prototype.getLeanTan = function (nextlean) {
     var dx, dy;
     if (nextlean > 0) {
@@ -406,12 +438,6 @@ Lines.prototype.appendCellCenter = function (ps, index) {
     var row = (index - col) / this.colcount;
     ps.push((col + 0.5) / this.colcount * this.width);
     ps.push((row + 0.5) / this.rowcount * this.height);
-}
-Lines.prototype.getRectLeft = function (index) {
-    return (index % this.colcount + 0.5) / this.colcount * this.width - this.rectw / 2;
-}
-Lines.prototype.getRectRight = function (index) {
-    return (index % this.colcount + 0.5) / this.colcount * this.width + this.rectw / 2;
 }
 Lines.prototype.appendRectY = function (ps, index, start) {
     index = this.cells[index];
@@ -446,7 +472,7 @@ Lines.prototype.appendEnd = function (ps, index) {
     ps.push(col / this.colcount * this.width + this.end.offset);
     ps.push(row / this.rowcount * this.height + this.end.y);
 }
-Lines.prototype.appendArray = function (arr, x, y, ox, oy) {
+Lines.prototype.appendLineSides = function (arr, x, y, ox, oy) {
     arr.push(x - ox);
     arr.push(y - oy);
     arr.push(x + ox);
@@ -457,120 +483,103 @@ Lines.prototype.flushPoints = function (points) {
     points.splice(0, points.length);
 }
 Lines.prototype.appendPoints = function (points) {
-    var borders = this.genPath(points);
-    var p = 'M' + borders.slice(0, 2).join(',');
-    for (var i = 4, l = borders.length; i < l; i += 4) {
-        p += ' L' + borders.slice(i, i + 2).join(',');
+    var edges = [];
+    var lengarr = [];
+    this.calcLinePath(points, edges, lengarr);
+
+    var p = 'M' + edges.slice(0, 2).join(',');
+    for (var i = 4, l = edges.length; i < l; i += 4) {
+        p += ' L' + edges.slice(i, i + 2).join(',');
     }
-    for (var i = borders.length - 2; i > 0; i -= 4) {
-        p += ' L' + borders.slice(i, i + 2).join(',');
+    for (var i = edges.length - 2; i > 0; i -= 4) {
+        p += ' L' + edges.slice(i, i + 2).join(',');
     }
     p += 'Z';
     console.log(p);
 
     group.append('svg:path')
             .attr('d', p)
+            .classed('shape', true)
             .style('fill', this.color);
 }
+Lines.prototype.setupBuffer = function (points) {
+    var edges = [];
+    var lengarr = [];
+    var totallen = this.calcLinePath(points, edges, lengarr);
+    console.log(edges.length, lengarr.length);
 
-//var line = new Lines(10);
-//    line.appendPoints([0, 10, 100, 10, 100, 110, 200, 110]);
-//    line.appendPoints([0, 200, 100, 400, 200, 200, 300, 400, 400, 200]);
-//    line.appendPoints([0, 500, 100, 300, 200, 500, 300, 300, 400, 300]);
-//    line.appendPoints([300, 40, 400, 100, 500, 120, 600, 400, 700, 300, 800, 300]);
-//line.frustumStart(true);
-//line.frustumEnd(true);
-//line.appendPoints([100, 100, 200, 100, 200, 200, 100, 200, 100, 100]);
-//line.appendPoints([300, 100, 300, 200, 400, 200, 400, 100, 300, 100]);
-//line.appendPoints([150, 300, 100, 300, 100, 400, 200, 400, 200, 300, 180, 300]);
-//line.appendPoints([350, 300, 400, 300, 400, 400, 300, 400, 300, 300, 320, 300]);
+    var vectors = [];
+    var textures = [];
+    var tstart = this.texture.x1;
+    var trange = this.texture.x2 - this.texture.x1;
+    var y1 = this.texture.y1;
+    var y2 = this.texture.y2;
+    for (var i = 0, length = edges.length - 4; i < length; i += 4) {
+        var offset = lengarr[i / 4] / totallen * trange;
+        this.interpret(edges, i, tstart, tstart + offset, y1, y2, vectors, textures);
+        tstart += offset;
+    }
 
-//var rline = new Lines(10);
-//rline.setColor('#E9967A');
-//rline.appendPoints([200, 200, 300, 300]);
-//
-//rline.setColor('#DA70D6');
-//rline.frustumStart(true);
-//rline.frustumEnd(true);
-//rline.appendPoints([200, 300, 300, 200]);
-//
-//var x = 600, y = 250, r = 100;
-//var points = [x + r, 100];
-//for (var i = 0; i < 6; i++) {
-//    var radius = i * 60 / 180 * Math.PI;
-//    points.push(x + r * Math.cos(radius));
-//    points.push(y + r * Math.sin(radius));
-//}
-//rline.appendPoints(points);
-//
-//x = 250, y = 600;
-//var points = [100, y + r];
-//for (var i = 0; i < 6; i++) {
-//    var radius = (90 - i * 60 ) / 180 * Math.PI;
-//    points.push(x + r * Math.cos(radius));
-//    points.push(y + r * Math.sin(radius));
-//}
-//rline.appendPoints(points);
-//
-//rline.setStart(20, 10);
-//rline.setEnd(20, 10);
-//rline.initSize(500, 300, 3, 5);
-//
-//rline.addPoint(10);
-//rline.addPoint(6);
-//rline.addPoint(2);
-//rline.addPoint(8);
-//rline.addPoint(14);
-//rline.setup();
-//rline.reset();
-//
-//rline.addPoint(0);
-//rline.addPoint(6);
-//rline.addPoint(2);
-//rline.addPoint(8);
-//rline.addPoint(4);
-//rline.setup();
-//rline.reset();
-//
-//rline.addPoint(10);
-//rline.addPoint(11);
-//rline.addPoint(12);
-//rline.addPoint(8);
-//rline.addPoint(4);
-//rline.setup();
-//rline.reset();
-//
-//rline.addPoint(5);
-//rline.addPoint(6);
-//rline.addPoint(7);
-//rline.addPoint(8);
-//rline.addPoint(4);
-//rline.setup();
-//rline.reset();
-
+    var maped = vectors.map(function (i) {
+        return Math.round(i);
+    })
+    for (var i = 0; i < maped.length; i += 6) {
+        console.log(maped.slice(i, i + 6).join(','));
+        console.log(textures.slice(i, i + 6).join(','));
+    }
+}
+Lines.prototype.interpret = function (p, i, x1, x2, y1, y2, v, t) {
+    for (var ci = 0; ci < 6; ci++) {
+        v.push(p[i + ci]);
+    }
+    t.push(x1);
+    t.push(y1);
+    t.push(x1);
+    t.push(y2);
+    t.push(x2);
+    t.push(y1);
+    for (var ci = 2; ci < 8; ci++) {
+        v.push(p[i + ci]);
+    }
+    t.push(x1);
+    t.push(y2);
+    t.push(x2);
+    t.push(y1);
+    t.push(x2);
+    t.push(y2);
+}
+Lines.prototype.drawBackground = function () {
+    for (var i = 0; i < this.colcount; i++) {
+        var x = this.width / this.colcount * i;
+        group.append('svg:path')
+                .attr('d', 'M' + x + ',0 L' + x + ',' + this.height)
+                .style('fill', 'none')
+                .style('stroke', '#FC9C9C');
+    }
+    for (var i = 0; i < this.rowcount; i++) {
+        var h = this.height / this.rowcount * i;
+        group.append('svg:path')
+                .attr('d', 'M0,' + h + ' L' + this.width + ',' + h)
+                .style('fill', 'none')
+                .style('stroke', '#FC9C9C');
+    }
+    group.append('svg:rect')
+            .attr('width', this.width)
+            .attr('height', this.height)
+            .style('fill', 'none')
+            .style('stroke', '#FC9C9C');
+}
 
 var rline = new Lines(5);
-rline.setStart(20, 15);
+rline.setStart(20, 90);
 rline.setEnd(20, 20);
 rline.frustumStart(true);
 rline.frustumEnd(true);
 rline.initSize(500, 300, 3, 5, 80, 80);
 
-//rline.addPoint(0);
-//rline.addPoint(11);
-//rline.addPoint(12);
-//rline.addPoint(3);
-//rline.addPoint(4);
-//rline.setup();
-//rline.reset();
+applyCells();
 
-rline.addPoint(10);
-rline.addPoint(11, true);
-rline.addPoint(2);
-rline.addPoint(3);
-rline.addPoint(4, true);
-rline.setup();
-rline.reset();
+rline.setupBuffer([0, 0, 100, 0, 100, 100])
 
 //    svg.on('mouseover.start', function () {
 //        console.log('----------------------');
