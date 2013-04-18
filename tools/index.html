@@ -188,49 +188,47 @@ Link.prototype.enter = function () {
         this.view.attr('pointer-events', 'none');
     }
 
-    // curve
-    this.curve = this.view.append('svg:path')
-            .attr('d', this.path(d));
-
-    // ends
+    this.curve = this.view.append('svg:path');
     this.start = this.view.append('svg:circle')
             .classed('start', true)
             .attr('r', 9)
-            .attr('cx', d.start.x)
-            .attr('cy', d.start.y);
     this.end = this.view.append('svg:circle')
             .classed('end', true)
             .attr('r', 9)
-            .attr('cx', d.end.x)
-            .attr('cy', d.end.y)
-            .attr('draggable', 'true');
+
+    this.update(d, d);
 }
 Link.prototype.update = function (oldd, d) {
-    this.curve.attr('d', this.path(d));
-    this.start
-            .attr('cx', d.start.x)
-            .attr('cy', d.start.y);
-    this.end
-            .attr('cx', d.end.x)
-            .attr('cy', d.end.y);
+    var n1, n2;
+    if ((n1 = d.from.node()) && (n2 = d.to.node())) {
+        this.show();
+
+        var p1 = camera.transformPoint(n1.getViewNode(), n1.getLinkEnd());
+        var p2 = camera.transformPoint(n2.getViewNode(), n2.getLinkEnd());
+        this.start.attr('cx', p1[0]).attr('cy', p1[1]);
+        this.end.attr('cx', p2[0]).attr('cy', p2[1]);
+
+        this.updateCurve(p1, p2);
+    } else {
+        this.hide();
+    }
+}
+Link.prototype.updateCurve = function (p1, p2) {
+    var gx = Math.abs(p2[0] - p1[0]);
+    var gy = Math.abs(p2[1] - p1[1]);
+    var c = (gx >= gy ? gx : gy) / 4;
+
+    var path = 'M' + p1[0] + ',' + p1[1]//
+            + 'C' + (p1[0] + c ) + ',' + p1[1] //
+            + ' ' + (p2[0] - c ) + ',' + p2[1] //
+            + ' ' + p2[0] + ',' + p2[1];//
+
+    this.curve.attr('d', path);
+    this.start.attr('cx', p1[0]).attr('cy', p1[1]);
+    this.end.attr('cx', p2[0]).attr('cy', p2[1]);
 }
 Link.prototype.exit = function (d) {
     this.view.remove();
-}
-Link.prototype.path = function (d) {
-    var x1 = d.start.x;
-    var y1 = d.start.y;
-    var x2 = d.end.x;
-    var y2 = d.end.y;
-    var c1x = x1 + 200;
-    var c1y = y1;
-    var c2x = x2 - 100;
-    var c2y = y2;
-
-    return 'M' + x1 + ',' + y1//
-            + 'C' + d.c1.x + ',' + d.c1.y //
-            + ' ' + d.c2.x + ',' + d.c2.y //
-            + ' ' + x2 + ',' + y2;//
 }
 Link.prototype.hide = function () {
     this.view.style('visibility', 'hidden');
@@ -240,22 +238,6 @@ Link.prototype.show = function () {
 }
 Link.prototype.disablePointer = function () {
     this.pointerdis = true;
-}
-Link.prototype.update = function () {
-    var d = this.data.start;
-
-    var n = d.node();
-    var p = camera.transform(n.getNode(), n.getLinkStart());
-    d.x = p[0];
-    d.y = p[1];
-
-    d = this.data.end;
-    n = d.node();
-    p = camera.transform(n.getNode(), n.getLinkStart());
-    d.x = p[0];
-    d.y = p[1];
-
-    this.refresh();
 }
 
 // ======================
@@ -441,7 +423,6 @@ function Camera(svg) {
             .on('mouseout', this.handleOut)
             .on('mouseover', this.handleOver)
     this.apply();
-    console.log('pointer-events:', this.rect.attr('pointer-events'));
 }
 Camera.prototype.getScale = function () {
     return this.scalef;
@@ -518,6 +499,9 @@ Camera.prototype.transformPoint = function (g, p) {
     var world = vec2.clone(p);
     vec2.transformMat2d(world, world, matrix);
     return world;
+}
+Camera.prototype.toLocal = function (x, y) {
+    return [x, y];
 }
 Camera.prototype.transform = function (g, size) {
     var svgM = g.getTransformToElement(global.root);
@@ -833,9 +817,10 @@ DragControl.prototype.onUserEvent = function (event) {
 }
 
 // ==========================
-// LinkControl
+// Link curve
 // ==========================
 function LinkEnd() {
+    this.type = this.Types.NONE;
 }
 LinkEnd.prototype.table = function () {
     var t;
@@ -857,24 +842,41 @@ LinkEnd.prototype.field = function () {
     }
 }
 LinkEnd.prototype.node = function () {
-    return this.mfield || this.mtable;
+    return this.type != this.Types.NONE && (this.mfield || this.mtable);
 }
-LinkAction.prototype.Types = {
+LinkEnd.prototype.checktype = function () {
+    if (this.mfield) {
+        this.type = this.Types.FIELD;
+    } else if (this.mtable) {
+        this.type = this.Types.TABLE;
+    }
+}
+LinkEnd.prototype.reset = function () {
+    delete this.mfield;
+    delete this.mtable;
+    this.type = this.Types.NONE;
+}
+LinkEnd.prototype.Types = {
     TABLE: 'table',
     FIELD: 'field',
     NONE: 'none'
 }
+// ==========================
+// LinkAction
+// ==========================
 function LinkAction(manager) {
     Action.call(this);
-    this.data = new DataMap({
-        start: {x: 0, y: 0},
-        c1: {x: 0, y: 0},
-        c2: {x: 0, y: 0},
-        end: {x: 0, y: 0}
-    });
+
+    this.linkstart = new LinkEnd();
+    this.linkend = new LinkEnd();
+
     this.link = manager.createLink();
     this.link.disablePointer();
-    this.link.bind(this.getData());// always bind a data
+    this.data = {
+        from: new LinkEnd(),
+        to: new LinkEnd()
+    };
+    this.link.bind(this.data);
 }
 _extends(LinkAction, Action);
 LinkAction.prototype.onRegister = function (manager) {
@@ -883,16 +885,9 @@ LinkAction.prototype.onRegister = function (manager) {
     this.on(ControlType.SVG_MOVE);
     this.on(ControlType.SVG_UP_END);
 }
-LinkAction.prototype.getData = function () {
-    return this.data.data();
-}
-LinkAction.prototype.Types = {
-    TABLE: 'table',
-    FIELD: 'field'
-}
 LinkAction.prototype.inactive = function () {
     this.active = false;
-    //this.link.hide();
+    this.link.hide();
 }
 LinkAction.prototype.onEvent = function (event) {
     switch (event.id) {
@@ -917,74 +912,56 @@ LinkAction.prototype.onEvent = function (event) {
             break;
 
         case ControlType.SVG_UP_END:
-            this.drawLink();
+            this.addLink();
             this.inactive();
             break;
     }
 }
-LinkAction.prototype.drawLink = function () {
-    if (this.beginType !== this.Types.NONE) {
-    }
+LinkAction.prototype.addLink = function () {
+//    if (this.beginType !== this.Types.NONE) {
+//    }
 }
 LinkAction.prototype.updateEnd = function (event) {
-    var p;
+    var d = this.data.to;
     var table = this.getParam(event, 'mouseover.table');
-    if (table && table != this.beginTable) {
-        this.endTable = table;
+    if (table && table != this.data.from.table()) {
+        d.table(table);
         var field = this.getParam(event, 'mouseover.field');
         if (field) {
-            this.endField = field;
-            p = camera.transformPoint(field.getViewNode(), field.getLinkEnd());
-        } else {
-            this.endField = null;
-            p = camera.transformPoint(table.getViewNode(), table.getLinkEnd());
+            d.field(field);
         }
     } else {
-        this.endTable = null;
+        d.reset();
     }
-
-    var ex, ey;
-    if (p) {
-        this.data.value('end.x', ex = p[0]);
-        this.data.value('end.y', ey = p[1]);
+    d.checktype();
+    var n = d.node();
+    if (n) {
+        this.dragend = camera.transformPoint(n.getViewNode(), n.getLinkEnd());
     } else {
-        this.data.value('end.x', ex = d3.event.x);
-        this.data.value('end.y', ey = d3.event.y);
+        this.dragend = camera.toLocal(d3.event.x, d3.event.y);
     }
 
-    var d = this.data;
-    var gx = Math.abs(ex - d.value('start.x'));
-    var gy = Math.abs(ey - d.value('start.y'));
-    var c = gx >= gy ? gx / 4 : gy / 4;
-    d.value('c1.x', d.value('start.x') + c);
-    d.value('c1.y', d.value('start.y'));
-    d.value('c2.x', ex - c);
-    d.value('c2.y', ey);
-
-    this.link.bind(this.getData());
+    this.link.updateCurve(this.dragstart, this.dragend);
     this.link.show();
 }
 LinkAction.prototype.start = function (event) {
-    this.beginType = this.Types.NONE;
+    var d = this.data.from;
+    d.reset();
 
     var table = this.getParam(event, 'mousedown.table');
     if (!table) {
         return;
     }
-    this.beginTable = table;
+
+    d.table(table);
     var field = this.getParam(event, 'mousedown.field');
     if (field) {
-        this.beginField = field;
-        var point = camera.transformPoint(this.field.getViewNode(), this.field.getLinkStart());
-        this.data.value('start.x', point[0]);
-        this.data.value('start.y', point[1]);
-        this.beginType = this.Types.FIELD;
-    } else {
-        var point = camera.transformPoint(this.beginTable.getViewNode(), this.beginTable.getLinkStart());
-        this.data.value('start.x', point[0]);
-        this.data.value('start.y', point[1]);
-        this.beginType = this.Types.TABLE;
+        d.field(field);
     }
+    d.checktype();
+    var n = d.node();
+    this.dragstart = camera.transformPoint(n.getViewNode(), n.getLinkStart());
+
     this.active = true;
     this.fireEvent('link.begin', this.beginTable);
 }
