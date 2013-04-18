@@ -184,6 +184,9 @@ Link.prototype.enter = function () {
     // root
     this.view = this.parentView().append('svg:g')
             .classed('link', true);
+    if (this.pointerdis) {
+        this.view.attr('pointer-events', 'none');
+    }
 
     // curve
     this.curve = this.view.append('svg:path')
@@ -235,6 +238,25 @@ Link.prototype.hide = function () {
 Link.prototype.show = function () {
     this.view.style('visibility', 'visible');
 }
+Link.prototype.disablePointer = function () {
+    this.pointerdis = true;
+}
+Link.prototype.update = function () {
+    var d = this.data.start;
+
+    var n = d.node();
+    var p = camera.transform(n.getNode(), n.getLinkStart());
+    d.x = p[0];
+    d.y = p[1];
+
+    d = this.data.end;
+    n = d.node();
+    p = camera.transform(n.getNode(), n.getLinkStart());
+    d.x = p[0];
+    d.y = p[1];
+
+    this.refresh();
+}
 
 // ======================
 // Table
@@ -270,21 +292,6 @@ _extends(Table, Node, {
                 .classed('table', true)
                 .classed(d.type, true)
                 .on('mousedown', this.handleDown)
-                .on('mouseover', function () {
-//                    console.log('testover 22');
-                })
-                .on('mouseover', function () {
-//                    console.log('testover 33');
-                }, true)
-                .on('dragenter', function () {
-                    console.log('dragenter');
-                })
-                .on('dragover', function () {
-                    console.log('dragenter');
-                })
-                .on('dragout', function () {
-                    console.log('dragenter');
-                })
                 .datum(d);
 
         // header
@@ -292,8 +299,7 @@ _extends(Table, Node, {
                 .append('svg:g')
                 .datum(d)
                 .on('mousedown', this.handleDown)
-                .on('mouseover', this.handleOver, true)// call before mouse over field
-                .on('mouseover', this.handleOver11);// call before mouse over field
+                .on('mouseover', this.handleOver, true)
         this.header.append('svg:rect')
                 .attr('width', this.prefer.width)
                 .attr('height', p.height)
@@ -346,13 +352,7 @@ _extends(Table, Node, {
         return d.fields.length * p.field.height + p.header.height + p.footer.height;
     },
     handleDown: listenEvent(ActionTypes.MOUSE_DOWN),
-    //handleOver: listenEvent(ActionTypes.MOUSE_OVER),
-    handleOver: function () {
-        console.log('over');
-    },
-    handleOver11: function () {
-        console.log('over11');
-    },
+    handleOver: listenEvent(ActionTypes.MOUSE_OVER),
     isTable: function (t) {
         return this.types.indexOf(t) != -1;
     },
@@ -439,8 +439,9 @@ function Camera(svg) {
     this.rect = svg.append('svg:rect')
             .attr('fill', 'url(#gridPattern)')
             .on('mouseout', this.handleOut)
-            .on('mouseover', this.handleOver);
+            .on('mouseover', this.handleOver)
     this.apply();
+    console.log('pointer-events:', this.rect.attr('pointer-events'));
 }
 Camera.prototype.getScale = function () {
     return this.scalef;
@@ -834,6 +835,35 @@ DragControl.prototype.onUserEvent = function (event) {
 // ==========================
 // LinkControl
 // ==========================
+function LinkEnd() {
+}
+LinkEnd.prototype.table = function () {
+    var t;
+    if (t = arguments[0]) {
+        if (this.mtable !== t) {
+            this.mfield = null;
+        }
+        this.mtable = t;
+    } else {
+        return this.mtable;
+    }
+}
+LinkEnd.prototype.field = function () {
+    var t;
+    if (t = arguments[0]) {
+        this.mfield = t;
+    } else {
+        return this.mfield
+    }
+}
+LinkEnd.prototype.node = function () {
+    return this.mfield || this.mtable;
+}
+LinkAction.prototype.Types = {
+    TABLE: 'table',
+    FIELD: 'field',
+    NONE: 'none'
+}
 function LinkAction(manager) {
     Action.call(this);
     this.data = new DataMap({
@@ -843,6 +873,7 @@ function LinkAction(manager) {
         end: {x: 0, y: 0}
     });
     this.link = manager.createLink();
+    this.link.disablePointer();
     this.link.bind(this.getData());// always bind a data
 }
 _extends(LinkAction, Action);
@@ -886,37 +917,31 @@ LinkAction.prototype.onEvent = function (event) {
             break;
 
         case ControlType.SVG_UP_END:
+            this.drawLink();
             this.inactive();
             break;
+    }
+}
+LinkAction.prototype.drawLink = function () {
+    if (this.beginType !== this.Types.NONE) {
     }
 }
 LinkAction.prototype.updateEnd = function (event) {
     var p;
     var table = this.getParam(event, 'mouseover.table');
-    if (table) {
-        this.eTable = table;
+    if (table && table != this.beginTable) {
+        this.endTable = table;
         var field = this.getParam(event, 'mouseover.field');
         if (field) {
-            this.eField = field;
+            this.endField = field;
             p = camera.transformPoint(field.getViewNode(), field.getLinkEnd());
         } else {
-            this.eField = null;
+            this.endField = null;
             p = camera.transformPoint(table.getViewNode(), table.getLinkEnd());
         }
     } else {
-        this.eTable = null;
+        this.endTable = null;
     }
-
-    var e = d3.event;
-    var evt = document.createEvent("MouseEvents");
-    evt.initMouseEvent("mouseover",
-            true,// canBubble
-            true,// cancelable
-            window,
-            0,// detail
-            e.screenX, e.screenY, e.clientX, e.clientY,//
-            false, false, false, false, 0, null);
-    this.manager.dispatchEvent(evt);
 
     var ex, ey;
     if (p) {
@@ -940,34 +965,28 @@ LinkAction.prototype.updateEnd = function (event) {
     this.link.show();
 }
 LinkAction.prototype.start = function (event) {
+    this.beginType = this.Types.NONE;
+
     var table = this.getParam(event, 'mousedown.table');
     if (!table) {
         return;
     }
-    this.table = table;
+    this.beginTable = table;
     var field = this.getParam(event, 'mousedown.field');
     if (field) {
-        this.field = field;
+        this.beginField = field;
         var point = camera.transformPoint(this.field.getViewNode(), this.field.getLinkStart());
         this.data.value('start.x', point[0]);
         this.data.value('start.y', point[1]);
-        this.type = this.Types.FIELD;
+        this.beginType = this.Types.FIELD;
     } else {
-        var point = camera.transformPoint(this.table.getViewNode(), this.table.getLinkStart());
+        var point = camera.transformPoint(this.beginTable.getViewNode(), this.beginTable.getLinkStart());
         this.data.value('start.x', point[0]);
         this.data.value('start.y', point[1]);
-        this.type = this.Types.TABLE;
+        this.beginType = this.Types.TABLE;
     }
     this.active = true;
-    this.fireEvent('link.begin', this.table);
-}
-
-LinkAction.prototype.validate = function (link) {
-    if (link.table) {
-        if (!link.table.hasField(link.field)) {
-            delete link.field;
-        }
-    }
+    this.fireEvent('link.begin', this.beginTable);
 }
 
 // ==========================

@@ -398,17 +398,17 @@ Lines.prototype.appendRect = function (ps, index) {
     var cx = ( col + 0.5) / this.colcount * this.width;
     var cy = (row + 0.5) / this.rowcount * this.height;
     ps.push(cx);
-    ps.push(cy - halfh);
-    ps.push(cx + halfw);
-    ps.push(cy - halfh);
+    ps.push(cy + halfh);
     ps.push(cx + halfw);
     ps.push(cy + halfh);
-    ps.push(cx - halfw);
-    ps.push(cy + halfh);
+    ps.push(cx + halfw);
+    ps.push(cy - halfh);
     ps.push(cx - halfw);
     ps.push(cy - halfh);
+    ps.push(cx - halfw);
+    ps.push(cy + halfh);
     ps.push(cx);
-    ps.push(cy - halfh);
+    ps.push(cy + halfh);
 }
 Lines.prototype.isRect = function (index) {
     return this.cellsflag[index];
