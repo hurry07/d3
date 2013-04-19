@@ -118,8 +118,13 @@ Node.prototype.exit = function () {
 }
 Node.prototype.unbind = function () {
     this.exit();
+    if (this.parentNode) {
+        this.parentNode.nodeRemoved(this);
+    }
     this.data = null;
     this.init = false;
+}
+Node.prototype.nodeRemoved = function (child) {
 }
 /**
  * get parent view
@@ -159,13 +164,14 @@ Node.createContainer = function (type, prop) {
         prop = {};
     }
     if (!prop.createChild) {
-        prop.createChild = function () {
+        prop.createChild = function (d) {
             return new type(this);
         }
     }
-    if (!prop.childClass) {
-        prop.childClass = function () {
-            return type;
+    if (!prop.identifier) {
+        var childid = type.prototype.identifier;
+        if (childid) {
+            prop.identifier = childid;
         }
     }
     return _extends(function (p, view) {
@@ -190,7 +196,7 @@ _extends(ListNode, Node);
  * sub class should overwrite this
  * @returns {Node}
  */
-ListNode.prototype.createChild = function () {
+ListNode.prototype.createChild = function (d) {
     return new Node(this);
 }
 /**
@@ -206,9 +212,8 @@ ListNode.prototype.releaseChild = function (child, i) {
  * sub class should give a specific type, this is like ArrayList<T>
  * @returns {*}
  */
-ListNode.prototype.childClass = function () {
-    return Node;
-}
+//ListNode.prototype.identifier = function (d) {
+//}
 ListNode.prototype.bindChild = function (child, d, i) {
     this.setChildIndex(child, i);
     child.bind(d);
@@ -221,7 +226,7 @@ ListNode.prototype.getChildIndex = function (child) {
 }
 ListNode.prototype.enter = function () {
     this.data.forEach(function (d, i) {
-        var child = this.createChild();
+        var child = this.createChild(d);
         this.bindChild(child, d, i);
         this.children.push(child);
     }, this);
@@ -232,7 +237,7 @@ ListNode.prototype.enter = function () {
 ListNode.prototype.sortView = function () {
 }
 ListNode.prototype.update = function (dold, dnew) {
-    var id = this.childClass().prototype.identifier;
+    var id = this.identifier;
     var data = dnew;
 
     var m = this.children.length;
@@ -278,7 +283,7 @@ ListNode.prototype.update = function (dold, dnew) {
                 this.setChildIndex(child, i);
                 child.bindUpdate(cold, data[i]);
             } else {
-                child = this.createChild();
+                child = this.createChild(data[i]);
                 this.bindChild(child, data[i], i);
             }
             this.children.push(child);
@@ -300,7 +305,7 @@ ListNode.prototype.update = function (dold, dnew) {
         }
         // if there is more data than children
         for (var i = min; i < n; i++) {
-            var child = this.createChild();
+            var child = this.createChild(data[i]);
             this.bindChild(child, data[i], i);
             this.children.push(child);
         }
@@ -311,4 +316,27 @@ ListNode.prototype.update = function (dold, dnew) {
 ListNode.prototype.exit = function () {
     this.children.forEach(this.releaseChild, this);
     this.children = [];
+}
+ListNode.prototype.addData = function (d) {
+    var i = this.data.indexOf(d);
+    if (i == -1) {
+        var child = this.createChild(d);
+        this.bindChild(child, d, this.data.length);
+        this.children.push(child);
+        this.data.push(d);
+        return child;
+    }
+}
+ListNode.prototype.nodeRemoved = function (child) {
+    var i = this.children.indexOf(child);
+    if (i != -1) {
+        this.children.splice(i, 1);
+        for (var index = i, l = this.data.length; i < l; i++) {
+            this.setChildIndex(this.children[i], i);
+        }
+        i = this.data.indexOf(child.data);
+        if (i != -1) {
+            this.data.splice(i, 1);
+        }
+    }
 }

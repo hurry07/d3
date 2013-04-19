@@ -9,20 +9,21 @@ path {
     fill: none;
 }
 
-.link path {
+.link .curve {
     stroke: #FC9C9C;
     stroke-width: 2px;
+    filter: url(#dropshadow);
 }
-.link circle {
+.link .start, .link .end {
     fill: #CBFF00;
     stroke: #8E9A8E;
     stroke-width: 2px;
 }
 
-.link.focus path {
+.link.focus .curve {
     stroke: #FC9C9C;
 }
-.link.focus circle {
+.link.focus .start {
     fill: #A0FF00;
 }
 
@@ -50,12 +51,15 @@ path {
     text-indent: 4px;
 }
 
-.entity g.fields-light rect {
+.entity .field:nth-child(odd) {
     fill: #B1BBC4;
 }
-
-.entity g.fields-dark rect {
+.entity .field:nth-child(even) {
     fill: #A7B6C7;
+}
+
+.entity .table {
+    filter: url(#dropshadow);
 }
 
 .entity g.edit rect {

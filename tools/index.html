@@ -90,9 +90,8 @@ _extends(Field, Node, {
         var i = ListNode.prototype.getChildIndex(this);
         var d = this.data;
 
-        var bgstyle = (i & 1) == 0 ? 'fields-light' : 'fields-dark';
         this.view = this.parentView().append('svg:g')
-                .classed(bgstyle, true)
+                .classed('field', true)
                 .datum(d)
 //                .on('click', this.handleEdit)
                 .on('mousedown', this.handleDown)
@@ -141,9 +140,12 @@ _extends(Field, Node, {
     getViewNode: function () {
         return this.view.node();
     },
+    getName: function () {
+        return this.data.name;
+    },
 
-    // ----------------------
-    // interact with text input.
+// ----------------------
+// interact with text input.
     beginInput: function (id, text) {
         text.value = this.data.name;
         this.view.classed('edit', true);
@@ -162,16 +164,24 @@ _extends(Field, Node, {
     getNode: function () {
         return this.view.node();
     }
-});
+})
+;
 
 // ======================
 // Link
 // ======================
 function Link(p) {
     Node.call(this, p);
+    this.id = '';
 }
 _extends(Link, Node);
 Link.prototype.targetType = Target.LINK;
+Link.prototype.identifier = function (d) {
+    return d.from.getId() + '->' + d.to.getId();
+}
+Link.prototype.cloneData = function (d) {
+    return {from: d.from.clone(), to: d.to.clone()};
+}
 /**
  * this.data {
  *     start(x,y),
@@ -188,25 +198,36 @@ Link.prototype.enter = function () {
         this.view.attr('pointer-events', 'none');
     }
 
-    this.curve = this.view.append('svg:path');
+    this.curve = this.view
+            .append('svg:path')
+            .classed('curve', true)
+            .on('click', function() {
+                console.log(this);
+            });
     this.start = this.view.append('svg:circle')
             .classed('start', true)
             .attr('r', 9)
-    this.end = this.view.append('svg:circle')
+    this.end = this.view
+            .append('svg:g');
+    this.end.append('svg:path')
             .classed('end', true)
-            .attr('r', 9)
+            .attr('d', this.endArc())
 
+    this.id = this.identifier(d);
     this.update(d, d);
+}
+Link.prototype.getId = function () {
+    return this.id;
 }
 Link.prototype.update = function (oldd, d) {
     var n1, n2;
     if ((n1 = d.from.node()) && (n2 = d.to.node())) {
         this.show();
 
-        var p1 = camera.transformPoint(n1.getViewNode(), n1.getLinkEnd());
+        var p1 = camera.transformPoint(n1.getViewNode(), n1.getLinkStart());
         var p2 = camera.transformPoint(n2.getViewNode(), n2.getLinkEnd());
         this.start.attr('cx', p1[0]).attr('cy', p1[1]);
-        this.end.attr('cx', p2[0]).attr('cy', p2[1]);
+        this.end.attr('transform', 'translate(' + p2[0] + ',' + p2[1] + ')');
 
         this.updateCurve(p1, p2);
     } else {
@@ -214,19 +235,28 @@ Link.prototype.update = function (oldd, d) {
     }
 }
 Link.prototype.updateCurve = function (p1, p2) {
-    var gx = Math.abs(p2[0] - p1[0]);
-    var gy = Math.abs(p2[1] - p1[1]);
-    var c = (gx >= gy ? gx : gy) / 4;
+    var gx = p2[0] - p1[0];
+    var gy = p2[1] - p1[1];
+    var c = Math.max(-Math.min(gx, gy), Math.max(gx, gy)) / 4;
 
     var path = 'M' + p1[0] + ',' + p1[1]//
-            + 'C' + (p1[0] + c ) + ',' + p1[1] //
-            + ' ' + (p2[0] - c ) + ',' + p2[1] //
-            + ' ' + p2[0] + ',' + p2[1];//
+    if (gx > 0) {
+        path += ' q' + c + ',0' + ' ' + gx / 2 + ',' + gy / 2
+        path += ' t' + gx / 2 + ',' + gy / 2;
+    } else {
+        path += ' q' + -c + ',0' + ' ' + (gx / 2 - c) + ',' + gy / 2
+        path += ' t' + (gx / 2 + c) + ',' + gy / 2;
+    }
 
     this.curve.attr('d', path);
     this.start.attr('cx', p1[0]).attr('cy', p1[1]);
-    this.end.attr('cx', p2[0]).attr('cy', p2[1]);
+    this.end.attr('transform', 'translate(' + p2[0] + ',' + p2[1] + ')');
 }
+Link.prototype.endArc = d3.svg.arc()
+        .innerRadius(0)
+        .outerRadius(10)
+        .startAngle(-Math.PI)
+        .endAngle(0);
 Link.prototype.exit = function (d) {
     this.view.remove();
 }
@@ -245,163 +275,231 @@ Link.prototype.disablePointer = function () {
 // ======================
 function Table(p) {
     Node.call(this, p);
+    this.linkout = [];
+    this.linkin = [];
 }
-_extends(Table, Node, {
-    targetType: Target.TABLE,
-    types: ['view', 'map', 'table'],
-    prefer: {
-        header: {
-            height: 45,
-            prefix: 8
-        },
-        field: {
-            height: 24,
-            prefix: 4
-        },
-        footer: {
-            height: 18
-        },
-        width: 150
-    },
-    enter: function () {
-        var d = this.data;
-        var p = this.prefer.header;
-        var w = this.prefer.width;
-
-        // view
-        this.view = this.parentView().append('svg:g')
-                .attr('transform', 'translate(' + d.position.x + ',' + d.position.y + ')')
-                .classed('table', true)
-                .classed(d.type, true)
-                .on('mousedown', this.handleDown)
-                .datum(d);
-
-        // header
-        this.header = this.view
-                .append('svg:g')
-                .datum(d)
-                .on('mousedown', this.handleDown)
-                .on('mouseover', this.handleOver, true)
-        this.header.append('svg:rect')
-                .attr('width', this.prefer.width)
-                .attr('height', p.height)
-                .classed('header', true);
-        this.title = this.header.append('svg:text')
-                .attr('x', p.prefix)
-                .attr('y', p.height / 2)
-                .attr('dy', 8)
-                .classed('headername', true)
-                .text(d.name)
-                .datum(d);
-
-        // fields
-        var fieldsBg = this.view.append('svg:g')
-                .attr("transform", 'translate(0,' + p.height + ')')
-                .classed('fields', true)
-                .datum(d)
-                .on('mousedown', this.handleDown)
-                .on('mouseover', this.handleOver, true)
-
-        this.fields = new Fields(this, fieldsBg);
-        this.fields.bind(d.fields);
-
-        // footer
-        p = this.prefer.footer;
-        this.footer = this.view.append('svg:rect')
-                .attr('width', w)
-                .attr('height', p.height)
-                .attr('y', this.getHeight() - p.height)
-                .classed('footer', true);
-    },
-    update: function (dold, dnew) {
-        var d = dnew;
-
-        this.title.text(d.name);
-
-        this.fields.bind(dnew.fields);
-
-        var p = this.footer;
-        this.footer
-                .attr('y', this.getHeight() - p.height)
-                .classed('footer', true);
-    },
-    exit: function () {
-        this.deleteView(this.view);
-    },
-    getHeight: function () {
-        var d = this.data;
-        var p = this.prefer;
-        return d.fields.length * p.field.height + p.header.height + p.footer.height;
-    },
-    handleDown: listenEvent(ActionTypes.MOUSE_DOWN),
-    handleOver: listenEvent(ActionTypes.MOUSE_OVER),
-    isTable: function (t) {
-        return this.types.indexOf(t) != -1;
-    },
-    hasField: function (f) {
-        if (!f) {
-            return false;
+_extends(Table, Node);
+Table.prototype.addLinkOut = function (link) {
+    this.linkout.push(link);
+}
+Table.prototype.addLinkIn = function (link) {
+    this.linkin.push(link);
+}
+Table.prototype.hasLink = function (link) {
+    var id = Link.prototype.identifier(link);
+    for (var i = 0, links = this.linkout , l = links.length; i < l; i++) {
+        if (links[i].getId() == id) {
+            return true;
         }
-        for (var i = 0, fs = this.data.fields, l = fs.length; i < l; i++) {
-            if (fs[i] === f.data) {
-                return true;
-            }
-        }
+    }
+    return false;
+}
+Table.prototype.rmLinkOut = function (link) {
+    var i = this.linkout.indexOf(link);
+    if (i != -1) {
+        this.linkout.splice(i, 1);
+    }
+}
+Table.prototype.rmLinkIn = function (link) {
+    var i = this.linkin.indexOf(link);
+    if (i != -1) {
+        this.linkin.splice(i, 1);
+    }
+}
+Table.prototype.targetType = Target.TABLE;
+Table.prototype.types = ['view', 'map', 'table'];
+Table.prototype.prefer = {
+    header: {
+        height: 45,
+        prefix: 8
+    },
+    field: {
+        height: 24,
+        prefix: 4
+    },
+    footer: {
+        height: 18
+    },
+    width: 150
+};
+Table.prototype.getName = function () {
+    return this.data.name;
+}
+
+Table.prototype.enter = function () {
+    var d = this.data;
+    var p = this.prefer.header;
+    var w = this.prefer.width;
+
+    // view
+    this.view = this.parentView().append('svg:g')
+            .attr('transform', 'translate(' + d.position.x + ',' + d.position.y + ')')
+            .classed('table', true)
+            .classed(d.type, true)
+            .on('mousedown', this.handleDown)
+            .datum(d);
+
+    // header
+    this.header = this.view
+            .append('svg:g')
+            .datum(d)
+            .on('mousedown', this.handleDown)
+            .on('mouseover', this.handleOver, true)
+    this.header.append('svg:rect')
+            .attr('width', this.prefer.width)
+            .attr('height', p.height)
+            .classed('header', true);
+    this.title = this.header.append('svg:text')
+            .attr('x', p.prefix)
+            .attr('y', p.height / 2)
+            .attr('dy', 8)
+            .classed('headername', true)
+            .text(d.name)
+            .datum(d);
+
+    // fields
+    var fieldsBg = this.view.append('svg:g')
+            .attr("transform", 'translate(0,' + p.height + ')')
+            .classed('fields', true)
+            .datum(d)
+            .on('mousedown', this.handleDown)
+            .on('mouseover', this.handleOver, true)
+
+    this.fields = new Fields(this, fieldsBg);
+    this.fields.bind(d.fields);
+
+    // footer
+    p = this.prefer.footer;
+    this.footer = this.view.append('svg:rect')
+            .attr('width', w)
+            .attr('height', p.height)
+            .attr('y', this.getHeight() - p.height)
+            .classed('footer', true);
+};
+Table.prototype.update = function (dold, dnew) {
+    var d = dnew;
+
+    this.title.text(d.name);
+
+    this.fields.bind(dnew.fields);
+
+    var p = this.footer;
+    this.footer
+            .attr('y', this.getHeight() - p.height)
+            .classed('footer', true);
+};
+Table.prototype.exit = function () {
+    this.deleteView(this.view);
+};
+Table.prototype.getHeight = function () {
+    var d = this.data;
+    var p = this.prefer;
+    return d.fields.length * p.field.height + p.header.height + p.footer.height;
+};
+Table.prototype.handleDown = listenEvent(ActionTypes.MOUSE_DOWN);
+Table.prototype.handleOver = listenEvent(ActionTypes.MOUSE_OVER);
+Table.prototype.isTable = function (t) {
+    return this.types.indexOf(t) != -1;
+};
+Table.prototype.hasField = function (f) {
+    if (!f) {
         return false;
-    },
-    /**
-     * get relative start to this table
-     */
-    getLinkStart: function () {
-        var p = this.prefer;
-        return [p.width, p.header.height / 2];
-    },
-    getLinkEnd: function () {
-        var p = this.prefer;
-        return [0, p.header.height / 2];
-    },
-    getViewNode: function () {
-        return this.view.node();
-    },
-
-    // -------------------- interactive with drag manager
-    startDrag: function () {
-    },
-    stopDrag: function () {
-    },
-    dragOffset: function (dx, dy) {
-        var p = this.data.position;
-        p.x += dx;
-        p.y += dy;
-        this.view.attr('transform', 'translate(' + p.x + ',' + p.y + ')')
     }
-});
+    for (var i = 0, fs = this.data.fields, l = fs.length; i < l; i++) {
+        if (fs[i] === f.data) {
+            return true;
+        }
+    }
+    return false;
+};
+Table.prototype.getField = function (name) {
+    for (var i = 0, fs = this.data.fields, l = fs.length; i < l; i++) {
+        if (fs[i].name == name) {
+            return Node.getNode(fs[i]);
+        }
+    }
+    return null;
+};
+/**
+ * get relative start to this table
+ */
+Table.prototype.getLinkStart = function () {
+    var p = this.prefer;
+    return [p.width, p.header.height / 2];
+};
+Table.prototype.getLinkEnd = function () {
+    var p = this.prefer;
+    return [0, p.header.height / 2];
+};
+Table.prototype.getViewNode = function () {
+    return this.view.node();
+};
 
+// -------------------- interactive with drag manager
+Table.prototype.startDrag = function () {
+};
+Table.prototype.stopDrag = function () {
+};
+Table.prototype.dragOffset = function (dx, dy) {
+    var p = this.data.position;
+    p.x += dx;
+    p.y += dy;
+    this.view.attr('transform', 'translate(' + p.x + ',' + p.y + ')');
+
+    for (var i = 0, a = this.linkout, l = this.linkout.length; i < l; i++) {
+        a[i].refresh();
+    }
+    for (var i = 0, a = this.linkin, l = this.linkin.length; i < l; i++) {
+        a[i].refresh();
+    }
+};
+
+// ---------------------- for tool
+Table.prototype._export = function () {
+    return ''
+}
+
+// ==========================
+// container types
+// ==========================
 var Fields = Node.createContainer(Field);
-var TableSchema = Node.createContainer(Table, {
-    order: function () {
-        var t = this.view.selectAll('g.table');
-        var fs = ListNode.prototype.setChildIndex;
-        var fg = ListNode.prototype.getChildIndex;
-        t.sort(function (a, b) {
-            var na = Node.getNode(a);
-            var nb = Node.getNode(b);
-            if (na.view.classed('focus')) {
-                return 1;
-            }
-            if (nb.view.classed('focus')) {
-                return -1;
-            }
-            na = fg(na);
-            nb = fg(nb);
-            return na == nb ? 0 : na > nb ? 1 : -1;
-        });
-        t.order();
-        t.each(function (d, i) {
-            fs(Node.getNode(d), i);
-        });
+function TableSchema(p, view) {
+    ListNode.call(this, p);
+    this.view = view;
+}
+_extends(TableSchema, ListNode);
+TableSchema.prototype.order = function () {
+    var t = this.view.selectAll('g.table');
+    var fs = ListNode.prototype.setChildIndex;
+    var fg = ListNode.prototype.getChildIndex;
+    t.sort(function (a, b) {
+        var na = Node.getNode(a);
+        var nb = Node.getNode(b);
+        if (na.view.classed('focus')) {
+            return 1;
+        }
+        if (nb.view.classed('focus')) {
+            return -1;
+        }
+        na = fg(na);
+        nb = fg(nb);
+        return na == nb ? 0 : na > nb ? 1 : -1;
+    });
+    t.order();
+    t.each(function (d, i) {
+        fs(Node.getNode(d), i);
+    });
+}
+TableSchema.prototype.createChild = function (d) {
+    if (Table.prototype.isTable(d.type)) {
+        return new Table(this);
+    } else {
+        return new Link(this);
     }
-});
+}
+TableSchema.prototype.identifier = function (d) {
+    console.log(d);
+}
 
 // ======================
 // camera
@@ -526,6 +624,12 @@ Camera.prototype.transform = function (g, size) {
     return [x, y, world[0] - x, world[1] - y];
 }
 // ======================
+// Menu
+// ======================
+function Menu() {
+    Action.call(this);
+}
+// ======================
 // UI Manager
 // ======================
 function UIManager() {
@@ -559,6 +663,7 @@ function UIManager() {
 //    });
 
     // all tables
+    var schemaN = Node.wrap(this.layers.schema);
     this.tables = new TableSchema(null, this.layers.schema);
 
     // all registered actions
@@ -569,7 +674,62 @@ UIManager.prototype.dispatchEvent = function (evt) {
     n.dispatchEvent(evt);
 }
 UIManager.prototype.bindDatas = function (data) {
+    var ts = data.entities;
+    var tmap = new d3.map();
+    for (var i = 0, l = ts.length; i < l; i++) {
+        var t = ts[i];
+        tmap.set(t.name, t);
+    }
     this.tables.bind(data.entities);
+
+    // gen links
+    for (var i = 0, l = ts.length; i < l; i++) {
+        var refs = ts[i].refs;
+        for (var r = 0, refs = ts[i].refs, rcount = refs.length; r < rcount; r++) {
+            var target = (refs[r].end || '').split('.');
+            if (target.length == 0) {
+                continue;
+            }
+            var endt = Node.getNode(tmap.get(target[0]));
+            if (!endt) {
+                continue;
+            }
+            var endf;
+            if (target.length == 2) {
+                endf = endt.getField(target[1]);
+                if (!endf) {
+                    continue;
+                }
+            }
+            var p2 = new LinkTerminal();
+            p2.table(endt);
+            p2.field(endf);
+
+            var p1 = new LinkTerminal();
+            var startt = Node.getNode(ts[i]);
+            p1.table(startt);
+            p1.field(startt.getField(refs.start));
+
+            var link = this.tables.addData({from: p1, to: p2});
+            startt.addLinkOut(link);
+            endt.addLinkIn(link);
+        }
+    }
+
+    var t1 = {
+        "type": "map",
+        "position": {"x": 400, "y": 400},
+        "name": "4th",
+        "fields": [
+            {"name": "abcde", "type": "s"},
+            {"name": "width", "type": "i"},
+            {"name": "percent", "type": "f"},
+            {"name": "price", "type": "f"}
+        ],
+        "refs": [
+        ]
+    }
+    this.tables.addData(t1);
 }
 UIManager.prototype.addAction = function (action) {
     action.register(this);
@@ -610,7 +770,8 @@ UIManager.prototype.runEvent = function (event, actions) {
     if (!actions) {
         return;
     }
-    for (var i = 0, l = actions.length, a; i < l, a = actions[i]; i++) {
+    for (var i = 0, l = actions.length, a; i < l; i++) {
+        a = actions[i];
         (a.initEvent == event.id || a.isActive()) && a.onEvent(event);
     }
 }
@@ -618,7 +779,8 @@ UIManager.prototype.runUserEvent = function (event, actions) {
     if (!actions) {
         return;
     }
-    for (var i = 0, l = actions.length, a; i < l, a = actions[i]; i++) {
+    for (var i = 0, l = actions.length, a; i < l; i++) {
+        a = actions[i];
         (a.initEvent == event.id || a.isActive()) && a.onUserEvent(event);
     }
 }
@@ -644,7 +806,7 @@ UIManager.prototype.handleEvent = function (p) {
     switch (p.id) {
         case ControlType.SVG_BG_OUT:
         case ControlType.SVG_BG_OVER:
-            console.log('handleEvent', p);
+//            console.log('handleEvent', p);
             this.eventRecord.clean(ActionTypes.MOUSE_OVER);
             break;
         case ControlType.SVG_DOWN_BEGIN:
@@ -686,17 +848,27 @@ UIManager.prototype.handle = function (param) {
     } else {
         d.value(speId, t);
     }
-
-    if (param.id.indexOf('mouseover') == 0 || param.id.indexOf('mouseout') == 0) {
-        console.log(speId);
-        console.log(d.value(param.id));
-    }
+//    if (param.id.indexOf('mouseover') == 0 || param.id.indexOf('mouseout') == 0) {
+//        console.log(speId);
+//        console.log(d.value(param.id));
+//    }
 }
 UIManager.prototype.globalKey = function () {
     console.log(d3.event);
 }
 UIManager.prototype.createLink = function () {
     return new Link(this.layers.assistant);
+}
+UIManager.prototype.addLink = function (d) {
+    var fromt = d.from.table();
+    var tot = d.to.table();
+    if (fromt && !fromt.hasLink(d) && tot) {
+        d = Link.prototype.cloneData(d);
+        var link = this.tables.addData(d);
+        console.log(link.getId());
+        fromt.addLinkOut(link);
+        tot.addLinkIn(link);
+    }
 }
 
 // ==========================
@@ -819,47 +991,79 @@ DragControl.prototype.onUserEvent = function (event) {
 // ==========================
 // Link curve
 // ==========================
-function LinkEnd() {
+function LinkTerminal() {
     this.type = this.Types.NONE;
 }
-LinkEnd.prototype.table = function () {
+LinkTerminal.prototype.table = function () {
     var t;
     if (t = arguments[0]) {
         if (this.mtable !== t) {
-            this.mfield = null;
+            delete this.mfield;
         }
         this.mtable = t;
+        this.updatetype();
     } else {
         return this.mtable;
     }
 }
-LinkEnd.prototype.field = function () {
+LinkTerminal.prototype.getId = function () {
+    var id;
+    var t;
+    if (t = this.table()) {
+        id = t.getName();
+    } else {
+        id = '';
+    }
+    if (t = this.field()) {
+        id += '.' + t.getName();
+    }
+    return id;
+}
+LinkTerminal.prototype.field = function () {
     var t;
     if (t = arguments[0]) {
         this.mfield = t;
+        this.updatetype();
     } else {
         return this.mfield
     }
 }
-LinkEnd.prototype.node = function () {
+LinkTerminal.prototype.delfield = function () {
+    delete this.mfield;
+}
+LinkTerminal.prototype.deltable = function () {
+    delete this.mtable;
+}
+LinkTerminal.prototype.node = function () {
     return this.type != this.Types.NONE && (this.mfield || this.mtable);
 }
-LinkEnd.prototype.checktype = function () {
+LinkTerminal.prototype.updatetype = function () {
     if (this.mfield) {
         this.type = this.Types.FIELD;
     } else if (this.mtable) {
         this.type = this.Types.TABLE;
     }
 }
-LinkEnd.prototype.reset = function () {
+LinkTerminal.prototype.reset = function () {
     delete this.mfield;
     delete this.mtable;
     this.type = this.Types.NONE;
 }
-LinkEnd.prototype.Types = {
+LinkTerminal.prototype.Types = {
     TABLE: 'table',
     FIELD: 'field',
     NONE: 'none'
+}
+LinkTerminal.prototype.clone = function () {
+    var t = new LinkTerminal();
+    if (this.mtable) {
+        t.mtable = this.mtable;
+    }
+    if (this.mfield) {
+        t.mfield = this.mfield;
+    }
+    t.type = this.type;
+    return t;
 }
 // ==========================
 // LinkAction
@@ -867,14 +1071,11 @@ LinkEnd.prototype.Types = {
 function LinkAction(manager) {
     Action.call(this);
 
-    this.linkstart = new LinkEnd();
-    this.linkend = new LinkEnd();
-
     this.link = manager.createLink();
     this.link.disablePointer();
     this.data = {
-        from: new LinkEnd(),
-        to: new LinkEnd()
+        from: new LinkTerminal(),
+        to: new LinkTerminal()
     };
     this.link.bind(this.data);
 }
@@ -887,6 +1088,8 @@ LinkAction.prototype.onRegister = function (manager) {
 }
 LinkAction.prototype.inactive = function () {
     this.active = false;
+    this.data.from.reset();
+    this.data.to.reset();
     this.link.hide();
 }
 LinkAction.prototype.onEvent = function (event) {
@@ -913,27 +1116,33 @@ LinkAction.prototype.onEvent = function (event) {
 
         case ControlType.SVG_UP_END:
             this.addLink();
-            this.inactive();
             break;
     }
 }
 LinkAction.prototype.addLink = function () {
-//    if (this.beginType !== this.Types.NONE) {
-//    }
+    var d = this.data;
+    var endt = d.to.table();
+    if (endt) {
+        uiMgr.addLink(d);
+    }
+    this.inactive();
 }
 LinkAction.prototype.updateEnd = function (event) {
     var d = this.data.to;
+
     var table = this.getParam(event, 'mouseover.table');
     if (table && table != this.data.from.table()) {
         d.table(table);
         var field = this.getParam(event, 'mouseover.field');
         if (field) {
             d.field(field);
+        } else {
+            d.delfield();
         }
     } else {
         d.reset();
     }
-    d.checktype();
+
     var n = d.node();
     if (n) {
         this.dragend = camera.transformPoint(n.getViewNode(), n.getLinkEnd());
@@ -958,7 +1167,7 @@ LinkAction.prototype.start = function (event) {
     if (field) {
         d.field(field);
     }
-    d.checktype();
+    d.updatetype();
     var n = d.node();
     this.dragstart = camera.transformPoint(n.getViewNode(), n.getLinkStart());
 
@@ -989,25 +1198,47 @@ TableAction.prototype.onUserEvent = function (event) {
 // ======================
 // global
 // ======================
+/**
+ * declear svg defs
+ * @param svg
+ */
+function initDefs(svg) {
+    // bg fill
+    var defs = svg.append('svg:defs');
+    defs.append('svg:pattern')
+            .attr('id', 'gridPattern')
+            .attr('x', 0)
+            .attr('y', 0)
+            .attr('width', 15)
+            .attr('height', 15)
+            .attr('patternUnits', 'userSpaceOnUse')
+            .append('svg:path')
+            .attr('d', 'M 15 0 L 0 0 0 15')
+            .attr('fill', 'none')
+            .attr('stroke', '#6DA0A1')
+            .attr('stroke-width', '0.25');
+    // shadow
+    var dropshadow = defs.append('svg:filter')
+            .attr('id', 'dropshadow')
+            .attr('height', '130%');
+    dropshadow.append('svg:feGaussianBlur')
+            .attr('in', 'SourceAlpha')
+            .attr('stdDeviation', '2');
+    dropshadow.append('svg:feOffset')
+            .attr('dx', '2')
+            .attr('dy', '2')
+            .attr('result', 'offsetblur');
+    var feMerge = dropshadow.append('svg:feMerge')
+    feMerge.append('svg:feMergeNode');
+    feMerge.append('svg:feMergeNode').attr('in', 'SourceGraphic');
+}
+
 var svg = d3.selectAll('.chart')
         .append("svg")
         .attr('width', window.innerWidth)
         .attr('height', window.innerHeight)
         .attr('id', 'svg');
-
-svg.append('svg:defs')
-        .append('svg:pattern')
-        .attr('id', 'gridPattern')
-        .attr('x', 0)
-        .attr('y', 0)
-        .attr('width', 15)
-        .attr('height', 15)
-        .attr('patternUnits', 'userSpaceOnUse')
-        .append('svg:path')
-        .attr('d', 'M 15 0 L 0 0 0 15')
-        .attr('fill', 'none')
-        .attr('stroke', '#6DA0A1')
-        .attr('stroke-width', '0.25');
+initDefs(svg);
 
 var global = {
     root: document.getElementById('svg')
@@ -1042,6 +1273,9 @@ svg.on('mouseup.end', listenSvg(ControlType.SVG_UP_END));
 document.onkeydown = function () {
     console.log('document.onkeydown');
 };
+document.oncontextmenu = function() {
+    console.log('oncontextmenu', d3.event);
+}
 
 // ======================
 // binding data

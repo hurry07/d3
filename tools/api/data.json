@@ -1,9 +1,9 @@
 {
     "entities" : [
         {
-            "position": {"x": 10, "y": 10},
-            "name":"First",
             "type":"map",
+            "position": {"x": 100, "y": 100},
+            "name":"first",
             "fields" : [
                 {"name":"name", "type":"s"},
                 {"name":"width", "type":"i"},
@@ -12,13 +12,14 @@
                 {"name":"second", "type":"r"}
             ],
             "refs" : [
-                {"type":"single","start":"second1","end":"second"}
+                {"type":"single","start":"width", "end":"second.name"},
+                {"type":"single","start":"price", "end":"second.price"}
             ]
         }
         ,{
-            "position": {"x": 300, "y": 10},
-            "name":"Second",
             "type":"map",
+            "position": {"x": 300, "y": 10},
+            "name":"second",
             "fields" : [
                 {"name":"name", "type":"s"},
                 {"name":"width", "type":"i"},
@@ -26,14 +27,15 @@
                 {"name":"price", "type":"f"}
             ],
             "refs" : [
+                {"type":"single","start":"percent", "end":"third.price"}
             ]
         }
         ,{
+            "type":"map",
             "position": {"x": 300, "y": 200},
-            "name":"Third",
-            "type":"view",
+            "name":"third",
             "fields" : [
-                {"name":"aaaaaaaaaafffffffffff", "type":"s"},
+                {"name":"aadd", "type":"s"},
                 {"name":"width", "type":"i"},
                 {"name":"percent", "type":"f"},
                 {"name":"price", "type":"f"}
