@@ -49,6 +49,12 @@ var ControlType = {
     SVG_BG_OUT: 'svgBgOut',
     SVG_BG_OVER: 'svgBgOver'
 }
+function _r(key) {
+    return key + '_r';
+}
+for (var i in ControlType) {
+    ControlType[i + '_RIGHT'] = ControlType[i] + '_r';
+}
 var ControlKeys = (function () {
     var keys = {};
     for (var i in ControlType) {
@@ -80,92 +86,90 @@ function join() {
 function Field(p) {
     Node.call(this, p);
 }
-_extends(Field, Node, {
-    targetType: Target.FIELD,
-    enter: function () {
-        var p = Table.prototype.prefer;
-        var fw = p.width;
-        var fh = p.field.height;
-        var fp = p.field.prefix;
-        var i = ListNode.prototype.getChildIndex(this);
-        var d = this.data;
+_extends(Field, Node)
+Field.prototype.targetType = Target.FIELD;
+Field.prototype.enter = function () {
+    var p = Table.prototype.prefer;
+    var fw = p.width;
+    var fh = p.field.height;
+    var fp = p.field.prefix;
+    var i = ListNode.prototype.getChildIndex(this);
+    var d = this.data;
 
-        this.view = this.parentView().append('svg:g')
-                .classed('field', true)
-                .datum(d)
+    this.view = this.parentView().append('svg:g')
+            .classed('field', true)
+            .datum(d)
 //                .on('click', this.handleEdit)
-                .on('mousedown', this.handleDown)
-                .on('mouseover', this.handleOver);
+            .on('mousedown', this.handleDown)
+            .on('mouseover', this.handleOver);
 
-        var ui = this.view;
-        ui.attr("transform", 'translate(' + 0 + ',' + (fh * i) + ')');
-        ui.append('svg:rect')
-                .attr('width', fw)
-                .attr('height', fh);
+    var ui = this.view;
+    ui.attr('transform', 'translate(' + 0 + ',' + (fh * i) + ')');
+    ui.append('svg:rect')
+            .attr('width', fw)
+            .attr('height', fh);
 
-        ui.append('svg:text')
-                .classed('fieldname', true)
-                .attr('x', fp)
-                .attr('y', fh / 2)
-                .attr('dy', 6)
-                .text(d.name)
+    ui.append('svg:text')
+            .classed('fieldname', true)
+            .attr('x', fp)
+            .attr('y', fh / 2)
+            .attr('dy', 6)
+            .text(d.name)
 //                .on('click', this.handleClick)
-                .datum(d);
-    },
-    update: function (dold, dnew) {
-        var d = dnew;
-        var ui = this.view;
-        ui.select('text')
-                .text(d.name);
-    },
-    exit: function () {
-        this.deleteView(this.view);
-    },
-    handleClick: function (d) {
-        uiMgr.handle({id: ActionTypes.MOUSE_CLICK, 'target': Node.getNode(d), 'id': 'name'});
-    },
-    handleDown: listenEvent(ActionTypes.MOUSE_DOWN),
-    handleOver: listenEvent(ActionTypes.MOUSE_OVER),
-    identifier: function (d) {
-        return d.type + d.name;
-    },
-    getLinkStart: function () {
-        var p = Table.prototype.prefer;
-        return [p.width, p.field.height / 2];
-    },
-    getLinkEnd: function () {
-        var p = Table.prototype.prefer;
-        return [0, p.field.height / 2];
-    },
-    getViewNode: function () {
-        return this.view.node();
-    },
-    getName: function () {
-        return this.data.name;
-    },
+            .datum(d);
+}
+Field.prototype.update = function (dold, dnew) {
+    var d = dnew;
+    var ui = this.view;
+    ui.select('text')
+            .text(d.name);
+}
+Field.prototype.exit = function () {
+    this.deleteView(this.view);
+}
+Field.prototype.handleClick = function (d) {
+    uiMgr.handle({id: ActionTypes.MOUSE_CLICK, 'target': Node.getNode(d), 'id': 'name'});
+}
+Field.prototype.handleDown = listenEvent(ActionTypes.MOUSE_DOWN)
+Field.prototype.handleOver = listenEvent(ActionTypes.MOUSE_OVER)
+Field.prototype.identifier = function (d) {
+    return d.type + d.name;
+}
+Field.prototype.getLinkStart = function () {
+    var p = Table.prototype.prefer;
+    return [p.width, p.field.height / 2];
+}
+Field.prototype.getLinkEnd = function () {
+    var p = Table.prototype.prefer;
+    return [0, p.field.height / 2];
+}
+Field.prototype.getViewNode = function () {
+    return this.view.node();
+}
+Field.prototype.getName = function () {
+    return this.data.name;
+}
 
 // ----------------------
 // interact with text input.
-    beginInput: function (id, text) {
-        text.value = this.data.name;
-        this.view.classed('edit', true);
-    },
-    endInput: function (id, text) {
-        this.data.name = text.value;
-        this.refresh();
-        this.view.classed('edit', false);
-    },
-    getSize: function (id) {
-        var p = Table.prototype.prefer;
-        var fw = p.width;
-        var fh = p.field.height;
-        return [0, 0, fw, fh];
-    },
-    getNode: function () {
-        return this.view.node();
-    }
-})
-;
+Field.prototype.beginInput = function (id, text) {
+    text.value = this.data.name;
+    this.view.classed('edit', true);
+}
+Field.prototype.endInput = function (id, text) {
+    this.data.name = text.value;
+    this.refresh();
+    this.view.classed('edit', false);
+}
+Field.prototype.getSize = function (id) {
+    var p = Table.prototype.prefer;
+    var fw = p.width;
+    var fh = p.field.height;
+    return [0, 0, fw, fh];
+}
+Field.prototype.getNode = function () {
+    return this.view.node();
+}
 
 // ======================
 // Link
@@ -200,10 +204,9 @@ Link.prototype.enter = function () {
 
     this.curve = this.view
             .append('svg:path')
+            .datum(d)
             .classed('curve', true)
-            .on('click', function() {
-                console.log(this);
-            });
+            .on('mousedown', this.handleDown);
     this.start = this.view.append('svg:circle')
             .classed('start', true)
             .attr('r', 9)
@@ -216,6 +219,7 @@ Link.prototype.enter = function () {
     this.id = this.identifier(d);
     this.update(d, d);
 }
+Link.prototype.handleDown = listenEvent(ActionTypes.MOUSE_DOWN);
 Link.prototype.getId = function () {
     return this.id;
 }
@@ -268,6 +272,16 @@ Link.prototype.show = function () {
 }
 Link.prototype.disablePointer = function () {
     this.pointerdis = true;
+}
+/**
+ * feature for right click
+ */
+Link.prototype.getMenu = function () {
+    return [
+        {title: 'remove', keys: 'L', command: 'remove'}
+    ];
+}
+Link.prototype.runMenuAction = function (action) {
 }
 
 // ======================
@@ -325,7 +339,6 @@ Table.prototype.prefer = {
 Table.prototype.getName = function () {
     return this.data.name;
 }
-
 Table.prototype.enter = function () {
     var d = this.data;
     var p = this.prefer.header;
@@ -434,6 +447,19 @@ Table.prototype.getLinkEnd = function () {
 Table.prototype.getViewNode = function () {
     return this.view.node();
 };
+/**
+ * communate with right click
+ * @returns {Array}
+ */
+Table.prototype.getMenu = function () {
+    return [
+        {title: 'Remove', keys: '', command: 'remove'},
+        {title: 'Rename', keys: 'R', command: 'rename'},
+        {title: 'Add Field', keys: 'F', command: 'add.field'}
+    ];
+}
+Table.prototype.runMenuAction = function (action) {
+}
 
 // -------------------- interactive with drag manager
 Table.prototype.startDrag = function () {
@@ -446,13 +472,41 @@ Table.prototype.dragOffset = function (dx, dy) {
     p.y += dy;
     this.view.attr('transform', 'translate(' + p.x + ',' + p.y + ')');
 
+};
+Table.prototype.updateLinks = function () {
     for (var i = 0, a = this.linkout, l = this.linkout.length; i < l; i++) {
         a[i].refresh();
     }
     for (var i = 0, a = this.linkin, l = this.linkin.length; i < l; i++) {
         a[i].refresh();
     }
-};
+}
+Table.prototype.getMoveFeature = function () {
+    var table = this;
+    return new (_extends(function () {
+        console.log(arguments);
+        MoveAdapter.call(this, table.data.position, table.view);
+    }, MoveAdapter, {
+        moveTo: function (x, y) {
+            MoveAdapter.prototype.moveTo.call(this, x, y);
+            table.updateLinks();
+        }
+    }))();
+}
+/**
+ * interact with global function
+ * @param f
+ * @returns {*}
+ */
+Table.prototype.getFeature = function (f) {
+    switch (f) {
+        case 'move':
+            return this.getMoveFeature();
+        default :
+            console.error('Unsupported feature found:' + f);
+            return null;
+    }
+}
 
 // ---------------------- for tool
 Table.prototype._export = function () {
@@ -626,8 +680,162 @@ Camera.prototype.transform = function (g, size) {
 // ======================
 // Menu
 // ======================
-function Menu() {
+function Menu(p, action) {
+    ListNode.call(this, p);
+    this.action = action;
+}
+_extends(Menu, ListNode);
+Menu.prototype.prefer = {
+    width: 170,
+    height: 20,
+    splitheight: 5,
+    padding: 4
+}
+/**
+ * d [{des, command}]
+ */
+Menu.prototype.enter = function () {
+    this.view = this.parentView().append('svg:g')
+            .classed('menu', true)
+            .datum(this.action)
+            .attr('transform', 'translate(' + 100 + ',' + 100 + ')')
+            .on('mousedown', this.handleDown);
+    this.rebind(this.data);
+}
+Menu.prototype.rebind = function (d) {
+    var p = this.prefer;
+    var menuy = 0;
+    for (var i = 0, l = d.length; i < l; i++) {
+        if (d[i].split) {
+            var cy = menuy + p.splitheight / 2;
+            this.view.append('svg:rect')
+                    .attr('width', p.width)
+                    .attr('height', p.splitheight)
+                    .attr('y', menuy)
+                    .classed('split', true);
+            this.view.append('svg:path')
+                    .attr('d', 'M' + p.padding + ',' + cy + 'L' + (p.width - p.padding) + ',' + cy);
+            menuy += p.splitheight;
+        } else {
+            d[i].action = this.action;
+            var g = this.view.append('svg:g')
+                    .datum(d[i])
+                    .attr('transform', 'translate(' + 0 + ',' + menuy + ')')
+                    .classed('item', true)
+                    .on('click', this.handleClick);
+            g.append('svg:rect')
+                    .attr('width', p.width)
+                    .attr('height', p.height)
+            g.append('svg:text')
+                    .attr('x', p.padding)
+                    .attr('y', p.height - 3)
+                    .text(d[i].title);
+            menuy += p.height;
+        }
+    }
+
+    this.view.insert('svg:rect', ':first-child')
+            .datum(this.action)
+            .attr('width', p.width)
+            .attr('height', menuy)
+            .classed('background', true)
+    this.height = menuy;
+}
+Menu.prototype.handleClick = function (d) {
+    d.action.onMenuClick(d.command);
+}
+Menu.prototype.handleDown = function (action) {
+    if (d3.event.button == 2) {
+        d3.event.stopPropagation();
+    }
+    action.onMenuDown();
+}
+Menu.prototype.update = function (old, newd) {
+    this.view.selectAll('*').remove();
+    this.rebind(newd);
+}
+Menu.prototype.exit = function () {
+    this.view.remove();
+}
+Menu.prototype.show = function (x, y, items) {
+    this.bind(items);
+    this.showprevious(x, y);
+}
+Menu.prototype.showprevious = function (x, y) {
+    this.view.attr('transform', 'translate(' + x + ',' + y + ')');
+    this.view.style('visibility', 'visible');
+}
+Menu.prototype.hide = function () {
+    this.view.style('visibility', 'hidden');
+}
+/**
+ * menu when you click at an empty space
+ * @constructor
+ */
+function DefaltMenu() {
+}
+DefaltMenu.prototype.getMenu = function () {
+    return [
+        {title: 'Add Table', keys: 'A', command: 'add.table'}
+    ];
+}
+DefaltMenu.prototype.runMenuAction = function (action) {
+    console.log(action)
+}
+function MenuAction(layer) {
     Action.call(this);
+
+    this.initEvent = _r(ControlType.SVG_DOWN_END);
+    this.focus = false;
+    this.target = null;
+    this.backmenu = new DefaltMenu();
+
+    this.menu = new Menu(layer, this);
+}
+_extends(MenuAction, Action);
+MenuAction.prototype.onRegister = function (manager) {
+    this.on(ControlType.SVG_DOWN_END);
+    this.on(_r(ControlType.SVG_DOWN_END));
+}
+MenuAction.prototype.onEvent = function (event) {
+    switch (event.id) {
+        case _r(ControlType.SVG_DOWN_END):
+            this.popupMenu(event);
+            break;
+        case ControlType.SVG_DOWN_END:
+            if (!this.focus) {
+                this.stopMenu();
+            }
+            break;
+    }
+}
+MenuAction.prototype.popupMenu = function (event) {
+    this.focus = false;
+
+    // if table menu
+    var target;
+    if (target = this.getParam(event, 'mousedown.link') || this.getParam(event, 'mousedown.table') || this.backmenu) {
+        // change position
+        if (target === this.target) {
+            this.menu.showprevious(d3.event.x, d3.event.y);
+            return;
+        }
+
+        this.target = target;
+        this.menu.show(d3.event.x, d3.event.y, target.getMenu());
+        this.active = true;
+    }
+}
+MenuAction.prototype.onMenuClick = function (command) {
+    this.target.runMenuAction(command);
+    this.stopMenu();
+}
+MenuAction.prototype.onMenuDown = function () {
+    this.focus = true;
+}
+MenuAction.prototype.stopMenu = function () {
+    this.menu.hide();
+    this.target = null;
 }
 // ======================
 // UI Manager
@@ -651,16 +859,8 @@ function UIManager() {
         schema: svg.append('svg:g').classed('entity', true),
         assistant: Node.wrap(svg.append('svg:g').classed('pAssistant', true)),
         dialog: Node.wrap(svg.append('svg:g').classed('pDialog', true)),
-        message: Node.wrap(svg.append('svg:g').classed('pDialog', true))
+        message: Node.wrap(svg.append('svg:g').classed('pMessage', true))
     };
-
-    var r = this.layers.schema;
-//    r.on('mouseover', function () {
-//        console.log('direct over');
-//    }, true);
-//    r.on('mouseover', function () {
-//        console.log('direct over11');
-//    });
 
     // all tables
     var schemaN = Node.wrap(this.layers.schema);
@@ -803,22 +1003,24 @@ UIManager.prototype.onFocus = function (param) {
  * @param p
  */
 UIManager.prototype.handleEvent = function (p) {
+    if (d3.event.button == 2) {
+        p.id += '_r';
+    }
     switch (p.id) {
         case ControlType.SVG_BG_OUT:
+        case _r(ControlType.SVG_BG_OUT):
         case ControlType.SVG_BG_OVER:
-//            console.log('handleEvent', p);
+        case _r(ControlType.SVG_BG_OVER):
             this.eventRecord.clean(ActionTypes.MOUSE_OVER);
             break;
         case ControlType.SVG_DOWN_BEGIN:
+        case _r(ControlType.SVG_DOWN_BEGIN):
             this.eventRecord.clean(ActionTypes.MOUSE_DOWN);
             break;
     }
 
     p.param = this.eventRecord;
     this.runEvent(p, this.controlListener.value(p.id));
-//    if (p.id != ControlType.SVG_MOVE) {
-//        console.log(p.id, p);
-//    }
 }
 UIManager.prototype.handleUserEvent = function (p) {
     this.runUserEvent(p, this.userListener.value(p.id));
@@ -848,10 +1050,6 @@ UIManager.prototype.handle = function (param) {
     } else {
         d.value(speId, t);
     }
-//    if (param.id.indexOf('mouseover') == 0 || param.id.indexOf('mouseout') == 0) {
-//        console.log(speId);
-//        console.log(d.value(param.id));
-//    }
 }
 UIManager.prototype.globalKey = function () {
     console.log(d3.event);
@@ -865,9 +1063,10 @@ UIManager.prototype.addLink = function (d) {
     if (fromt && !fromt.hasLink(d) && tot) {
         d = Link.prototype.cloneData(d);
         var link = this.tables.addData(d);
-        console.log(link.getId());
         fromt.addLinkOut(link);
         tot.addLinkIn(link);
+
+        console.log(link.getId());
     }
 }
 
@@ -922,26 +1121,25 @@ TextInput.prototype.handle = function (param) {
 // ==========================
 // DragControl
 // ==========================
-function DragControl() {
+function DragAction() {
     Action.call(this);
     this.initEvent = ControlType.SVG_DOWN_END;
 }
-_extends(DragControl, Action);
-DragControl.prototype.onRegister = function (manager) {
+_extends(DragAction, Action);
+DragAction.prototype.onRegister = function (manager) {
     this.on(ControlType.SVG_DOWN_END);
     this.on(ControlType.SVG_MOVE);
     this.on(ControlType.SVG_UP_END);
     this.on('link.begin');
 }
-DragControl.prototype.inactive = function () {
+DragAction.prototype.inactive = function () {
     this.active = false;
     var n = this.node;
     if (n) {
-        n.view.classed('focus', false);
         this.node = null;
     }
 }
-DragControl.prototype.onEvent = function (event) {
+DragAction.prototype.onEvent = function (event) {
     switch (event.id) {
         case ControlType.SVG_DOWN_END:
             this.inactive();
@@ -951,14 +1149,12 @@ DragControl.prototype.onEvent = function (event) {
                 break;
             }
 
-            var n = this.getParam(event, 'mousedown.table');
-            if (n) {
-                this.node = n;
-                this.downx = d3.event.x;
-                this.downy = d3.event.y;
+            var target = this.getParam(event, 'mousedown.table');
+            if (target) {
+                this.node = target.getFeature('move');
+                this.node.startMove(d3.event.x, d3.event.y);
                 this.active = true;
-                n.view.classed('focus', true);
-                this.fireEvent('drag.begin', this.node);
+                this.fireEvent('drag.begin', target);
             } else {
                 // TODO drag camera
             }
@@ -969,10 +1165,7 @@ DragControl.prototype.onEvent = function (event) {
                 this.inactive();
                 break;
             }
-            var cx, cy;
-            this.downx += (cx = d3.event.x - this.downx);
-            this.downy += (cy = d3.event.y - this.downy);
-            this.node.dragOffset(cx, cy);
+            this.node.moveTo(d3.event.x, d3.event.y);
             break;
 
         case ControlType.SVG_UP_END:
@@ -980,14 +1173,13 @@ DragControl.prototype.onEvent = function (event) {
             break;
     }
 }
-DragControl.prototype.onUserEvent = function (event) {
+DragAction.prototype.onUserEvent = function (event) {
     switch (event.id) {
         case 'link.begin':
             this.inactive();
             break;
     }
 }
-
 // ==========================
 // Link curve
 // ==========================
@@ -1234,7 +1426,7 @@ function initDefs(svg) {
 }
 
 var svg = d3.selectAll('.chart')
-        .append("svg")
+        .append('svg')
         .attr('width', window.innerWidth)
         .attr('height', window.innerHeight)
         .attr('id', 'svg');
@@ -1248,8 +1440,9 @@ var camera = new Camera(svg);
 
 var uiMgr = new UIManager();
 uiMgr.addAction(new TableAction(uiMgr.tables));
-uiMgr.addAction(new DragControl());
+uiMgr.addAction(new DragAction());
 uiMgr.addAction(new LinkAction(uiMgr));
+uiMgr.addAction(new MenuAction(uiMgr.layers.dialog));
 // uiMgr.addAction(new TextInput(document.getElementById('input')));
 
 // global listeners register
@@ -1266,23 +1459,28 @@ svg.on('mousedown.end', listenSvg(ControlType.SVG_DOWN_END));
 svg.on('mousemove', listenSvg(ControlType.SVG_MOVE), true);
 svg.on('mouseup.start', listenSvg(ControlType.SVG_UP_BEGIN), true);
 svg.on('mouseup.end', listenSvg(ControlType.SVG_UP_END));
-//svg.on('mouseover', function() {
-//    console.log('root over');
-//});
 
-document.onkeydown = function () {
-    console.log('document.onkeydown');
-};
-document.oncontextmenu = function() {
-    console.log('oncontextmenu', d3.event);
-}
-
-// ======================
+// ==========================
 // binding data
-// ======================
-d3.json("api/data.json", function (data) {
+// ==========================
+d3.json('api/data.json', function (data) {
     uiMgr.bindDatas(data);
 });
+
+// ==========================
+// disable chrome plugins
+// ==========================
+function keyListener() {
+    console.log('document.onkeydown');
+}
+function menuListener() {
+    return false;
+}
+var tt = setInterval(function () {
+    document.onkeydown = keyListener;
+    document.oncontextmenu = menuListener;
+    clearInterval(tt);
+}, 2000)
 </script>
 </body>
 </html>

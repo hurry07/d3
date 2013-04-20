@@ -34,6 +34,9 @@ function _defineClass(super_, props) {
     }
     return sub;
 }
+function _copyextends(sub, super_) {
+
+}
 
 // ==========================================
 // node is used as basic element of MVC

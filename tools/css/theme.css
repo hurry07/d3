@@ -14,6 +14,7 @@ path {
     stroke-width: 2px;
     filter: url(#dropshadow);
 }
+
 .link .start, .link .end {
     fill: #CBFF00;
     stroke: #8E9A8E;
@@ -23,6 +24,7 @@ path {
 .link.focus .curve {
     stroke: #FC9C9C;
 }
+
 .link.focus .start {
     fill: #A0FF00;
 }
@@ -54,6 +56,7 @@ path {
 .entity .field:nth-child(odd) {
     fill: #B1BBC4;
 }
+
 .entity .field:nth-child(even) {
     fill: #A7B6C7;
 }
@@ -140,4 +143,32 @@ path {
     border: none;
     padding: 0px;
     outline-width: 0px;
+}
+
+.menu .background {
+    filter: url(#dropshadow);
+}
+.menu g.item {
+    fill: #EEEEEE;
+}
+.menu g.item:hover {
+    fill: #1EB5E7;
+}
+.menu g.item:hover text {
+    fill: white;
+}
+.menu .split {
+    fill: #EEEEEE;
+}
+.menu text {
+    text-anchor: start;
+    font-size: 15px;
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    fill: black;
+}
+.menu path {
+    stroke: #CCCCCC;
 }
