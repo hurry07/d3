@@ -484,12 +484,18 @@ Table.prototype.updateLinks = function () {
 Table.prototype.getMoveFeature = function () {
     var table = this;
     return new (_extends(function () {
-        console.log(arguments);
         MoveAdapter.call(this, table.data.position, table.view);
     }, MoveAdapter, {
+        startMove: function (x, y) {
+            MoveAdapter.prototype.startMove.call(this, x, y);
+            table.view.classed('focus', true);
+        },
         moveTo: function (x, y) {
             MoveAdapter.prototype.moveTo.call(this, x, y);
             table.updateLinks();
+        },
+        stopMove: function (x, y) {
+            table.view.classed('focus', false);
         }
     }))();
 }
@@ -509,8 +515,20 @@ Table.prototype.getFeature = function (f) {
 }
 
 // ---------------------- for tool
-Table.prototype._export = function () {
-    return ''
+Table.prototype.export = function () {
+    var d = {};
+    var td = this.data;
+
+    d.type = td.type;
+    d.fields = this.copyField();
+    return d;
+}
+Table.prototype.copyField = function () {
+    var fs = [];
+    for (var i = 0, l = this.data.fields.length; i < l; i++) {
+        fs.push(this.data.fields[i]);
+    }
+    return fs;
 }
 
 // ==========================
@@ -522,7 +540,10 @@ function TableSchema(p, view) {
     this.view = view;
 }
 _extends(TableSchema, ListNode);
-TableSchema.prototype.order = function () {
+/**
+ * @param table current focus table
+ */
+TableSchema.prototype.order = function (table) {
     var t = this.view.selectAll('g.table');
     var fs = ListNode.prototype.setChildIndex;
     var fg = ListNode.prototype.getChildIndex;
@@ -553,6 +574,15 @@ TableSchema.prototype.createChild = function (d) {
 }
 TableSchema.prototype.identifier = function (d) {
     console.log(d);
+}
+TableSchema.prototype.export = function () {
+    var tables = [];
+    for (var t = 0, i = 0, data = this.children, l = data.length; i < l; i++) {
+        if (this.children[i].targetType === Target.TABLE) {
+            tables[t++] = this.children[i].export();
+        }
+    }
+    return tables;
 }
 
 // ======================
@@ -1069,6 +1099,11 @@ UIManager.prototype.addLink = function (d) {
         console.log(link.getId());
     }
 }
+UIManager.prototype.export = function () {
+    var save = {};
+    save.entities = this.tables.export();
+    return save;
+}
 
 // ==========================
 // TextInput
@@ -1136,6 +1171,7 @@ DragAction.prototype.inactive = function () {
     this.active = false;
     var n = this.node;
     if (n) {
+        n.stopMove(d3.event.x, d3.event.y);
         this.node = null;
     }
 }
@@ -1382,7 +1418,8 @@ TableAction.prototype.onRegister = function (manager) {
 TableAction.prototype.onUserEvent = function (event) {
     switch (event.id) {
         case 'drag.begin':
-            this.tables.order();
+            // console.log(event);
+            this.tables.order(event.param);
             break;
     }
 }
@@ -1479,8 +1516,12 @@ function menuListener() {
 var tt = setInterval(function () {
     document.onkeydown = keyListener;
     document.oncontextmenu = menuListener;
+
+    var exp = uiMgr.export();
+    console.log(exp);
     clearInterval(tt);
 }, 2000)
+
 </script>
 </body>
 </html>

@@ -67,3 +67,5 @@ MoveAdapter.prototype.moveTo = function (x, y) {
         + (this.position.x = x + this.offsetx) + ','
         + (this.position.y = y + this.offsety) + ')');
 }
+MoveAdapter.prototype.stopMove = function (x, y) {
+}
