@@ -73,7 +73,7 @@ function listenSvg(id) {
 }
 function listenEvent(event) {
     return function (d) {
-        uiMgr.handle({id: event, target: Node.getNode(d)});
+        uiMgr.handle({id: event, target: d});
     }
 }
 function join() {
@@ -98,25 +98,24 @@ Field.prototype.enter = function () {
 
     this.view = this.parentView().append('svg:g')
             .classed('field', true)
-            .datum(d)
-//                .on('click', this.handleEdit)
+            .datum(this)
+        //.on('click', this.handleEdit)
             .on('mousedown', this.handleDown)
-            .on('mouseover', this.handleOver);
+            .on('mouseover', this.handleOver)
+            .attr('transform', 'translate(' + 0 + ',' + (fh * i) + ')');
 
-    var ui = this.view;
-    ui.attr('transform', 'translate(' + 0 + ',' + (fh * i) + ')');
-    ui.append('svg:rect')
+    this.view.append('svg:rect')
             .attr('width', fw)
             .attr('height', fh);
 
-    ui.append('svg:text')
+    this.view.append('svg:text')
             .classed('fieldname', true)
             .attr('x', fp)
             .attr('y', fh / 2)
             .attr('dy', 6)
             .text(d.name)
-//                .on('click', this.handleClick)
-            .datum(d);
+        //.on('click', this.handleClick)
+            .datum(this);
 }
 Field.prototype.update = function (dold, dnew) {
     var d = dnew;
@@ -204,7 +203,7 @@ Link.prototype.enter = function () {
 
     this.curve = this.view
             .append('svg:path')
-            .datum(d)
+            .datum(this)
             .classed('curve', true)
             .on('mousedown', this.handleDown);
     this.start = this.view.append('svg:circle')
@@ -350,12 +349,12 @@ Table.prototype.enter = function () {
             .classed('table', true)
             .classed(d.type, true)
             .on('mousedown', this.handleDown)
-            .datum(d);
+            .datum(this);
 
     // header
     this.header = this.view
             .append('svg:g')
-            .datum(d)
+            .datum(this)
             .on('mousedown', this.handleDown)
             .on('mouseover', this.handleOver, true)
     this.header.append('svg:rect')
@@ -368,13 +367,13 @@ Table.prototype.enter = function () {
             .attr('dy', 8)
             .classed('headername', true)
             .text(d.name)
-            .datum(d);
+            .datum(this);
 
     // fields
     var fieldsBg = this.view.append('svg:g')
             .attr("transform", 'translate(0,' + p.height + ')')
             .classed('fields', true)
-            .datum(d)
+            .datum(this)
             .on('mousedown', this.handleDown)
             .on('mouseover', this.handleOver, true)
 
@@ -428,7 +427,7 @@ Table.prototype.hasField = function (f) {
 Table.prototype.getField = function (name) {
     for (var i = 0, fs = this.data.fields, l = fs.length; i < l; i++) {
         if (fs[i].name == name) {
-            return Node.getNode(fs[i]);
+            return this.fields.getChild(i);
         }
     }
     return null;
@@ -460,6 +459,7 @@ Table.prototype.getMenu = function () {
 }
 Table.prototype.runMenuAction = function (action) {
 }
+Table.prototype.get
 
 // -------------------- interactive with drag manager
 Table.prototype.startDrag = function () {
@@ -548,21 +548,19 @@ TableSchema.prototype.order = function (table) {
     var fs = ListNode.prototype.setChildIndex;
     var fg = ListNode.prototype.getChildIndex;
     t.sort(function (a, b) {
-        var na = Node.getNode(a);
-        var nb = Node.getNode(b);
-        if (na.view.classed('focus')) {
+        if (a.view.classed('focus')) {
             return 1;
         }
-        if (nb.view.classed('focus')) {
+        if (b.view.classed('focus')) {
             return -1;
         }
-        na = fg(na);
-        nb = fg(nb);
-        return na == nb ? 0 : na > nb ? 1 : -1;
+        a = fg(a);
+        b = fg(b);
+        return  a == b ? 0 : a > b ? 1 : -1;
     });
     t.order();
     t.each(function (d, i) {
-        fs(Node.getNode(d), i);
+        fs(d, i);
     });
 }
 TableSchema.prototype.createChild = function (d) {
@@ -781,6 +779,7 @@ Menu.prototype.handleDown = function (action) {
     action.onMenuDown();
 }
 Menu.prototype.update = function (old, newd) {
+    var all =  this.view.selectAll('*');
     this.view.selectAll('*').remove();
     this.rebind(newd);
 }
@@ -905,12 +904,14 @@ UIManager.prototype.dispatchEvent = function (evt) {
 }
 UIManager.prototype.bindDatas = function (data) {
     var ts = data.entities;
-    var tmap = new d3.map();
-    for (var i = 0, l = ts.length; i < l; i++) {
-        var t = ts[i];
-        tmap.set(t.name, t);
-    }
     this.tables.bind(data.entities);
+
+    // map all table nodes
+    var tmap = new d3.map();
+    var tables = this.tables.getChildren();
+    for (var i = 0, l = ts.length; i < l; i++) {
+        tmap.set(ts[i].name, tables[i]);
+    }
 
     // gen links
     for (var i = 0, l = ts.length; i < l; i++) {
@@ -920,7 +921,9 @@ UIManager.prototype.bindDatas = function (data) {
             if (target.length == 0) {
                 continue;
             }
-            var endt = Node.getNode(tmap.get(target[0]));
+
+            // end table
+            var endt = tmap.get(target[0]);
             if (!endt) {
                 continue;
             }
@@ -931,12 +934,13 @@ UIManager.prototype.bindDatas = function (data) {
                     continue;
                 }
             }
+            // end point
             var p2 = new LinkTerminal();
             p2.table(endt);
             p2.field(endf);
 
             var p1 = new LinkTerminal();
-            var startt = Node.getNode(ts[i]);
+            var startt = tables[i];
             p1.table(startt);
             p1.field(startt.getField(refs.start));
 

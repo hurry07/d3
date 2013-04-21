@@ -59,7 +59,6 @@ function Node(parent) {
 //}
 Node.prototype.setData = function (data) {
     this.data = data;
-    data.__controller__ = this;
 }
 /**
  * rebind data
@@ -151,9 +150,6 @@ Node.wrap = function (sel) {
     var n = new Node(null);
     n.view = sel;
     return n;
-}
-Node.getNode = function (data) {
-    return data.__controller__;
 }
 /**
  * create a Container function with a closure containing certain element type
@@ -342,4 +338,10 @@ ListNode.prototype.nodeRemoved = function (child) {
             this.data.splice(i, 1);
         }
     }
+}
+ListNode.prototype.getChildren = function() {
+    return this.children;
+}
+ListNode.prototype.getChild = function(i) {
+    return this.children[i];
 }

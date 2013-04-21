@@ -14,7 +14,7 @@
     <file path="/d3.js" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1364742848897" ignored="false" />
     <file path="/t_03.html" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1364906014332" ignored="false" />
     <file path="/index_mine.html" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1364914130326" ignored="false" />
-    <file path="/index.html" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1366472967859" ignored="false" />
+    <file path="/index.html" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1366518964890" ignored="false" />
     <file path="/a.html" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1365816965499" ignored="false" />
     <file path="/a.xml" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1365109507233" ignored="false" />
     <file path="/a.js" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1365817738520" ignored="false" />
@@ -35,7 +35,7 @@
     <file path="/text.html" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1365477913207" ignored="false" />
     <file path="/theme.css" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1366451665361" ignored="false" />
     <file path="/Dummy.txt" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1365493388480" ignored="false" />
-    <file path="/node.js" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1366390348859" ignored="false" />
+    <file path="/node.js" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1366518642354" ignored="false" />
     <file path="/data.json" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1366354081876" ignored="false" />
     <file path="/operation.js" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1366468245538" ignored="false" />
     <file path="/test2.html" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1365752422781" ignored="false" />
@@ -63,13 +63,13 @@
     <favorites_list name="d3" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.5">
+    <splitter split-orientation="horizontal" split-proportion="0.5557789">
       <split-first>
         <leaf>
           <file leaf-file-name="index.html" pinned="false" current="true" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/tools/index.html">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="525" column="41" selection-start="14278" selection-end="14278" vertical-scroll-proportion="3.3678162">
+                <state line="787" column="27" selection-start="21707" selection-end="21707" vertical-scroll-proportion="0.28711256">
                   <folding />
                 </state>
               </provider>
@@ -100,7 +100,7 @@
           <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/tools/index.html">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="536" column="28" selection-start="14518" selection-end="14533" vertical-scroll-proportion="0.33333334">
+                <state line="550" column="0" selection-start="14929" selection-end="14929" vertical-scroll-proportion="-1.2131438">
                   <folding />
                 </state>
               </provider>
@@ -109,7 +109,7 @@
           <file leaf-file-name="node.js" pinned="false" current="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/tools/api/node.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="164" column="5" selection-start="3470" selection-end="3470" vertical-scroll-proportion="0.0">
+                <state line="344" column="27" selection-start="8491" selection-end="8499" vertical-scroll-proportion="0.0">
                   <folding />
                 </state>
               </provider>
@@ -139,9 +139,9 @@
         <option value="$PROJECT_DIR$/tools/test/test_shadow/shadow.svg" />
         <option value="$PROJECT_DIR$/tools/api/data.json" />
         <option value="$PROJECT_DIR$/tools/api/utils.js" />
-        <option value="$PROJECT_DIR$/tools/api/node.js" />
         <option value="$PROJECT_DIR$/tools/css/theme.css" />
         <option value="$PROJECT_DIR$/tools/api/operation.js" />
+        <option value="$PROJECT_DIR$/tools/api/node.js" />
         <option value="$PROJECT_DIR$/tools/index.html" />
       </list>
     </option>
@@ -282,14 +282,14 @@
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="options.lastSelected" value="preferences.keymap" />
     <property name="recentsLimit" value="5" />
+    <property name="options.lastSelected" value="preferences.keymap" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../gl-matrix" />
     <property name="FullScreen" value="false" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
-    <property name="GoToClass.includeJavaFiles" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="GoToClass.includeJavaFiles" value="false" />
   </component>
   <component name="ReadonlyStatusHandler">
     <option name="SHOW_DIALOG" value="false" />
@@ -383,9 +383,8 @@
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32900944" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27439025" sideWeight="0.9967299" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.202085" sideWeight="0.7256098" order="1" side_tool="false" content_ui="tabs" x="0" y="359" width="334" height="437" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20769848" sideWeight="0.7256098" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.202085" sideWeight="0.7256098" order="1" side_tool="false" content_ui="tabs" x="0" y="359" width="334" height="437" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20769848" sideWeight="0.7256098" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32748538" sideWeight="0.7393293" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -394,6 +393,7 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27439025" sideWeight="0.9967299" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -458,7 +458,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="18" />
+      <option name="time" value="19" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
@@ -532,21 +532,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/tools/api/widget.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tools/api/operation.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="58" column="35" selection-start="1247" selection-end="1247" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tools/css/theme.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="152" column="32" selection-start="2219" selection-end="2219" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -558,16 +549,23 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/tools/css/theme.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="152" column="32" selection-start="2219" selection-end="2219" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/tools/api/node.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="164" column="5" selection-start="3470" selection-end="3470" vertical-scroll-proportion="0.0">
+        <state line="344" column="27" selection-start="8491" selection-end="8499" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tools/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="525" column="41" selection-start="14278" selection-end="14278" vertical-scroll-proportion="3.3678162">
+        <state line="787" column="27" selection-start="21707" selection-end="21707" vertical-scroll-proportion="0.28711256">
           <folding />
         </state>
       </provider>
