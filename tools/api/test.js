@@ -1,18 +1,36 @@
-function A() {
-    this.name = 'jack';
+function neednumber(name) {
+    var neednumber = 0;
+    var m = new Array();
+    var h = new Array();
+    for (var i = 0; i < name.length; i++) {
+        var name = name.toUpperCase()
+        m[i] = Math.pow(name.charCodeAt(i), i + 1);
+        h[i] = magic(m[i]);
+        while (h[i] > 9) {
+            h[i] = magic(h[i]);
+        }
+    }
+    for (i = 0; i < name.length; i++) {
+        neednumber += h[i];
+    }
+    while (neednumber > 9) {
+        var neednumber = magic(neednumber);
+    }
+    return neednumber;
 }
-function B() {
-    A.call(this);
-    this.job = 'programmer';
+function magic(a) {
+    var b = 0;
+    var c = 0;
+    while (a) {
+        b = a % 10;
+        c += a % 10;
+        a = (a - b) / 10;
+    }
+    return c;
 }
-var b = new B();
-_extends(B, A);
-console.log(b.name);
-console.log(b.job);
-console.log(b.hello);
-A.prototype.hello = function () {
-    console.log('hello ' + this.name);
+
+function test(name) {
+    for (var i = 0; i < name.length; i++) {
+
+    }
 }
-console.log(b.name);
-console.log(b.job);
-console.log(b.hello);

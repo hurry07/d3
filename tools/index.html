@@ -8,6 +8,7 @@
     <script type="text/javascript" src="api/mootools-core-1.4.5.js"></script>
     <script type="text/javascript" src="api/utils.js"></script>
     <script type="text/javascript" src="api/node.js"></script>
+    <script type="text/javascript" src="api/menus.js"></script>
     <script type="text/javascript" src="api/operation.js"></script>
     <script type="text/javascript" src="api/gl-matrix.js"></script>
 </head>
@@ -93,7 +94,7 @@ Field.prototype.enter = function () {
     var fw = p.width;
     var fh = p.field.height;
     var fp = p.field.prefix;
-    var i = ListNode.prototype.getChildIndex(this);
+    var i = ListNode.prototype.getChildId(this);
     var d = this.data;
 
     this.view = this.parentView().append('svg:g')
@@ -273,14 +274,19 @@ Link.prototype.disablePointer = function () {
     this.pointerdis = true;
 }
 /**
- * feature for right click
+ * menu adapter
  */
 Link.prototype.getMenu = function () {
     return [
-        {title: 'remove', keys: 'L', command: 'remove'}
+        {keys: 'L', command: 'link.remove'}
     ];
 }
 Link.prototype.runMenuAction = function (action) {
+    switch (action) {
+        case 'link.remove':
+            break;
+    }
+    console.log(action);
 }
 
 // ======================
@@ -297,6 +303,9 @@ Table.prototype.addLinkOut = function (link) {
 }
 Table.prototype.addLinkIn = function (link) {
     this.linkin.push(link);
+}
+Table.prototype.addLink = function (link) {
+    this.data.refs.push({});
 }
 Table.prototype.hasLink = function (link) {
     var id = Link.prototype.identifier(link);
@@ -446,33 +455,28 @@ Table.prototype.getLinkEnd = function () {
 Table.prototype.getViewNode = function () {
     return this.view.node();
 };
-/**
- * communate with right click
- * @returns {Array}
- */
+
+// interact with menu
 Table.prototype.getMenu = function () {
     return [
-        {title: 'Remove', keys: '', command: 'remove'},
-        {title: 'Rename', keys: 'R', command: 'rename'},
-        {title: 'Add Field', keys: 'F', command: 'add.field'}
+        {keys: '', command: 'table.remove'},
+        {keys: 'R', command: 'table.rename'},
+        {keys: 'F', command: 'table.add.field'}
     ];
 }
 Table.prototype.runMenuAction = function (action) {
+    switch (action) {
+        case 'table.remove':
+            break;
+        case 'table.rename':
+            break;
+        case 'table.add.field':
+            break;
+    }
+    console.log(action);
 }
-Table.prototype.get
 
-// -------------------- interactive with drag manager
-Table.prototype.startDrag = function () {
-};
-Table.prototype.stopDrag = function () {
-};
-Table.prototype.dragOffset = function (dx, dy) {
-    var p = this.data.position;
-    p.x += dx;
-    p.y += dy;
-    this.view.attr('transform', 'translate(' + p.x + ',' + p.y + ')');
-
-};
+// interactive with drag manager
 Table.prototype.updateLinks = function () {
     for (var i = 0, a = this.linkout, l = this.linkout.length; i < l; i++) {
         a[i].refresh();
@@ -513,7 +517,6 @@ Table.prototype.getFeature = function (f) {
             return null;
     }
 }
-
 // ---------------------- for tool
 Table.prototype.export = function () {
     var d = {};
@@ -534,54 +537,70 @@ Table.prototype.copyField = function () {
 // ==========================
 // container types
 // ==========================
-var Fields = Node.createContainer(Field);
-function TableSchema(p, view) {
+var Fields = Node.createContainer(Field, {
+    constructor: function (p, view) {
+        ListNode.call(this, p);
+        this.view = view;
+    }
+});
+
+// ==========================
+// schema layer
+// ==========================
+function TableCollection(p, view) {
     ListNode.call(this, p);
     this.view = view;
 }
-_extends(TableSchema, ListNode);
+_extends(TableCollection, ListNode);
 /**
  * @param table current focus table
  */
-TableSchema.prototype.order = function (table) {
-    var t = this.view.selectAll('g.table');
-    var fs = ListNode.prototype.setChildIndex;
-    var fg = ListNode.prototype.getChildIndex;
-    t.sort(function (a, b) {
-        if (a.view.classed('focus')) {
-            return 1;
-        }
-        if (b.view.classed('focus')) {
-            return -1;
-        }
-        a = fg(a);
-        b = fg(b);
-        return  a == b ? 0 : a > b ? 1 : -1;
-    });
-    t.order();
-    t.each(function (d, i) {
-        fs(d, i);
-    });
+TableCollection.prototype.order = function (table) {
+//    var t = this.view.selectAll('g.table');
+//    var fs = ListNode.prototype.setChildIndex;
+//    var fg = ListNode.prototype.getChildIndex;
+//    t.sort(function (a, b) {
+//        if (a.view.classed('focus')) {
+//            return 1;
+//        }
+//        if (b.view.classed('focus')) {
+//            return -1;
+//        }
+//        a = fg(a);
+//        b = fg(b);
+//        return  a == b ? 0 : a > b ? 1 : -1;
+//    });
+//    t.order();
+//    t.each(function (d, i) {
+//        fs(d, i);
+//    });
 }
-TableSchema.prototype.createChild = function (d) {
+TableCollection.prototype.createChild = function (d) {
     if (Table.prototype.isTable(d.type)) {
         return new Table(this);
     } else {
         return new Link(this);
     }
 }
-TableSchema.prototype.identifier = function (d) {
-    console.log(d);
-}
-TableSchema.prototype.export = function () {
+TableCollection.prototype.identifier = Table.identifier;
+TableCollection.prototype.export = function () {
     var tables = [];
     for (var t = 0, i = 0, data = this.children, l = data.length; i < l; i++) {
         if (this.children[i].targetType === Target.TABLE) {
-            tables[t++] = this.children[i].export();
+            tables[t++] = this.children[i].getData();
         }
     }
     return tables;
 }
+function LinkCollection(p, view) {
+    ListNode.call(this, p);
+    this.view = view;
+}
+_extends(LinkCollection, ListNode);
+LinkCollection.prototype.createChild = function () {
+    return new Link(this);
+}
+LinkCollection.prototype.identifier = Link.identifier;
 
 // ======================
 // camera
@@ -734,7 +753,9 @@ Menu.prototype.rebind = function (d) {
     var p = this.prefer;
     var menuy = 0;
     for (var i = 0, l = d.length; i < l; i++) {
-        if (d[i].split) {
+        var item = d[i];
+
+        if (item.split) {
             var cy = menuy + p.splitheight / 2;
             this.view.append('svg:rect')
                     .attr('width', p.width)
@@ -745,9 +766,9 @@ Menu.prototype.rebind = function (d) {
                     .attr('d', 'M' + p.padding + ',' + cy + 'L' + (p.width - p.padding) + ',' + cy);
             menuy += p.splitheight;
         } else {
-            d[i].action = this.action;
+            item.action = this.action;
             var g = this.view.append('svg:g')
-                    .datum(d[i])
+                    .datum(item)
                     .attr('transform', 'translate(' + 0 + ',' + menuy + ')')
                     .classed('item', true)
                     .on('click', this.handleClick);
@@ -757,7 +778,7 @@ Menu.prototype.rebind = function (d) {
             g.append('svg:text')
                     .attr('x', p.padding)
                     .attr('y', p.height - 3)
-                    .text(d[i].title);
+                    .text(item.title || i18n.string(item.command));
             menuy += p.height;
         }
     }
@@ -779,7 +800,7 @@ Menu.prototype.handleDown = function (action) {
     action.onMenuDown();
 }
 Menu.prototype.update = function (old, newd) {
-    var all =  this.view.selectAll('*');
+    var all = this.view.selectAll('*');
     this.view.selectAll('*').remove();
     this.rebind(newd);
 }
@@ -805,11 +826,20 @@ function DefaltMenu() {
 }
 DefaltMenu.prototype.getMenu = function () {
     return [
-        {title: 'Add Table', keys: 'A', command: 'add.table'}
+        {keys: 'A', command: 'global.add.table'},
+        {keys: '', command: 'global.export'}
     ];
 }
 DefaltMenu.prototype.runMenuAction = function (action) {
-    console.log(action)
+    switch (action) {
+        case 'global.add.table':
+            break;
+        case 'global.export':
+            var exp = uiMgr.export();
+            console.log(JSON.encode(exp));
+            break;
+    }
+    console.log(action);
 }
 function MenuAction(layer) {
     Action.call(this);
@@ -849,7 +879,6 @@ MenuAction.prototype.popupMenu = function (event) {
             this.menu.showprevious(d3.event.x, d3.event.y);
             return;
         }
-
         this.target = target;
         this.menu.show(d3.event.x, d3.event.y, target.getMenu());
         this.active = true;
@@ -885,15 +914,15 @@ function UIManager() {
 
     // ui drawing layers
     this.layers = {
-        schema: svg.append('svg:g').classed('entity', true),
+        schema: Node.wrap(svg.append('svg:g').classed('entity', true)),
         assistant: Node.wrap(svg.append('svg:g').classed('pAssistant', true)),
         dialog: Node.wrap(svg.append('svg:g').classed('pDialog', true)),
         message: Node.wrap(svg.append('svg:g').classed('pMessage', true))
     };
 
     // all tables
-    var schemaN = Node.wrap(this.layers.schema);
-    this.tables = new TableSchema(null, this.layers.schema);
+    this.tables = new TableCollection(this.layers.schema, this.layers.schema.view);
+    this.links = new LinkCollection(this.layers.schema, this.layers.schema.view);
 
     // all registered actions
     this.actions = [];
@@ -942,9 +971,9 @@ UIManager.prototype.bindDatas = function (data) {
             var p1 = new LinkTerminal();
             var startt = tables[i];
             p1.table(startt);
-            p1.field(startt.getField(refs.start));
+            p1.field(startt.getField(refs[r].start));
 
-            var link = this.tables.addData({from: p1, to: p2});
+            var link = this.tables.appendChild({from: p1, to: p2});
             startt.addLinkOut(link);
             endt.addLinkIn(link);
         }
@@ -963,7 +992,7 @@ UIManager.prototype.bindDatas = function (data) {
         "refs": [
         ]
     }
-    this.tables.addData(t1);
+    this.tables.appendChild(t1);
 }
 UIManager.prototype.addAction = function (action) {
     action.register(this);
@@ -1096,9 +1125,10 @@ UIManager.prototype.addLink = function (d) {
     var tot = d.to.table();
     if (fromt && !fromt.hasLink(d) && tot) {
         d = Link.prototype.cloneData(d);
-        var link = this.tables.addData(d);
+        var link = this.tables.appendChild(d);
         fromt.addLinkOut(link);
         tot.addLinkIn(link);
+        fromt.addLink(link);
 
         console.log(link.getId());
     }
@@ -1506,6 +1536,8 @@ svg.on('mouseup.end', listenSvg(ControlType.SVG_UP_END));
 // ==========================
 d3.json('api/data.json', function (data) {
     uiMgr.bindDatas(data);
+    var ts = d3.select('g.entity');
+    console.log(ts.selectAll('g.entity > g'));
 });
 
 // ==========================
@@ -1520,12 +1552,28 @@ function menuListener() {
 var tt = setInterval(function () {
     document.onkeydown = keyListener;
     document.oncontextmenu = menuListener;
-
-    var exp = uiMgr.export();
-    console.log(exp);
     clearInterval(tt);
 }, 2000)
 
+var listtest = new ListNode();
+var a1 = {};
+var a2 = {};
+var a3 = {};
+var a4 = {};
+var a5 = {};
+listtest.childAdd(a1);
+listtest.childAdd(a2);
+listtest.childAdd(a3);
+listtest.childAdd(a4);
+listtest.childAdd(a5);
+console.log(a3.__id__);
+listtest.childRemove(a3);
+console.log(listtest.startid);
+console.log('----------');
+
+a3 = {};
+listtest.childAdd(a3);
+console.log(a3.__id__);
 </script>
 </body>
 </html>

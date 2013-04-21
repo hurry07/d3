@@ -7,35 +7,37 @@
  */
 function _extends(sub, super_, props) {
     sub.prototype = Object.create(super_.prototype);
-    sub.prototype.constructor = sub;
-
     if (props) {
         for (var i in props) {
             sub.prototype[i] = props[i];
         }
     }
+    sub.prototype.constructor = sub;
     return sub;
 }
 
 function _defineClass(super_, props) {
-    var c = props._constructor;
-
-    function sub() {
-        super_.apply(this, arguments);
-        c.apply(this, arguments);
+    var c = props.constructor;
+    var sub;
+    if (c) {
+        sub = function () {
+            super_.apply(this, arguments);
+            c.apply(this, arguments);
+        }
+    } else {
+        sub = function () {
+            super_.apply(this, arguments);
+        }
     }
 
     sub.prototype = Object.create(super_.prototype);
-    sub.prototype.constructor = sub;
     if (props) {
         for (var i in props) {
-            props[i] != c && (sub.prototype[i] = props[i]);
+            sub.prototype[i] = props[i];
         }
     }
+    sub.prototype.constructor = sub;
     return sub;
-}
-function _copyextends(sub, super_) {
-
 }
 
 // ==========================================
@@ -59,6 +61,9 @@ function Node(parent) {
 //}
 Node.prototype.setData = function (data) {
     this.data = data;
+}
+Node.prototype.getData = function () {
+    return this.data;
 }
 /**
  * rebind data
@@ -121,12 +126,12 @@ Node.prototype.exit = function () {
 Node.prototype.unbind = function () {
     this.exit();
     if (this.parentNode) {
-        this.parentNode.nodeRemoved(this);
+        this.parentNode.childRemove(this);
     }
     this.data = null;
     this.init = false;
 }
-Node.prototype.nodeRemoved = function (child) {
+Node.prototype.childRemove = function (child) {
 }
 /**
  * get parent view
@@ -155,28 +160,25 @@ Node.wrap = function (sel) {
  * create a Container function with a closure containing certain element type
  *
  * @param type
- * @param prop
  * @returns {*}
  */
-Node.createContainer = function (type, prop) {
-    if (!prop) {
-        prop = {};
-    }
+Node.createContainer = function (type) {
+    var prop = arguments[1] || {};
     if (!prop.createChild) {
         prop.createChild = function (d) {
             return new type(this);
         }
     }
     if (!prop.identifier) {
-        var childid = type.prototype.identifier;
-        if (childid) {
-            prop.identifier = childid;
+        var id = type.prototype.identifier;
+        if (id) {
+            prop.identifier = id;
         }
     }
-    return _extends(function (p, view) {
+    var func = prop.constructor || function (p) {
         ListNode.call(this, p);
-        this.view = view;
-    }, ListNode, prop);
+    }
+    return _extends(func, ListNode, prop);
 }
 Node.prototype.getViewNode = function () {
 
@@ -188,7 +190,7 @@ Node.prototype.getViewNode = function () {
 function ListNode(parent) {
     Node.call(this, parent);
     this.children = [];
-    this.param = {};
+    this.startid = 0;
 }
 _extends(ListNode, Node);
 /**
@@ -202,10 +204,10 @@ ListNode.prototype.createChild = function (d) {
  * you can implement child cache.
  *
  * @param child
- * @param i
  */
-ListNode.prototype.releaseChild = function (child, i) {
+ListNode.prototype.releaseChild = function (child) {
     child.unbind();
+    this.childRemove(child);
 }
 /**
  * sub class should give a specific type, this is like ArrayList<T>
@@ -213,22 +215,23 @@ ListNode.prototype.releaseChild = function (child, i) {
  */
 //ListNode.prototype.identifier = function (d) {
 //}
-ListNode.prototype.bindChild = function (child, d, i) {
-    this.setChildIndex(child, i);
+ListNode.prototype.bindChild = function (child, d) {
+    this.childAdd(child);
     child.bind(d);
 }
-ListNode.prototype.setChildIndex = function (child, i) {
-    child.__index__ = i;
-}
-ListNode.prototype.getChildIndex = function (child) {
-    return child.__index__;
+ListNode.prototype.bindUpdate = function (child, d) {
+    var oldd = child.data;
+    child.setData(d);
+    child.bindUpdate(oldd, d);
 }
 ListNode.prototype.enter = function () {
+    this.listEnter();
     this.data.forEach(function (d, i) {
         var child = this.createChild(d);
-        this.bindChild(child, d, i);
-        this.children.push(child);
+        this.bindChild(child, d);
     }, this);
+}
+ListNode.prototype.listEnter = function () {
 }
 /**
  * render order is changed
@@ -239,17 +242,17 @@ ListNode.prototype.update = function (dold, dnew) {
     var id = this.identifier;
     var data = dnew;
 
-    var m = this.children.length;
-    var n = data.length;
     var children = this.children;
+    var m = children.length;
+    var n = data.length;
 
     if (id) {
-        var carr = children.splice(0, m);// remove all element from current children
+        var carr = children.slice(0, m);// copy current array
         var s = 0;// search index
         var cm = new d3.map();
 
-        var sort = false;
         var child;// temp child element
+        var unbind = [];
         for (var i = 0, size = n; i < size; i++) {
             var key = id(data[i]);
 
@@ -274,74 +277,77 @@ ListNode.prototype.update = function (dold, dnew) {
 
             // if find, update it, create new element
             if (child) {
-                var cold = child.data;// get data with current reusable child
-                child.setData(data[i]);
-                if (!sort && this.getChildIndex(child) != i) {
-                    sort = true;
-                }
-                this.setChildIndex(child, i);
-                child.bindUpdate(cold, data[i]);
+                this.bindUpdate(child, data[i]);
             } else {
-                child = this.createChild(data[i]);
-                this.bindChild(child, data[i], i);
+                unbind.push(data[i]);
             }
-            this.children.push(child);
         }
 
-        // remove useless elements if any
-        cm.values().forEach(this.releaseChild, this);
-        if (sort) {
-            this.sortView();
-        }
-    } else {
-        var min = Math.min(m, n);
-        for (var i = 0, size = min; i < size; i++) {
-            children[i].bind(data[i]);
-        }
-        // if there is more children than data
-        for (var i = min; i < m; i++) {
-            this.releaseChild(children[i], i);
-        }
-        // if there is more data than children
-        for (var i = min; i < n; i++) {
-            var child = this.createChild(data[i]);
-            this.bindChild(child, data[i], i);
-            this.children.push(child);
-        }
+        data = unbind;
+        children = cm.values();
+        m = children.length;
+        n = data.length;
+    }
 
-        this.children = (m < n) ? children : children.slice(0, n);
+    var min = Math.min(m, n);
+    for (var i = 0, size = min; i < size; i++) {
+        children[i].bind(data[i]);
+    }
+    // if there is more children than data
+    for (var i = min; i < m; i++) {
+        this.releaseChild(children[i]);
+    }
+    // if there is more data than children
+    for (var i = min; i < n; i++) {
+        var child = this.createChild(data[i]);
+        this.bindChild(child, data[i]);
     }
 }
 ListNode.prototype.exit = function () {
     this.children.forEach(this.releaseChild, this);
     this.children = [];
 }
-ListNode.prototype.addData = function (d) {
-    var i = this.data.indexOf(d);
-    if (i == -1) {
-        var child = this.createChild(d);
-        this.bindChild(child, d, this.data.length);
-        this.children.push(child);
-        this.data.push(d);
-        return child;
-    }
+ListNode.prototype.appendChild = function (d) {
+    var child = this.createChild(d);
+    this.bindChild(child, d);
+    return child;
 }
-ListNode.prototype.nodeRemoved = function (child) {
-    var i = this.children.indexOf(child);
-    if (i != -1) {
-        this.children.splice(i, 1);
-        for (var index = i, l = this.data.length; i < l; i++) {
-            this.setChildIndex(this.children[i], i);
-        }
-        i = this.data.indexOf(child.data);
-        if (i != -1) {
-            this.data.splice(i, 1);
-        }
-    }
-}
-ListNode.prototype.getChildren = function() {
+ListNode.prototype.getChildren = function () {
     return this.children;
 }
-ListNode.prototype.getChild = function(i) {
+ListNode.prototype.getChild = function (i) {
     return this.children[i];
+}
+/**
+ * recycle children id
+ * TODO rewrite with binary tree
+ * @param child
+ */
+ListNode.prototype.childAdd = function (child) {
+    var id;
+    for (var i = this.startid, children = this.children, l = children.length; i < l; i++) {
+        if ((id = this.getChildId(children[i])) > i) {
+            this.setChildId(child, id - 1);
+            this.children.splice(i, 0, child);
+            this.startid = i;
+            return;
+        }
+    }
+    this.setChildId(child, this.startid = l);
+    this.children.push(child);
+}
+ListNode.prototype.childRemove = function (child) {
+    var index = this.children.indexOf(child);
+    if (index != -1) {
+        this.children.splice(index, 1);
+        if (index < this.startid) {
+            this.startid = index;
+        }
+    }
+}
+ListNode.prototype.setChildId = function (c, id) {
+    c.__id__ = id;
+}
+ListNode.prototype.getChildId = function (c) {
+    return c.__id__;
 }
