@@ -475,18 +475,9 @@ Table.prototype.runMenuAction = function (action) {
     }
     console.log(action);
 }
-
-// interactive with drag manager
-Table.prototype.updateLinks = function () {
-    for (var i = 0, a = this.linkout, l = this.linkout.length; i < l; i++) {
-        a[i].refresh();
-    }
-    for (var i = 0, a = this.linkin, l = this.linkin.length; i < l; i++) {
-        a[i].refresh();
-    }
-}
 Table.prototype.getMoveFeature = function () {
     var table = this;
+    var links = [].concat(this.linkout).concat(this.linkin);
     return new (_extends(function () {
         MoveAdapter.call(this, table.data.position, table.view);
     }, MoveAdapter, {
@@ -496,7 +487,10 @@ Table.prototype.getMoveFeature = function () {
         },
         moveTo: function (x, y) {
             MoveAdapter.prototype.moveTo.call(this, x, y);
-            table.updateLinks();
+            // update link terminate when moving the table
+            for (var i = 0, l = links.length; i < l; i++) {
+                links[i].refresh();
+            }
         },
         stopMove: function (x, y) {
             table.view.classed('focus', false);
@@ -556,24 +550,24 @@ _extends(TableCollection, ListNode);
  * @param table current focus table
  */
 TableCollection.prototype.order = function (table) {
-//    var t = this.view.selectAll('g.table');
-//    var fs = ListNode.prototype.setChildIndex;
-//    var fg = ListNode.prototype.getChildIndex;
-//    t.sort(function (a, b) {
+    var tables = this.view.node().querySelectorAll('g.entity > g.table');
+//    console.log(tables);
+//    var fs = ListNode.prototype.setChildId;
+//    var fg = ListNode.prototype.getChildId;
+//    var all = this.view.selectAll('g.entity > g.table');
+//    all.sort(function (a, b) {
 //        if (a.view.classed('focus')) {
 //            return 1;
 //        }
 //        if (b.view.classed('focus')) {
 //            return -1;
 //        }
-//        a = fg(a);
-//        b = fg(b);
-//        return  a == b ? 0 : a > b ? 1 : -1;
+//        return 0;
 //    });
-//    t.order();
-//    t.each(function (d, i) {
-//        fs(d, i);
-//    });
+//
+//    console.log(all);
+//    var all = this.view.selectAll('g.entity > g');
+//    console.log(all);
 }
 TableCollection.prototype.createChild = function (d) {
     if (Table.prototype.isTable(d.type)) {
@@ -777,7 +771,7 @@ Menu.prototype.rebind = function (d) {
                     .attr('height', p.height)
             g.append('svg:text')
                     .attr('x', p.padding)
-                    .attr('y', p.height - 3)
+                    .attr('y', p.height - 4)
                     .text(item.title || i18n.string(item.command));
             menuy += p.height;
         }
@@ -1536,8 +1530,7 @@ svg.on('mouseup.end', listenSvg(ControlType.SVG_UP_END));
 // ==========================
 d3.json('api/data.json', function (data) {
     uiMgr.bindDatas(data);
-    var ts = d3.select('g.entity');
-    console.log(ts.selectAll('g.entity > g'));
+    console.log(d3.selectAll('g.entity > g').selectAll('g > g').selectAll('rect'));
 });
 
 // ==========================
@@ -1550,30 +1543,11 @@ function menuListener() {
     return false;
 }
 var tt = setInterval(function () {
+    var check = ['onkeydown', 'onkeyup', 'onmousedown', 'onmousemove', 'onmouseout', 'onmouseover', 'onmouseup', 'ondblclick', 'onclick', 'onkeypress'];
     document.onkeydown = keyListener;
     document.oncontextmenu = menuListener;
     clearInterval(tt);
 }, 2000)
-
-var listtest = new ListNode();
-var a1 = {};
-var a2 = {};
-var a3 = {};
-var a4 = {};
-var a5 = {};
-listtest.childAdd(a1);
-listtest.childAdd(a2);
-listtest.childAdd(a3);
-listtest.childAdd(a4);
-listtest.childAdd(a5);
-console.log(a3.__id__);
-listtest.childRemove(a3);
-console.log(listtest.startid);
-console.log('----------');
-
-a3 = {};
-listtest.childAdd(a3);
-console.log(a3.__id__);
 </script>
 </body>
 </html>

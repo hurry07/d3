@@ -92,7 +92,7 @@ Node.prototype.bind = function (data) {
         }
     } else if (data) {
         this.init = true;
-        var dold = this.data;
+        var dold = this.getData();
 
         this.setData(data);
         var id = this.identifier;
@@ -205,9 +205,8 @@ ListNode.prototype.createChild = function (d) {
  *
  * @param child
  */
-ListNode.prototype.releaseChild = function (child) {
+ListNode.prototype.unbindChild = function (child) {
     child.unbind();
-    this.childRemove(child);
 }
 /**
  * sub class should give a specific type, this is like ArrayList<T>
@@ -215,20 +214,13 @@ ListNode.prototype.releaseChild = function (child) {
  */
 //ListNode.prototype.identifier = function (d) {
 //}
-ListNode.prototype.bindChild = function (child, d) {
-    this.childAdd(child);
-    child.bind(d);
-}
-ListNode.prototype.bindUpdate = function (child, d) {
-    var oldd = child.data;
-    child.setData(d);
-    child.bindUpdate(oldd, d);
-}
 ListNode.prototype.enter = function () {
     this.listEnter();
     this.data.forEach(function (d, i) {
         var child = this.createChild(d);
-        this.bindChild(child, d);
+        this.setChildId(child, i);
+        child.bind(d);
+        this.children.push(child);
     }, this);
 }
 ListNode.prototype.listEnter = function () {
@@ -248,68 +240,78 @@ ListNode.prototype.update = function (dold, dnew) {
 
     if (id) {
         var carr = children.slice(0, m);// copy current array
-        var s = 0;// search index
         var cm = new d3.map();
 
-        var child;// temp child element
-        var unbind = [];
-        for (var i = 0, size = n; i < size; i++) {
-            var key = id(data[i]);
-
-            // try to find reusable child
-            child = null;
+        // map all children
+        var remain = [];
+        for (var i = 0; i < m; i++) {
+            var key = id(children[i].data);
             if (cm.has(key)) {
-                child = cm.get(key);
-                cm.remove(key);
+                remain.push(children[i]);
             } else {
-                while (s < m) {
-                    var ck = id(carr[s].data);
-                    if (key == ck) {
-                        child = carr[s];
-                        s++;
-                        break;
-                    } else {
-                        cm.set(ck, carr[s]);
-                    }
-                    s++;
-                }
-            }
-
-            // if find, update it, create new element
-            if (child) {
-                this.bindUpdate(child, data[i]);
-            } else {
-                unbind.push(data[i]);
+                cm.set(key, children[i]);
             }
         }
 
-        data = unbind;
-        children = cm.values();
-        m = children.length;
-        n = data.length;
-    }
+        var r = 0;
+        var child;
+        this.children = [];
 
-    var min = Math.min(m, n);
-    for (var i = 0, size = min; i < size; i++) {
-        children[i].bind(data[i]);
-    }
-    // if there is more children than data
-    for (var i = min; i < m; i++) {
-        this.releaseChild(children[i]);
-    }
-    // if there is more data than children
-    for (var i = min; i < n; i++) {
-        var child = this.createChild(data[i]);
-        this.bindChild(child, data[i]);
+        for (var i = 0; i < n; i++) {
+            var key = id(data[i]);
+            if (cm.has(key)) {
+                child = cm.get(key);
+                cm.remove(key);
+                this.setChildId(child, i);
+
+                var oldd = child.data;
+                child.setData(d);
+                child.bindUpdate(oldd, d);
+            } else if (r < remain.length) {
+                this.setChildId(remain[r ], i);
+
+                remain[r].bind(data[i]);
+                r++;
+            } else {
+                child = this.createChild(data[i]);
+                this.setChildId(remain[r ], i);
+
+                child.bind(data[i]);
+            }
+
+            this.children.push(child);
+        }
+
+        for (; r < remain.length; r++) {
+            this.unbindChild(remain[i]);
+        }
+    } else {
+        var min = Math.min(m, n);
+        for (var i = 0, size = min; i < size; i++) {
+            children[i].bind(data[i]);
+        }
+        // if there is more children than data
+        for (var i = min; i < m; i++) {
+            this.unbindChild(children[i]);
+        }
+        // if there is more data than children
+        for (var i = min; i < n; i++) {
+            var child = this.createChild(data[i]);
+            this.setChildId(child, i);
+            child.bind(data[i]);
+            children.push(child);
+        }
     }
 }
 ListNode.prototype.exit = function () {
-    this.children.forEach(this.releaseChild, this);
+    this.children.forEach(this.unbindChild, this);
     this.children = [];
 }
 ListNode.prototype.appendChild = function (d) {
     var child = this.createChild(d);
-    this.bindChild(child, d);
+    this.setChildId(child, this.children.length);
+    child.bind(d);
+    this.children.push(child);
     return child;
 }
 ListNode.prototype.getChildren = function () {
@@ -318,31 +320,36 @@ ListNode.prototype.getChildren = function () {
 ListNode.prototype.getChild = function (i) {
     return this.children[i];
 }
-/**
- * recycle children id
- * TODO rewrite with binary tree
- * @param child
- */
-ListNode.prototype.childAdd = function (child) {
-    var id;
-    for (var i = this.startid, children = this.children, l = children.length; i < l; i++) {
-        if ((id = this.getChildId(children[i])) > i) {
-            this.setChildId(child, id - 1);
-            this.children.splice(i, 0, child);
-            this.startid = i;
-            return;
-        }
+ListNode.prototype.getData = function () {
+    var d = [];
+    for (var i = 0, c = this.children, l = c.length; i < l; i++) {
+        d.push(c[i].getData());
     }
-    this.setChildId(child, this.startid = l);
-    this.children.push(child);
+    this.data = d;
+    return d;
 }
+///**
+// * recycle children id
+// * TODO rewrite with binary tree
+// * @param child
+// */
+//ListNode.prototype.childAdd = function (child) {
+//    var id;
+//    for (var i = this.startid, children = this.children, l = children.length; i < l; i++) {
+//        if ((id = this.getChildId(children[i])) > i) {
+//            this.setChildId(child, id - 1);
+//            this.children.splice(i, 0, child);
+//            this.startid = i;
+//            return;
+//        }
+//    }
+//    this.setChildId(child, this.startid = l);
+//    this.children.push(child);
+//}
 ListNode.prototype.childRemove = function (child) {
     var index = this.children.indexOf(child);
     if (index != -1) {
         this.children.splice(index, 1);
-        if (index < this.startid) {
-            this.startid = index;
-        }
     }
 }
 ListNode.prototype.setChildId = function (c, id) {
