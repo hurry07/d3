@@ -14,7 +14,7 @@
     <file path="/d3.js" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1364742848897" ignored="false" />
     <file path="/t_03.html" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1364906014332" ignored="false" />
     <file path="/index_mine.html" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1364914130326" ignored="false" />
-    <file path="/index.html" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1366620845629" ignored="false" />
+    <file path="/index.html" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1366645569985" ignored="false" />
     <file path="/a.html" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1365816965499" ignored="false" />
     <file path="/a.xml" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1365109507233" ignored="false" />
     <file path="/a.js" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1365817738520" ignored="false" />
@@ -35,7 +35,7 @@
     <file path="/text.html" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1365477913207" ignored="false" />
     <file path="/theme.css" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1366451665361" ignored="false" />
     <file path="/Dummy.txt" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1365493388480" ignored="false" />
-    <file path="/node.js" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1366618357543" ignored="false" />
+    <file path="/node.js" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1366646357285" ignored="false" />
     <file path="/data.json" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1366354081876" ignored="false" />
     <file path="/operation.js" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1366468245538" ignored="false" />
     <file path="/test2.html" changelist="102534c8-c1d5-4dc3-9ee7-0b00e57bc226" time="1365752422781" ignored="false" />
@@ -66,10 +66,64 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="selectAll.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="selectAll.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/selection/selectAll.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="51" selection-start="253" selection-end="253" vertical-scroll-proportion="0.18181819">
+            <state line="23" column="46" selection-start="663" selection-end="663" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="selection.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/selection/selection.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="21" column="26" selection-start="333" selection-end="346" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.html" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/tools/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="1555" column="0" selection-start="42845" selection-end="42860" vertical-scroll-proportion="0.6566901">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="node.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tools/api/node.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="133" column="43" selection-start="3133" selection-end="3133" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="mootools-core-1.4.5.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tools/api/mootools-core-1.4.5.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="300" column="9" selection-start="7362" selection-end="7362" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="operation.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tools/api/operation.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="58" column="35" selection-start="1247" selection-end="1247" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="utils.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tools/api/utils.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="16" column="29" selection-start="355" selection-end="364" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -87,7 +141,16 @@
       <file leaf-file-name="select.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/selection/select.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="29" column="30" selection-start="851" selection-end="872" vertical-scroll-proportion="0.0">
+            <state line="2" column="52" selection-start="73" selection-end="73" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="on.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/selection/on.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="87" column="74" selection-start="2215" selection-end="2274" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -117,16 +180,16 @@
         <option value="$PROJECT_DIR$/tools/api/menus.js" />
         <option value="$PROJECT_DIR$/tools/api/test.js" />
         <option value="$PROJECT_DIR$/tools/css/theme.css" />
-        <option value="$PROJECT_DIR$/tools/api/node.js" />
         <option value="$PROJECT_DIR$/tools/index.html" />
+        <option value="$PROJECT_DIR$/tools/api/node.js" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="103" />
-    <option name="y" value="12" />
-    <option name="width" value="1680" />
-    <option name="height" value="1011" />
+    <option name="x" value="1" />
+    <option name="y" value="22" />
+    <option name="width" value="1280" />
+    <option name="height" value="774" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -232,20 +295,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="d3" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="d3" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
       <pane id="Scope" />
@@ -254,14 +303,14 @@
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="recentsLimit" value="5" />
     <property name="options.lastSelected" value="preferences.keymap" />
+    <property name="recentsLimit" value="5" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../gl-matrix" />
     <property name="FullScreen" value="false" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
-    <property name="options.searchVisible" value="true" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="GoToClass.includeJavaFiles" value="false" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="ReadonlyStatusHandler">
     <option name="SHOW_DIALOG" value="false" />
@@ -350,13 +399,14 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="103" y="12" width="1680" height="1011" extended-state="0" />
+    <frame x="1" y="22" width="1280" height="774" extended-state="0" />
     <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32900944" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20536259" sideWeight="0.75535166" order="1" side_tool="false" content_ui="tabs" x="0" y="359" width="334" height="437" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17672151" sideWeight="0.7262997" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24464832" sideWeight="0.9967299" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20525059" sideWeight="0.75535166" order="1" side_tool="false" content_ui="tabs" x="0" y="359" width="334" height="437" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19570406" sideWeight="0.7262997" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32748538" sideWeight="0.7393293" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -365,7 +415,6 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24464832" sideWeight="0.9967299" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -430,28 +479,20 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="20" />
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/tools/index.html</url>
+          <line>1555</line>
+          <option name="timeStamp" value="20" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="21" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/tools/api/operation.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="58" column="35" selection-start="1247" selection-end="1247" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tools/api/utils.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="29" selection-start="355" selection-end="364" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tools/api/jquery-1.7.2.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="1647" column="8" selection-start="75794" selection-end="75794" vertical-scroll-proportion="0.33278957" />
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Roaming/Tencent/QQ/Temp/}F~MZRZOO}KS3F2GLCF(I9M.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tools/api/test.js">
@@ -462,11 +503,6 @@
     <entry file="file://$PROJECT_DIR$/tools/css/theme.css">
       <provider selected="true" editor-type-id="text-editor">
         <state line="163" column="70" selection-start="2426" selection-end="2426" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tools/api/mootools-core-1.4.5.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="511" column="21" selection-start="11719" selection-end="11719" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tools/api/jquery.svg.input.js">
@@ -484,21 +520,6 @@
         <state line="7" column="12" selection-start="159" selection-end="168" vertical-scroll-proportion="0.12727273" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/selection/selection.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="29" selection-start="466" selection-end="482" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tools/api/node.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="352" column="0" selection-start="8498" selection-end="8498" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tools/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1532" column="79" selection-start="42160" selection-end="42160" vertical-scroll-proportion="-18.565218" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/selection/append.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="32" column="19" selection-start="754" selection-end="760" vertical-scroll-proportion="0.0">
@@ -506,16 +527,65 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/selection/select.js">
+    <entry file="file://$PROJECT_DIR$/src/selection/selectAll.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="30" selection-start="851" selection-end="872" vertical-scroll-proportion="0.0">
+        <state line="23" column="46" selection-start="663" selection-end="663" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/selection/selectAll.js">
+    <entry file="file://$PROJECT_DIR$/src/selection/select.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="51" selection-start="253" selection-end="253" vertical-scroll-proportion="0.18181819">
+        <state line="2" column="52" selection-start="73" selection-end="73" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools/api/operation.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="58" column="35" selection-start="1247" selection-end="1247" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools/api/utils.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="29" selection-start="355" selection-end="364" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools/api/mootools-core-1.4.5.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="300" column="9" selection-start="7362" selection-end="7362" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/selection/selection.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="26" selection-start="333" selection-end="346" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/selection/on.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="87" column="74" selection-start="2215" selection-end="2274" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools/api/node.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="133" column="43" selection-start="3133" selection-end="3133" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1555" column="0" selection-start="42845" selection-end="42860" vertical-scroll-proportion="0.6566901">
           <folding />
         </state>
       </provider>

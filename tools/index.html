@@ -1531,20 +1531,30 @@ svg.on('mouseup.end', listenSvg(ControlType.SVG_UP_END));
 d3.json('api/data.json', function (data) {
     uiMgr.bindDatas(data);
     console.log(d3.selectAll('g.entity > g').selectAll('g > g').selectAll('rect'));
+    svg.on('aaaa', function () {
+
+    });
+    console.log(typeOf(false));
 });
+console.log(null === null, '-0000');
 
 // ==========================
 // disable chrome plugins
 // ==========================
 function keyListener() {
-    console.log('document.onkeydown');
+    console.log('document.onkeydown', this, arguments);
 }
+var seltest = new selection(document);
 function menuListener() {
     return false;
 }
 var tt = setInterval(function () {
     var check = ['onkeydown', 'onkeyup', 'onmousedown', 'onmousemove', 'onmouseout', 'onmouseover', 'onmouseup', 'ondblclick', 'onclick', 'onkeypress'];
-    document.onkeydown = keyListener;
+    seltest.on('keydown', keyListener, true, {name: 'bj'});
+    seltest.on('keydown', keyListener, false, {name: 'sh'});
+
+    seltest.off('keydown');
+    //document.onkeydown = keyListener;
     document.oncontextmenu = menuListener;
     clearInterval(tt);
 }, 2000)
